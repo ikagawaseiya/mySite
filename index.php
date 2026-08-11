@@ -1,14 +1,8 @@
-<!DOCTYPE html>
-<html lang="ja">
+<?php
+// index.php
 
-<head>
-  <meta charset="UTF-8">
-  <title>自作サイトテスト</title>
-  <link rel="stylesheet" href="css/style.css">
-</head>
+// コントローラーを読み込んで実行する
+require_once 'Controller/topPageController.php';
 
-<body>
-  <h1><?php echo "Hello World! PHPが動いています。"; ?></h1>
-</body>
-
-</html>
+$controller = new topPageController();
+$controller->show();
