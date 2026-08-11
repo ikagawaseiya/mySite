@@ -12,15 +12,12 @@
 
 <body>
   <div class="profile-card">
-    <?php showHeader($pageTitle); ?>
-    <h1>Hello, World!</h1>
-    <p>HP:かわいいうさぎ へようこそ。</p>
-    <main>
-
+    <main class="main-content">
+      <h1>Hello, World!</h1>
+      <p>ホームページ：かわいいうさぎ <br class="br-sp">へようこそ。</p>
       <p class="bio">test</p>
     </main>
     <footer>
-      <a href="#contact" class="btn">お問い合わせはこちら</a>
     </footer>
   </div>
 </body>

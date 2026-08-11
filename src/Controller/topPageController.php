@@ -12,6 +12,7 @@ class topPageController {
    */
     public function show() {
     $pageTitle = "トップページ";
+    showHeader($pageTitle);
     require_once __DIR__ . '/../View/topPageView.php';
-    }
+}
 }

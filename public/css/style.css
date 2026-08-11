@@ -1,0 +1,29 @@
+/* main */
+.main-content {
+  background-color: #ffffff;
+  max-width: 800px;
+  margin: 40px auto 0;
+  padding: 40px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+/* 背景 */
+body {
+  background-color: #f4f6f8;
+  /* 薄いグレーベージュ */
+  margin: 0;
+  padding: 40px 20px;
+  font-family: sans-serif;
+  color: #333333;
+}
+
+/*
+*スマホの画面サイズの場合に開業する
+*書式:<br class="br-sp">
+*/
+@media screen and (min-width: 768px) {
+  .br-sp {
+    display: none;
+  }
+}
