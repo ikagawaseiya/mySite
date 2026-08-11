@@ -1,0 +1,8 @@
+# .htaccess でURLを操作する命令を書く際の呪文
+RewriteEngine On
+
+# URLを書き換える命令
+RewriteRule ^src/ - [F,L]
+
+# URLにファイル名を省略してアクセスした際、フォルダ内のファイル一覧をブラウザに表示させない
+Options -Indexes
