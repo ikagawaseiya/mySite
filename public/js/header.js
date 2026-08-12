@@ -12,3 +12,15 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 });
+
+document.addEventListener('DOMContentLoaded', () => {
+  const dropdownBtn = document.getElementById('js-dropdown-btn');
+  const dropdownMenu = document.getElementById('js-dropdown-menu');
+
+  if (dropdownBtn && dropdownMenu) {
+    dropdownBtn.addEventListener('click', () => {
+      dropdownBtn.classList.toggle('is-open');
+      dropdownMenu.classList.toggle('is-open');
+    });
+  }
+});

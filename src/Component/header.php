@@ -1,20 +1,21 @@
 <?php
-  require_once __DIR__ . '/headerGenerator.php';
+require_once __DIR__ . '/headerGenerator.php';
 /**
  * 共通ヘッダーを表示する関数
  * @param string $activePage 現在のページ名（色を変えたい場合などに使用）
  */
-function showHeader(string $activePage = ''): void {
-  $title  = "かわいいうさぎ"; 
-  if($activePage) {
-    $title .= ":" . $activePage;
+function showHeader(string $activePage = ''): void
+{
+  $siteTitle  = "かわいいうさぎ";
+  if ($activePage) {
+    $siteTitle .= ":" . $activePage;
   }
   $blogPosts = generateHeader();
 ?>
 
 <header class="site-header">
   <div class="header-text">
-    <?php echo common::h($title); ?>
+    <?php echo common::h($siteTitle); ?>
   </div>
 
   <!-- ハンバーガーボタン -->
@@ -29,18 +30,26 @@ function showHeader(string $activePage = ''): void {
     <ul class="nav-list">
       <li><a href="/public/">トップページ</a></li>
 
-      <!-- 自動収集・ソートされたブログリンクを出力 -->
-      <?php foreach ($blogPosts as $post): ?>
-      <li>
-        <a href="<?php echo common::h($post['url']); ?>">
-          <?php echo common::h($post['title']); ?>
-        </a>
+      <!-- ブログ一覧の親メニュー（クリックで開閉） -->
+      <li class="nav-item-dropdown">
+        <button type="button" class="dropdown-btn" id="js-dropdown-btn">
+          ブログ <span class="arrow"></span>
+        </button>
+
+        <!-- 子メニュー（ブログ記事のリスト） -->
+        <ul class="dropdown-menu" id="js-dropdown-menu">
+          <?php foreach ($blogPosts as $post): ?>
+          <li>
+            <a href="<?php echo common::h($post['url']); ?>">
+              <?php echo common::h($post['title']); ?>
+            </a>
+          </li>
+          <?php endforeach; ?>
+        </ul>
       </li>
-      <?php endforeach; ?>
-      <!-- 修正ポイント：ループの閉じタグを追加 -->
     </ul>
   </nav>
 </header>
 <?php
-} 
+}
 ?>

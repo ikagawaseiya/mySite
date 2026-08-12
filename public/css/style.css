@@ -10,7 +10,9 @@
 
 /* 背景 */
 body {
-  background-color: #f4f6f8;
+  background-image: url("/../../images/backGround.jpg");
+  background-size: cover;
+  background-position: center;
   /* 薄いグレーベージュ */
   margin: 0;
   padding: 40px 20px;
@@ -18,12 +20,147 @@ body {
   color: #333333;
 }
 
+/**
+ * 中央寄せに配置される文字
+ */
+.center-text {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  /*子要素を改行する*/
+  flex-direction: column;
+}
+
 /*
-*スマホの画面サイズの場合に開業する
+*スマホの画面サイズの場合に改行する
+*見切れるのが嫌な場合に使う
 *書式:<br class="br-sp">
 */
 @media screen and (min-width: 768px) {
   .br-sp {
     display: none;
   }
+}
+
+/**
+ * リンクに使う、かわいい広告文
+ */
+.cute-advertise-text {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: brown;
+  font-size: 12px;
+  letter-spacing: 0.05em;
+  font-weight: bold;
+}
+
+/* ボタン全体のデザイン（lit.link風の横長角丸） */
+.link-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-width: 400px;
+  /* ボタンの最大横幅 */
+  width: 90%;
+  /* スマホ画面で左右に少し余白を持たせる */
+  margin: 12px auto;
+  /* ボタン同士の間隔を空け、中央寄せにする */
+  padding: 14px 20px;
+  /* ボタン上下左右の適度な内白 */
+  background-color: #ffffff;
+  /* ボタンの背景色（白） */
+  border: 1px solid #ffb6c1;
+  /* パステルピンクの細い枠線 */
+  border-radius: 50px;
+  /* 完全な角丸（カプセル型）にする */
+  text-decoration: none;
+  /* リンクの下線を消す */
+  box-shadow: 0 4px 10px rgba(255, 182, 193, 0.15);
+  /* ほんのりピンクの影 */
+  transition: all 0.3s ease;
+  /* ホバー時のアニメーションをなめらかに */
+}
+
+/* 
+*リンクに使用する、ボタン内の文字デザイン
+*/
+.link-button-text {
+  color: #222222;
+  font-size: 13px;
+  /* 文字間隔*/
+  letter-spacing: 0.08em;
+  font-weight: bold;
+}
+
+/* マウスを乗せたとき（ホバー時） */
+.link-button:hover {
+  /* 少し浮き上がらせる */
+  transform: translateY(-2px);
+  /* 影を濃くする */
+  box-shadow: 0 6px 15px rgba(255, 105, 180, 0.25);
+  /* 背景が変化 */
+  background-color: #fff0f5;
+}
+
+/* プロフィールカードの枠 */
+.profile-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #ffffff;
+  max-width: 440px;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 60px 24px 30px;
+  border-radius: 24px;
+  box-shadow: 0 10px 30px rgba(255, 182, 193, 0.3);
+  text-align: center;
+  margin: 0 auto;
+  border: 1px solid gray;
+}
+
+/* まん丸のアイコンを配置する枠（サイズと位置の基準） */
+.profile-image-wrap {
+  width: 100px;
+  /* 画像の横幅 */
+  height: 100px;
+  /* 画像の縦幅 */
+  margin: 0 auto -50px;
+  /* 下のカードを50px上に引き込んで重ねる */
+  position: relative;
+  /* 重なりの順序を正しく保つ */
+  z-index: 10;
+  /* カードよりも上に画像を表示させる */
+}
+
+/* まん丸の画像本体 */
+.profile-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 4px solid #ffffff;
+  box-shadow: 0 4px 10px rgba(255, 182, 193, 0.4);
+}
+
+/**強調文字*/
+.bold-text {
+  font-weight: bold;
+}
+
+/*やや控えめなサイズの文字*/
+.min-text {
+  font-size: 13px;
+}
+
+/* お問い合わせ */
+.contact-area {
+  margin-top: 40px;
+  /* ボタンとの間の空白（数値はお好みで調整してください） */
+  flex-direction: column;
+  /* 他に影響を与えずここだけを縦並び（改行）にする */
+  gap: 8px;
+  /* お問い合わせ文字とアドレスの間の隙間 */
 }

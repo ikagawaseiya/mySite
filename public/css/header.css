@@ -1,19 +1,15 @@
-/* 「.site-header」という名前がついた、ヘッダー全体への命令 */
+/* ヘッダー全体 */
 .site-header {
   display: flex;
-  /* 中にある要素（ロゴとボタン）を横並びにします */
-  justify-content: space-between;
   /* 横並びにした要素を、左端と右端に離して配置します */
+  justify-content: space-between;
   align-items: center;
-  /* 横並びにした要素の、上下の「高さ中央」を揃えます */
   padding: 15px 25px;
-  /* ヘッダーの内側に余白を作ります（上下15px、左右25px） */
-  background-color: skyblue;
-  /* 背景色を濃いグレー（#333）にします */
+  background-color: olive;
+  /*文字色*/
   color: #ffffff;
-  /* 文字の色を白（#fff）にします */
+  /* 今後の配置の基準点として、このヘッダーの位置を固定 */
   position: relative;
-  /* 今後の配置の基準点として、このヘッダーの位置を固定します */
 }
 
 /* ヘッダーロゴの中にある「aタグ（リンク）」への命令 */
@@ -29,7 +25,6 @@
 }
 
 /* ボタンのスタイル */
-
 /* ハンバーガーメニューの「ボタン（buttonタグ）」への命令 */
 .menu-btn {
   background: none;
@@ -116,4 +111,58 @@
   /* 文字の大きさを少しだけ大きくします */
   border-bottom: 1px solid #444;
   /* メニューの項目ごとに、区切りとなる薄い線（下線）を引きます */
+}
+
+/* 初期状態は非表示にする、ドロップダウンメニュー */
+.dropdown-menu {
+  display: none;
+  list-style: none;
+  padding-left: 30px;
+  /* 少し右にずらして階層をわかりやすくする */
+}
+
+/* クラスがついたら表示 */
+.dropdown-menu.is-open {
+  display: block;
+}
+
+/*各項目のドロップダウンボタン*/
+.dropdown-btn {
+  display: block;
+  width: 100%;
+  /* ボタンの横幅を100%いっぱいに広げる */
+  background: none;
+  /* ブラウザ標準の「白い背景」を消す */
+  border: none;
+  /* ブラウザ標準の「枠線」を消す */
+  font: inherit;
+  /* 文字のフォントや太さを親から引き継ぐ */
+  text-align: left;
+  /* 中央寄せになっている文字を左寄せにする */
+  cursor: pointer;
+  /* マウスを乗せたときに指マークにする */
+  color: #fff;
+  /* 文字の色を白にします */
+  text-decoration: none;
+  /* リンクの下線を消します */
+  padding: 15px 30px;
+  /* 押しやすいように、文字の周りに大きな余白を作る */
+  font-size: 1.1rem;
+  /* 文字の大きさを少しだけ大きくします */
+  border-bottom: 1px solid #444;
+  /* メニューの項目ごとに、区切りとなる薄い線（下線）を引きます */
+}
+
+/* 矢印アイコン */
+.dropdown-btn .arrow::after {
+  content: '▼';
+  font-size: 0.7em;
+  margin-left: 5px;
+  display: inline-block;
+  transition: transform 0.2s;
+}
+
+/* 開いている時は矢印を反転 */
+.dropdown-btn.is-open .arrow::after {
+  transform: rotate(180deg);
 }
