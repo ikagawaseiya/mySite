@@ -1,5 +1,5 @@
 <?php if ($loopCount > 0): ?>
-  <ul>
+  <ul class="new-articles">
     <?php for ($i = 0; $i < $loopCount; $i++): $post = $blogPosts[$i]; ?>
       <li>
         <a href="<?php echo Common::h($post['url']); ?>">

@@ -28,12 +28,13 @@ function showHeader(string $activePage = ''): void
   <!-- ナビゲーションメニュー(順次追加) -->
   <nav class="nav-content" id="js-nav-content">
     <ul class="nav-list">
-      <li><a href="/public/">トップページ</a></li>
+      <li><a href="/">トップページ</a></li>
 
       <!-- ブログ一覧の親メニュー（クリックで開閉） -->
       <li class="nav-item-dropdown">
         <button type="button" class="dropdown-btn" id="js-dropdown-btn">
-          ブログ <span class="arrow"></span>
+          ブログ
+          <span class="arrow"></span>
         </button>
 
         <!-- 子メニュー（ブログ記事のリスト） -->

@@ -17,7 +17,7 @@
       <p class="center-text">かわいいうさぎの世界にようこそ</p>
       <div>
         <div class="profile-image-wrap">
-          <img src="/../images/profile.jpg" alt="プロフィール写真" class="profile-image">
+          <img src="images/profile.jpg" alt="プロフィール写真" class="profile-image">
         </div>
         <span class="profile-card">
           <span class="bold-text">五十川誠也</span><br>
@@ -28,17 +28,15 @@
       </div>
       <div>
         <h2>新着記事</h2>
-        <span class="new-articles-box">
-          <?php $this->renderNewestPostsList($blogPosts, $newestPageLoopLimit); ?>
-        </span>
+        <?php $this->renderNewestPostsList($blogPosts, $newestPageLoopLimit); ?>
       </div>
-      <div>
+      <div class="button-wrapper">
         <span class="cute-advertise-text"><br>かわいいうさぎが見放題！</span>
         <a href="https://x.com/itoshi_u_tyan" class="link-button">
           <span class="link-button-text">X（旧Twitter）</span>
         </a>
       </div>
-      <div>
+      <div class="button-wrapper">
         <span class="cute-advertise-text"><br>かわいいうさぎで会話を盛り上げよう！</span>
         <a href="https://store.line.me/stickershop/product/32439561/ja" class="link-button">
           <span class="link-button-text">LINEスタンプ</span>

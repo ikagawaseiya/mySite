@@ -18,7 +18,7 @@ class blogController
 
     if (file_exists($viewFile)) {
       $content = file_get_contents($viewFile, false, null, 0, 1024);
-      if (preg_match('/\$pageTitle\s*=\s*[\'"](.+?)[\'"]\s*;/', $content, $matches)) {
+      if (preg_match('/\$title\s*=\s*[\'"](.+?)[\'"]\s*;/', $content, $matches)) {
         $title = trim($matches[1]);
       } else {
         $title = 'ブログ'; // デフォルト値

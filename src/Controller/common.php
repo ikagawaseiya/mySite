@@ -88,7 +88,7 @@ class Common
                 $posts[] = [
                     'title' => trim($titleMatch[1]),
                     'date'  => trim($dateMatch[1]),
-                    'url'   => '/public/blog/' . $slug
+                    'url'   => '/blog/' . $slug
                 ];
             }
         }

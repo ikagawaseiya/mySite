@@ -1,0 +1,50 @@
+<?php
+$title = '今後の予定';
+$date = '2026-08-12';
+$displayTitle = Common::getHtmlPageTitle($title);
+?>
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><?php echo Common::h($displayTitle); ?></title>
+  <link rel="stylesheet" href="/public/css/style.css">
+  <link rel="stylesheet" href="/public/css/header.css">
+  <script src="/public/js/header.js" defer></script>
+</head>
+
+<body>
+  <div>
+    <main class="main-content">
+      <h1><?php echo Common::h($title); ?></h1>
+      <p>初期設定を完了し、本日やっと公開することができました。<br>
+        当サイトの作成、公開にかかった期間は2日でした。</br>
+        今後このサイトを発展させる予定について、ある程度考えをまとめてあるので備忘録も兼ねてここに書き記しておきたいと思います。
+
+      <ol>
+        <li>フッターの実装</li>
+        「前の記事へ」「次の記事へ」ボタンなどを付けたら便利そうです。<br>
+        汎用的な機能は拡張性を見据えてしっかり作りたいタイプなので、意外と作成が長引くかもしれません。
+        <s>このためにヘッダーの実装で苦戦しました。</s>
+        <li>ブログページの作成日時を表示</li>
+        無いのは変だなとは思っていたのですが、どこに置くべきか悩んで後回しにしてしまいました。<br>
+        置くならフッターのど真ん中か、ヘッダーの真ん中～右側でしょうか。<br>
+        <li>いいねボタンの実装</li>
+        データベースの練習も兼ねて取り組む予定です。
+        右下あたりにハートマークをポチっと。
+        <li>ゲーム作成</li>
+        かなり先の見通しですが、ゲーム作成のアイデアを2つほど考えてあります。
+        ブラウザ上で動作できるようにする予定ですが、javascriptにあまり慣れていないので大変かも。<br>
+        簡易なもので練習した後、そこそこ凝ったものをお出しする予定です。お楽しみに。<br>
+      </ol>
+      </p>
+  </div>
+  </main>
+  <footer>
+  </footer>
+  </div>
+</body>
+
+</html>

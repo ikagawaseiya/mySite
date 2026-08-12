@@ -1,8 +1,15 @@
-# .htaccess でURLを操作する命令を書く際の呪文
+# URLを操作する命令を有効化
 RewriteEngine On
 
-# URLを書き換える命令
+# スタイルシートや画像、実在するファイル・フォルダはそのまま読み込む
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# 【重要】実在しないURLへのアクセスはすべて index.php に送る
+RewriteRule . index.php [L]
+
+# srcフォルダへの直接アクセスを禁止
 RewriteRule ^src/ - [F,L]
 
-# URLにファイル名を省略してアクセスした際、フォルダ内のファイル一覧をブラウザに表示させない
+# フォルダ内のファイル一覧をブラウザに表示させない
 Options -Indexes

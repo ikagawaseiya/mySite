@@ -24,7 +24,6 @@ body {
  * 中央寄せに配置される文字
  */
 .center-text {
-  display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
@@ -56,31 +55,36 @@ body {
   font-weight: bold;
 }
 
-/* ボタン全体のデザイン（lit.link風の横長角丸） */
+/* リンクボタン */
 .link-button {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: inline-block;
+  /* inline-block に戻します */
+  box-sizing: border-box;
+  /* paddingで潰れないようにする必須設定 */
+  text-align: center;
+  /* ボタン内の文字を中央寄せ */
+
   max-width: 400px;
   /* ボタンの最大横幅 */
   width: 90%;
-  /* スマホ画面で左右に少し余白を持たせる */
+  /* スマホ画面での横幅 */
   margin: 12px auto;
-  /* ボタン同士の間隔を空け、中央寄せにする */
   padding: 14px 20px;
-  /* ボタン上下左右の適度な内白 */
   background-color: #ffffff;
-  /* ボタンの背景色（白） */
   border: 1px solid #ffb6c1;
-  /* パステルピンクの細い枠線 */
   border-radius: 50px;
-  /* 完全な角丸（カプセル型）にする */
   text-decoration: none;
-  /* リンクの下線を消す */
   box-shadow: 0 4px 10px rgba(255, 182, 193, 0.15);
-  /* ほんのりピンクの影 */
   transition: all 0.3s ease;
-  /* ホバー時のアニメーションをなめらかに */
+}
+
+/*ボタンの追加設定*/
+.button-wrapper {
+  display: block;
+  /* 縦並びのブロックにする */
+  text-align: center;
+  /* 中にあるボタンを中央に寄せる */
+  width: 100%;
 }
 
 /* 
@@ -163,4 +167,37 @@ body {
   /* 他に影響を与えずここだけを縦並び（改行）にする */
   gap: 8px;
   /* お問い合わせ文字とアドレスの間の隙間 */
+}
+
+/*新着記事の枠内*/
+.new-articles {
+  margin-top: 0;
+  display: inline-block;
+  text-align: left;
+  background-color: skyblue;
+  border-radius: 5px;
+  border: 1px solid brown;
+  padding: 20px 30px;
+  box-sizing: border-box;
+  /* 余白を横幅に含める設定 */
+  width: 100%;
+  /* 親要素いっぱいに広げる */
+  max-width: 400px;
+  /* 大きくなりすぎない上限（お好みで調整） */
+}
+
+/* 親要素に指定してulを中央に配置する */
+.main-content .center-text {
+  text-align: center;
+}
+
+/*下に余白を付けたいとき*/
+.bottom-blank {
+  margin-bottom: 24px;
+}
+
+ol li {
+  margin-top: 24px;
+  margin-bottom: 12px;
+  /* 上側に好みの隙間を空けます */
 }

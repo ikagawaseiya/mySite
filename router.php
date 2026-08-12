@@ -51,13 +51,17 @@ class Router
      */
     public function loadingCommonFiles()
     {
-        $commonFile = __DIR__ . '/../src/Controller/common.php';
+        $commonFile = __DIR__ . '/src/Controller/common.php';
         if (file_exists($commonFile)) {
             require_once $commonFile;
+        } else {
+            echo "読み込みエラーです。";
         }
-        $headerFile = __DIR__ . '/../src/Component/header.php';
+        $headerFile = __DIR__ . '/src/Component/header.php';
         if (file_exists($headerFile)) {
             require_once $headerFile;
+        } else {
+            echo "読み込みエラーです。";
         }
     }
 
@@ -70,7 +74,7 @@ class Router
     public function checkIsBlogDirectory(string $page)
     {
         if (strpos($page, 'blog/') === 0) {
-            require_once __DIR__ . '/../src/Controller/blogController.php';
+            require_once __DIR__ . '/src/Controller/blogController.php';
             $controller = new blogController();
             $articleName = substr($page, 5);
             $controller->show($articleName);
@@ -87,7 +91,7 @@ class Router
     public function checkIsTopPage(string $page)
     {
         if ($page === '' || $page === 'index.php') {
-            require_once __DIR__ . '/../src/Controller/topPageController.php';
+            require_once __DIR__ . '/src/Controller/topPageController.php';
             $controller = new topPageController();
             $controller->show();
             exit;
@@ -102,7 +106,7 @@ class Router
      */
     public function checkIsExistingPage(string $page)
     {
-        $controllerFile = __DIR__ . '/../src/Controller/' . $page . 'Controller.php';
+        $controllerFile = __DIR__ . '/src/Controller/' . $page . 'Controller.php';
         if (file_exists($controllerFile)) {
             require_once $controllerFile;
             $className = $page . 'Controller';
