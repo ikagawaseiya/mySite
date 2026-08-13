@@ -57,7 +57,7 @@ class Common
      */
     public static function getHtmlPageTitle(string $title)
     {
-        return $title . "-" . Common::getSiteName();
+        return Common::getSiteName() . "-" . $title;
     }
 
     /**

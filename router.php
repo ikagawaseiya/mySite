@@ -16,7 +16,12 @@ class Router
         $targetFile = $publicDir . str_replace('/', DIRECTORY_SEPARATOR, $cleanPath);
         $this->checkIsCssOrJsFile($targetFile);
 
+        /**
+         * 初期設定
+         * 汎用ファイルとCSSを読み込む
+         */
         $this->loadingCommonFiles();
+        echo '<link rel="stylesheet" href="/public/css/common.css">';
 
         $page = trim($cleanPath, '/');
         $this->checkIsTopPage($page);
@@ -25,7 +30,6 @@ class Router
 
         Common::show404();
     }
-
 
     /**
      * CSSまたはJSファイルであるか確認し、該当する場合はそのファイルを読み込む

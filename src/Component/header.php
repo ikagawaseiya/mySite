@@ -12,21 +12,22 @@ function showHeader(string $activePage = ''): void
   }
   $blogPosts = generateHeader();
 ?>
+  <link rel="stylesheet" href="/public/css/header.css">
+  <header class="site-header">
+    <div class="header-text">
+      <?php echo common::h($siteTitle); ?>
+    </div>
 
-<header class="site-header">
-  <div class="header-text">
-    <?php echo common::h($siteTitle); ?>
-  </div>
-
-  <!-- ハンバーガーボタン -->
-  <button class="menu-btn" id="js-menu-btn" aria-label="メニューを開く">
-    <span></span>
-    <span></span>
-    <span></span>
-  </button>
-
+    <!-- ハンバーガーボタン -->
+    <button class="menu-btn" id="js-menu-btn" aria-label="メニューを開く">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </header>
   <!-- ナビゲーションメニュー(順次追加) -->
   <nav class="nav-content" id="js-nav-content">
+    <div class="nav-overlay"></div>
     <ul class="nav-list">
       <li><a href="/">トップページ</a></li>
 
@@ -39,18 +40,22 @@ function showHeader(string $activePage = ''): void
 
         <!-- 子メニュー（ブログ記事のリスト） -->
         <ul class="dropdown-menu" id="js-dropdown-menu">
-          <?php foreach ($blogPosts as $post): ?>
-          <li>
-            <a href="<?php echo common::h($post['url']); ?>">
-              <?php echo common::h($post['title']); ?>
-            </a>
-          </li>
-          <?php endforeach; ?>
+          <?php
+          $maxCount = min(5, count($blogPosts));
+          for ($i = 0; $i < $maxCount; $i++):
+            $post = $blogPosts[$i];
+          ?>
+            <li>
+              <a href="<?php echo common::h($post['url']); ?>">
+                <?php echo common::h($post['title']); ?>
+              </a>
+            </li>
+          <?php endfor; ?>
         </ul>
       </li>
     </ul>
   </nav>
-</header>
+
 <?php
 }
 ?>

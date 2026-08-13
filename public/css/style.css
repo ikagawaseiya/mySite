@@ -8,42 +8,9 @@
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
 
-/* 背景 */
-body {
-  background-image: url("/../../images/backGround.jpg");
-  background-size: cover;
-  background-position: center;
-  /* 薄いグレーベージュ */
-  margin: 0;
-  padding: 40px 20px;
-  font-family: sans-serif;
-  color: #333333;
-}
-
 /**
- * 中央寄せに配置される文字
- */
-.center-text {
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  /*子要素を改行する*/
-  flex-direction: column;
-}
-
-/*
-*スマホの画面サイズの場合に改行する
-*見切れるのが嫌な場合に使う
-*書式:<br class="br-sp">
-*/
-@media screen and (min-width: 768px) {
-  .br-sp {
-    display: none;
-  }
-}
-
-/**
- * リンクに使う、かわいい広告文
+ * かわいい広告文
+ * リンクの紹介に使う
  */
 .cute-advertise-text {
   display: flex;
@@ -53,59 +20,6 @@ body {
   font-size: 12px;
   letter-spacing: 0.05em;
   font-weight: bold;
-}
-
-/* リンクボタン */
-.link-button {
-  display: inline-block;
-  /* inline-block に戻します */
-  box-sizing: border-box;
-  /* paddingで潰れないようにする必須設定 */
-  text-align: center;
-  /* ボタン内の文字を中央寄せ */
-
-  max-width: 400px;
-  /* ボタンの最大横幅 */
-  width: 90%;
-  /* スマホ画面での横幅 */
-  margin: 12px auto;
-  padding: 14px 20px;
-  background-color: #ffffff;
-  border: 1px solid #ffb6c1;
-  border-radius: 50px;
-  text-decoration: none;
-  box-shadow: 0 4px 10px rgba(255, 182, 193, 0.15);
-  transition: all 0.3s ease;
-}
-
-/*ボタンの追加設定*/
-.button-wrapper {
-  display: block;
-  /* 縦並びのブロックにする */
-  text-align: center;
-  /* 中にあるボタンを中央に寄せる */
-  width: 100%;
-}
-
-/* 
-*リンクに使用する、ボタン内の文字デザイン
-*/
-.link-button-text {
-  color: #222222;
-  font-size: 13px;
-  /* 文字間隔*/
-  letter-spacing: 0.08em;
-  font-weight: bold;
-}
-
-/* マウスを乗せたとき（ホバー時） */
-.link-button:hover {
-  /* 少し浮き上がらせる */
-  transform: translateY(-2px);
-  /* 影を濃くする */
-  box-shadow: 0 6px 15px rgba(255, 105, 180, 0.25);
-  /* 背景が変化 */
-  background-color: #fff0f5;
 }
 
 /* プロフィールカードの枠 */
@@ -139,7 +53,7 @@ body {
   /* カードよりも上に画像を表示させる */
 }
 
-/* まん丸の画像本体 */
+/* プロフィールまん丸の画像本体 */
 .profile-image {
   width: 100%;
   height: 100%;
@@ -147,16 +61,6 @@ body {
   border-radius: 50%;
   border: 4px solid #ffffff;
   box-shadow: 0 4px 10px rgba(255, 182, 193, 0.4);
-}
-
-/**強調文字*/
-.bold-text {
-  font-weight: bold;
-}
-
-/*やや控えめなサイズの文字*/
-.min-text {
-  font-size: 13px;
 }
 
 /* お問い合わせ */
@@ -199,5 +103,4 @@ body {
 ol li {
   margin-top: 24px;
   margin-bottom: 12px;
-  /* 上側に好みの隙間を空けます */
 }

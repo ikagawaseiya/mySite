@@ -5,16 +5,15 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title><?php echo Common::h($htmlTitle); ?></title>
-  <link rel="stylesheet" href="/public/css/style.css">
-  <link rel="stylesheet" href="/public/css/header.css">
+  <link rel="stylesheet" href="/public/css/topPage.css">
   <script src="/public/js/header.js" defer></script>
 </head>
 
 <body>
   <div>
-    <main class="main-content center-text">
-      <h1 class="center-text">Hello, World!</h1>
-      <p class="center-text">かわいいうさぎの世界にようこそ</p>
+    <main class="main-content center-element">
+      <h1>Hello, World!</h1>
+      <p>かわいいうさぎの世界にようこそ</p>
       <div>
         <div class="profile-image-wrap">
           <img src="images/profile.jpg" alt="プロフィール写真" class="profile-image">
@@ -42,7 +41,7 @@
           <span class="link-button-text">LINEスタンプ</span>
         </a>
       </div>
-      <div class="center-text contact-area ">
+      <div class="center-element contact-area ">
         <div class="cute-advertise-text"> お問い合わせ</div>
         <span class="min-text">ikagawa.office@gmail.com</span>
       </div>
