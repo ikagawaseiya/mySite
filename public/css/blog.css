@@ -1,0 +1,35 @@
+/* main */
+.main-content {
+  background-color: #ffffff;
+  max-width: 2000px;
+  margin: 40px auto 0;
+  padding: 40px 5%;
+  border-radius: 8px;
+}
+
+/* 画面幅が768px以上のとき（タブレット・PC） */
+@media screen and (min-width: 768px) {
+  .main-content {
+    /* PCなど広い画面では固定の40pxに戻す */
+    padding: 40px;
+  }
+}
+
+/*段落の中身*/
+ol li {
+  margin-top: 24px;
+  margin-bottom: 12px;
+}
+
+
+/*下に余白を付けたいとき*/
+.bottom-blank {
+  margin-bottom: 24px;
+}
+
+/*画面がスマホサイズの場合、見出しを控えめなサイズにする*/
+@media screen and (max-width: 768px) {
+  h1 {
+    font-size: 5vw;
+  }
+}
