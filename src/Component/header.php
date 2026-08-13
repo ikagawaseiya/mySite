@@ -19,7 +19,7 @@ function showHeader(string $activePage = ''): void
   </div>
 
   <!-- ハンバーガーボタン -->
-  <button class="menu-btn" id="js-menu-btn" aria-label="メニューを開く">
+  <button class="menu-open-btn" id="js-menu-btn" aria-label="メニューを開く">
     <span></span>
     <span></span>
     <span></span>
@@ -27,6 +27,9 @@ function showHeader(string $activePage = ''): void
 </header>
 <!-- ナビゲーションメニュー(順次追加) -->
 <nav class="nav-content" id="js-nav-content">
+  <button class="menu-close-btn" id="js-close-btn" aria-label="メニューを閉じる">
+    <span>×</span>
+  </button>
   <div class="nav-overlay"></div>
   <ul class="nav-list">
     <li><a href="/">トップページ</a></li>
