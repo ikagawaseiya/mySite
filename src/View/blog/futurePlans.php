@@ -18,7 +18,7 @@ $displayTitle = Common::getHtmlPageTitle($title);
   <div>
     <main class="main-content">
       <h1><?php echo Common::h($title); ?></h1>
-      <p>初期設定を完了し、本日やっと公開することができました。<br>
+      <p>初期設定を完了し、本日ページを公開することができました。<br>
         当サイトの作成、公開にかかった期間は2日でした。</br>
         今後このサイトを発展させる予定について、ある程度考えをまとめてあるので備忘録も兼ねてここに書き記しておきたいと思います。
 

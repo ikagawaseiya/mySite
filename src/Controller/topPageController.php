@@ -49,9 +49,9 @@ class topPageController
    * @param int $limit 表示する最大件数
    * @return void
    */
-  public static function renderNewestPostsList(array $blogPosts, int $limit = 5): void
+  public static function showNewestPostsList(array $blogPosts, int $limit = 5): void
   {
-    $loopCount = min($limit, count($blogPosts));
+    define("NEWEST_PAGE_LOOP_COUNT", min($limit, count($blogPosts)));
     include __DIR__ . '/../View/postList.php';
   }
 }

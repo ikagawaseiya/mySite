@@ -1,24 +1,23 @@
 <?php
 require_once __DIR__ . '/headerGenerator.php';
+define("MAX_PAGE_COUNT_IN_DROPDOWN", 5);
 /**
  * 共通ヘッダーを表示する関数
- * @param string $activePage 現在のページ名（色を変えたい場合などに使用）
+ * @param string $activePage 現在のページ名
  */
 function showHeader(string $activePage = ''): void
 {
-  $siteTitle  = "かわいいうさぎ";
-  if ($activePage) {
-    $siteTitle .= ":" . $activePage;
-  }
-  $blogPosts = generateHeader();
+  $displayHeaderTitle = SITE_NAME . ":" . $activePage;
+  $blogPosts = getArrayNewestBlogPageFirst();
 ?>
 <link rel="stylesheet" href="/public/css/header.css">
 <header class="site-header">
   <div class="header-text">
-    <?php echo common::h($siteTitle); ?>
+    <?php echo common::h($displayHeaderTitle); ?>
   </div>
 
   <!-- ハンバーガーボタン -->
+  <!-- クリックでメニューが開閉 -->
   <button class="menu-open-btn" id="js-menu-btn" aria-label="メニューを開く">
     <span></span>
     <span></span>
@@ -44,7 +43,7 @@ function showHeader(string $activePage = ''): void
       <!-- 子メニュー（ブログ記事のリスト） -->
       <ul class="dropdown-menu" id="js-dropdown-menu">
         <?php
-          $maxCount = min(5, count($blogPosts));
+          $maxCount = min(MAX_PAGE_COUNT_IN_DROPDOWN, count($blogPosts));
           for ($i = 0; $i < $maxCount; $i++):
             $post = $blogPosts[$i];
           ?>

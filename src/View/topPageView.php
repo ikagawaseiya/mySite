@@ -27,7 +27,7 @@
       </div>
       <div>
         <h2>新着記事</h2>
-        <?php $this->renderNewestPostsList($blogPosts, $newestPageLoopLimit); ?>
+        <?php $this->showNewestPostsList($blogPosts, $newestPageLoopLimit); ?>
       </div>
       <div class="button-wrapper">
         <span class="cute-advertise-text"><br>かわいいうさぎが見放題！</span>

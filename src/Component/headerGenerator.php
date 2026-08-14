@@ -1,6 +1,6 @@
 <?php
 //現在はブログページの最新順を返すのみ実装
-function generateHeader(): array
+function getArrayNewestBlogPageFirst(): array
 {
   $blogFilePass = __DIR__ . '/../View/blog';
   $targetFiles = Common::getPhpFilesFromDir($blogFilePass);

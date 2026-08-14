@@ -1,4 +1,5 @@
 <?php
+const SITE_NAME = "かわいいうさぎ";
 // エラー表示を有効化
 @ini_set('display_errors', 'On');
 @error_reporting(E_ALL);

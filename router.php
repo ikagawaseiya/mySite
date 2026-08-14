@@ -9,19 +9,19 @@ class Router
 {
     public function run()
     {
-        // --- 静的ファイル（CSS/JS）の処理 ---
         $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
         $publicDir = dirname(__FILE__);
         $cleanPath = (strpos($path, '/public') === 0) ? substr($path, 7) : $path;
         $targetFile = $publicDir . str_replace('/', DIRECTORY_SEPARATOR, $cleanPath);
         $this->checkIsCssOrJsFile($targetFile);
 
+
         /**
          * 初期設定
          * 汎用ファイルとCSSを読み込む
          */
         $this->loadingCommonFiles();
-        echo '<link rel="stylesheet" href="/public/css/common.css">';
+
 
         $page = trim($cleanPath, '/');
         $this->checkIsTopPage($page);
@@ -52,6 +52,7 @@ class Router
     *各種controllerを起動する前に、以下のファイルを読み込む
     *汎用関数 - src/Controller/common.php
     *ヘッダー - src/Component/header.php 
+    *汎用css common.css
      */
     public function loadingCommonFiles()
     {
@@ -67,6 +68,7 @@ class Router
         } else {
             echo "読み込みエラーです。";
         }
+        echo '<link rel="stylesheet" href="/public/css/common.css">';
     }
 
     /**
