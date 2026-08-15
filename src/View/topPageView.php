@@ -29,10 +29,6 @@
         <h2>新着記事</h2>
         <?php $this->showNewestPostsList($newestPosts, $newestPageLoopLimit); ?>
       </div>
-      <div>
-        <span class="cute-advertise-text">このサイトをみんなでシェア！</span>
-        <img src="images/topPage/qrcode.jpg" alt="QRコード" class="qrcode-image">
-      </div>
       <div class="button-wrapper">
         <span class="cute-advertise-text"><br>かわいいうさぎが見放題！</span>
         <a href="https://x.com/itoshi_u_tyan" class="link-button">
@@ -44,6 +40,10 @@
         <a href="https://store.line.me/stickershop/product/32439561/ja" class="link-button">
           <span class="link-button-text">LINEスタンプ</span>
         </a>
+      </div>
+      <div>
+        <span class="cute-advertise-text"><br>このサイトをみんなでシェア！</span>
+        <img src="images/topPage/qrcode.jpg" alt="QRコード" class="qrcode-image">
       </div>
       <div class="center-element contact-area ">
         <div class="cute-advertise-text"> お問い合わせ</div>
