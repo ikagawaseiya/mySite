@@ -19,8 +19,8 @@ class topPageController
     $pageTitle = "トップページ";
     showHeader($pageTitle);
     $htmlTitle = Common::getHtmlPageTitle($pageTitle);
-    $blogPosts = $this->getBlogAndGameArrayNewestPageFirst();
-    $newestPageLoopLimit = min(5, count($blogPosts));
+    $newestPosts = $this->getBlogAndGameArrayNewestPageFirst();
+    $newestPageLoopLimit = min(5, count($newestPosts));
     require_once __DIR__ . '/../View/topPageView.php';
   }
 
@@ -34,10 +34,9 @@ class topPageController
    */
   public function getBlogAndGameArrayNewestPageFirst(): array
   {
-    $blogFilePass = __DIR__ . '/../View/blog';
-    $blogFiles = Common::getPhpFilesFromDir($blogFilePass);
-    $gameFilePass = __DIR__ . '/../View/game';
-    $gameFiles = Common::getPhpFilesFromDir($gameFilePass);
+    $blogFiles = Common::getPhpFilesFromDir(Common::getBlogFilePathFromController());
+    $gameFilePath = __DIR__ . '/../View/game';
+    $gameFiles = Common::getPhpFilesFromDir($gameFilePath);
     $targetFiles = array_merge($blogFiles, $gameFiles);
     return Common::createArrayNewestPageFirst($targetFiles);
   }
@@ -45,13 +44,13 @@ class topPageController
   /**
    * 最新記事リストのHTMLを表示する
    *
-   * @param array $blogPosts 記事データの配列
+   * @param array $newestPosts 記事データの配列
    * @param int $limit 表示する最大件数
    * @return void
    */
-  public static function showNewestPostsList(array $blogPosts, int $limit = 5): void
+  public static function showNewestPostsList(array $newestPosts, int $limit = 5): void
   {
-    define("NEWEST_PAGE_LOOP_COUNT", min($limit, count($blogPosts)));
-    include __DIR__ . '/../View/postList.php';
+    define("NEWEST_PAGE_LOOP_COUNT", min($limit, count($newestPosts)));
+    include __DIR__ . '/../View/newestPostDisplayer.php';
   }
 }

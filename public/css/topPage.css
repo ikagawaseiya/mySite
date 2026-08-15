@@ -83,14 +83,25 @@
   border: 1px solid brown;
   padding: 20px 30px;
   box-sizing: border-box;
-  /* 余白を横幅に含める設定 */
   width: 100%;
-  /* 親要素いっぱいに広げる */
-  max-width: 400px;
-  /* 大きくなりすぎない上限（お好みで調整） */
+  max-width: 500px;
 }
 
 /* 親要素に指定してulを中央に配置する */
 .main-content .center-text {
   text-align: center;
+}
+
+/*トップページに表示する、QRコードの画像*/
+.qrcode-image {
+  max-width: 100%;
+  height: auto;
+  width: 20%;
+}
+
+/* QRコードのスマホ表示 */
+@media (max-width: 767px) {
+  .qrcode-image {
+    width: 40%;
+  }
 }

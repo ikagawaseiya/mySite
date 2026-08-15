@@ -1,5 +1,4 @@
 <?php
-require_once __DIR__ . '/headerGenerator.php';
 define("MAX_PAGE_COUNT_IN_DROPDOWN", 5);
 /**
  * 共通ヘッダーを表示する関数
@@ -8,55 +7,56 @@ define("MAX_PAGE_COUNT_IN_DROPDOWN", 5);
 function showHeader(string $activePage = ''): void
 {
   $displayHeaderTitle = SITE_NAME . ":" . $activePage;
-  $blogPosts = getArrayNewestBlogPageFirst();
+  $blogPosts =  Common::getArrayNewestPageFirst(Common::getBlogFilePathFromController());
 ?>
-<link rel="stylesheet" href="/public/css/header.css">
-<header class="site-header">
-  <div class="header-text">
-    <?php echo common::h($displayHeaderTitle); ?>
-  </div>
+  <link rel="stylesheet" href="/public/css/header.css">
+  <header class="site-header">
+    <div class="header-text">
+      <?php echo Common::h($displayHeaderTitle); ?>
+    </div>
 
-  <!-- ハンバーガーボタン -->
-  <!-- クリックでメニューが開閉 -->
-  <button class="menu-open-btn" id="js-menu-btn" aria-label="メニューを開く">
-    <span></span>
-    <span></span>
-    <span></span>
-  </button>
-</header>
-<!-- ナビゲーションメニュー(順次追加) -->
-<nav class="nav-content" id="js-nav-content">
-  <button class="menu-close-btn" id="js-close-btn" aria-label="メニューを閉じる">
-    <span>×</span>
-  </button>
-  <div class="nav-overlay"></div>
-  <ul class="nav-list">
-    <li><a href="/">トップページ</a></li>
+    <!-- ハンバーガーボタン -->
+    <!-- クリックでメニューが開閉 -->
+    <button class="menu-open-btn" id="js-menu-btn" aria-label="メニューを開く">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </header>
+  <!-- ナビゲーションメニュー(順次追加) -->
+  <nav class="nav-content" id="js-nav-content">
+    <button class="menu-close-btn" id="js-close-btn" aria-label="メニューを閉じる">
+      <span>×</span>
+    </button>
+    <div class="nav-overlay"></div>
+    <ul class="nav-list">
+      <li><a href="/">トップページ</a></li>
 
-    <!-- ブログ一覧の親メニュー（クリックで開閉） -->
-    <li class="nav-item-dropdown">
-      <button type="button" class="dropdown-btn" id="js-dropdown-btn">
-        ブログ
-        <span class="arrow"></span>
-      </button>
+      <!-- ブログ一覧の親メニュー（クリックで開閉） -->
+      <li class="nav-item-dropdown">
+        <button type="button" class="dropdown-btn" id="js-dropdown-btn">
+          ブログ
+          <span class="arrow"></span>
+        </button>
 
-      <!-- 子メニュー（ブログ記事のリスト） -->
-      <ul class="dropdown-menu" id="js-dropdown-menu">
-        <?php
+        <!-- 子メニュー（ブログ記事のリスト） -->
+        <ul class="dropdown-menu" id="js-dropdown-menu">
+          <?php
           $maxCount = min(MAX_PAGE_COUNT_IN_DROPDOWN, count($blogPosts));
           for ($i = 0; $i < $maxCount; $i++):
             $post = $blogPosts[$i];
           ?>
-        <li>
-          <a href="<?php echo common::h($post['url']); ?>">
-            <?php echo common::h($post['title']); ?>
-          </a>
-        </li>
-        <?php endfor; ?>
-      </ul>
-    </li>
-  </ul>
-</nav>
+            <li>
+              <a href="<?php echo common::h($post['url']); ?>">
+                <?php echo common::h($post['title']); ?>
+              </a>
+            </li>
+          <?php endfor; ?>
+          <li><a href="/blogList"><span class="arrow-icon">▶</span>ブログ一覧</a></li>
+        </ul>
+      </li>
+    </ul>
+  </nav>
 
 <?php
 }

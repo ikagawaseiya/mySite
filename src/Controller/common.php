@@ -12,7 +12,7 @@ class Common
      */
     public static function getSiteName(): string
     {
-        $siteName = "かわいいうさぎ";
+        $siteName = SITE_NAME;
         return $siteName;
     }
 
@@ -42,6 +42,8 @@ class Common
      * ページタイトルと作成日時を受け取り、
      * 繋げたものを返す
      * 
+     * ヘッダーに用いる
+     * 
      * @param string $title ページタイトル
      * @param string $date 日時
      * @return string タイトルと作成日時を繋げた文字列　"ページタイトル 作成日時"
@@ -54,6 +56,8 @@ class Common
     /**
      * タイトルを、HTMLのタイトルで表示する書式とする
      * ページタイトルを受け取り、サイト名を付けて返す
+     * 
+     * ブラウザで表示されるページに用いる
      */
     public static function getHtmlPageTitle(string $title)
     {
@@ -61,11 +65,11 @@ class Common
     }
 
     /**
-     * ページのパスを格納した配列を受け取り、
+     * ページのpathを格納した配列を受け取り、
      * そのすべてのページからタイトルと作成日時を取得する。
      * その後、それを新着順にした配列を作成する。
      * それを返す。
-     * 書式:($files = __DIR__ . '/../View/blog';)
+     * 書式例:($files = __DIR__ . '/../View/blog';)
      * 
      * @param array $files ページ種別の保存されたフォルダ
      * @return  array 受け取った種別のページを新着順に格納したリスト
@@ -97,8 +101,25 @@ class Common
         return $posts;
     }
 
+
     /**
-     * ブログ記事の配列を日付の新しい順（降順）にソートする
+     * 対象フォルダへのpathを受け取り、
+     * そのフォルダ内の記事のpathを新着順に並べた配列を返す
+     * passの書式例:"__DIR__ . '/../View/blog';"
+     *
+     * @param  mixed $filePass フォルダへのパス 書式例:"__DIR__ . '/../View/blog';"
+     * @return array フォルダ内のページへのパスを新着順に並べたもの
+     */
+    public static function getArrayNewestPageFirst($filePass): array
+    {
+        $targetFiles = Common::getPhpFilesFromDir($filePass);
+        $blogPosts = Common::createArrayNewestPageFirst($targetFiles);
+        return $blogPosts;
+    }
+
+
+    /**
+     * 記事の配列を日付の新しい順（降順）にソートする
      *
      * @param array $posts ソート前のブログ記事配列
      * @return array ソート後のブログ記事配列
@@ -131,5 +152,15 @@ class Common
 
         // globが失敗（false）した場合は空配列を返す
         return $files === false ? [] : $files;
+    }
+
+    /**
+     * Controllerの位置から見た、ブログファイルへのpathを返す
+     *
+     * @return String Controllerの位置から見た、ブログファイルへのpath
+     */
+    public static function getBlogFilePathFromController()
+    {
+        return __DIR__ . '/../View/blog';
     }
 }

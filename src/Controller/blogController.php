@@ -3,7 +3,7 @@
 /**
  * ブログ記事を動的に管理・表示するコントローラー
  */
-class blogController
+class BlogController
 {
   /**
    * @param string $articleName 記事のファイル名（拡張子なし）
@@ -14,7 +14,7 @@ class blogController
       $this->show404();
     }
 
-    $viewFile = __DIR__ . '/../View/blog/' . $articleName . '.php';
+    $viewFile = Common::getBlogFilePathFromController() . '/' . $articleName . '.php';
 
     if (file_exists($viewFile)) {
       $content = file_get_contents($viewFile, false, null, 0, 1024);

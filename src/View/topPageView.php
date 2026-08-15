@@ -16,7 +16,7 @@
       <p>かわいいうさぎの世界にようこそ</p>
       <div>
         <div class="profile-image-wrap">
-          <img src="images/profile.jpg" alt="プロフィール写真" class="profile-image">
+          <img src="images/topPage/profile.jpg" alt="プロフィール写真" class="profile-image">
         </div>
         <span class="profile-card">
           <span class="bold-text">五十川誠也</span><br>
@@ -27,7 +27,11 @@
       </div>
       <div>
         <h2>新着記事</h2>
-        <?php $this->showNewestPostsList($blogPosts, $newestPageLoopLimit); ?>
+        <?php $this->showNewestPostsList($newestPosts, $newestPageLoopLimit); ?>
+      </div>
+      <div>
+        <span class="cute-advertise-text">このサイトをみんなでシェア！</span>
+        <img src="images/topPage/qrcode.jpg" alt="QRコード" class="qrcode-image">
       </div>
       <div class="button-wrapper">
         <span class="cute-advertise-text"><br>かわいいうさぎが見放題！</span>

@@ -13,6 +13,7 @@ class Router
         $publicDir = dirname(__FILE__);
         $cleanPath = (strpos($path, '/public') === 0) ? substr($path, 7) : $path;
         $targetFile = $publicDir . str_replace('/', DIRECTORY_SEPARATOR, $cleanPath);
+
         $this->checkIsCssOrJsFile($targetFile);
 
 
@@ -26,8 +27,7 @@ class Router
         $page = trim($cleanPath, '/');
         $this->checkIsTopPage($page);
         $this->checkIsBlogDirectory($page);
-        $this->checkIsExistingPage($page);
-
+        $this->checkIsBlogListPage($page);
         Common::show404();
     }
 
@@ -50,9 +50,9 @@ class Router
     /*
     *初期設定を読み込む
     *各種controllerを起動する前に、以下のファイルを読み込む
-    *汎用関数 - src/Controller/common.php
-    *ヘッダー - src/Component/header.php 
-    *汎用css common.css
+    *汎用関数 
+    *ヘッダー 
+    *汎用css 
      */
     public function loadingCommonFiles()
     {
@@ -68,7 +68,7 @@ class Router
         } else {
             echo "読み込みエラーです。";
         }
-        echo '<link rel="stylesheet" href="/public/css/common.css">';
+        echo '<link rel="stylesheet" href="/public/css/allPage.css">';
     }
 
     /**
@@ -88,6 +88,23 @@ class Router
         }
     }
 
+
+    /**
+     * ブログ一覧ページであるか確認する。
+     * その場合、blogListPagePageControllerを呼び出す
+     * 
+     * @param string $page 現在のページ名
+     */
+    public function checkIsBlogListPage(string $page)
+    {
+        if (strpos($page, "blogList") !== false) {
+            require_once __DIR__ . '/src/Controller/blogListPageController.php';
+            $controller = new BlogListPageController();
+            $controller->show();
+            exit;
+        }
+    }
+
     /**
      * トップページであるか確認する。
      * その場合、topPageControllerを呼び出す
@@ -101,26 +118,6 @@ class Router
             $controller = new topPageController();
             $controller->show();
             exit;
-        }
-    }
-
-    /**
-     * 既存のページであるか確認する。
-     * その場合、対応するコントローラーを呼び出す
-     * 
-     * @param string $page 現在のページ名
-     */
-    public function checkIsExistingPage(string $page)
-    {
-        $controllerFile = __DIR__ . '/src/Controller/' . $page . 'Controller.php';
-        if (file_exists($controllerFile)) {
-            require_once $controllerFile;
-            $className = $page . 'Controller';
-            if (class_exists($className)) {
-                $controller = new $className();
-                $controller->show();
-                exit;
-            }
         }
     }
 }

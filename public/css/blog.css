@@ -7,10 +7,9 @@
   border-radius: 8px;
 }
 
-/* 画面幅が768px以上のとき（タブレット・PC） */
+/* PC画面表示 */
 @media screen and (min-width: 768px) {
   .main-content {
-    /* PCなど広い画面では固定の40pxに戻す */
     padding: 40px;
   }
 }
@@ -31,5 +30,21 @@ ol li {
 @media screen and (max-width: 768px) {
   h1 {
     font-size: 5vw;
+  }
+}
+
+/*ブログページに表示する画像*/
+.blog-image {
+  max-width: 100%;
+  height: auto;
+  width: 40%;
+  display: block;
+  margin: 0 auto;
+}
+
+/* 画像のスマホ表示 */
+@media (max-width: 767px) {
+  .blog-image {
+    width: 80%;
   }
 }
