@@ -1,7 +1,7 @@
 <?php
 $title = 'トップページにQRコードを追加しました';
 $date = '2026-08-15';
-$displayTitle = Common::getHtmlPageTitle($title);
+$displayTitle = Common::getTitleInHtml($title);
 ?>
 <!DOCTYPE html>
 <html lang="ja">
@@ -17,6 +17,9 @@ $displayTitle = Common::getHtmlPageTitle($title);
 <body>
   <div>
     <main class="main-content">
+      <div>
+        <?php echo Common::h($date); ?>
+      </div>
       <h1><?php echo Common::h($title); ?></h1>
       <p>トップページにQRコードを載せてみました。<br>
         chromeでQRコードを作成すると、真ん中に恐竜がついてくるんですね<br>

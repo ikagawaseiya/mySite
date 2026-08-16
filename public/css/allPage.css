@@ -40,6 +40,10 @@ body {
   font-size: 13px;
 }
 
+/*上の要素に対してスペースを空ける*/
+.top-space {
+  margin-top: 2.5em;
+}
 
 /* リンクボタン */
 .link-button {

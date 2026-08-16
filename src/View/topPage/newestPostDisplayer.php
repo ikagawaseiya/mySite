@@ -1,3 +1,9 @@
+<?php
+
+/**
+ * @var array $newestPosts 新着順のページ配列
+ */
+?>
 <?php if (NEWEST_PAGE_LOOP_COUNT > 0): ?>
   <ul class="new-articles">
     <?php for ($i = 0; $i < NEWEST_PAGE_LOOP_COUNT; $i++): $post = $newestPosts[$i]; ?>

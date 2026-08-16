@@ -7,61 +7,51 @@
   padding: 15px 25px;
   background-color: olive;
   color: #ffffff;
-  /* 今後の配置の基準点として、このヘッダーの位置を固定 */
+  /* ヘッダーの位置を固定 */
   position: relative;
 }
 
-/* ヘッダーロゴの中にある「aタグ（リンク）」への命令 */
+/* ヘッダー内のテキスト */
 .header-text {
   color: #fff;
-  /* リンクの文字色を白にします（青色になるのを防ぐ） */
   text-decoration: none;
-  /* リンクの下線を消します */
   font-size: 1.25rem;
-  /* 文字の大きさを少し大きくします */
   font-weight: bold;
-  /* 文字を太字にします */
 }
 
-/* ハンバーガーメニューのボタンへの命令 */
+/* ハンバーガーメニューのボタン */
 .menu-open-btn {
   background: none;
-  /* ボタンの背景色を透明（なし）にします */
   border: none;
-  /* ボタンの周りの枠線を消します */
   cursor: pointer;
-  /* マウスを乗せたときに、矢印から「手袋（クリックできる）マーク」に変えます */
+  /* マウスを乗せたときに、矢印から「手袋（クリックできる）マーク」に変える*/
   display: flex;
-  /* ボタンの中にある3本線を制御しやすくします */
+  /* 縦並びとする */
   flex-direction: column;
-  /* 3本線を縦に並べます */
+  /* 3本線を縦に並べる */
   justify-content: space-between;
-  /* 3本線の上下の間隔を綺麗に均等に広げます */
   height: 20px;
-  /* ボタン全体の高さを20pxにします */
   width: 25px;
-  /* ボタン全体の横幅を25pxにします */
+  /*タイトルが長くてもつぶれない設定*/
+  flex-shrink: 0;
 }
 
-/* ボタンの中にある、3本の「線（spanタグ）」への命令 */
+/* ボタンの見た目として表示する三本線 */
 .menu-open-btn span {
   display: block;
-  /* 線の塊（ボックス）を作ります */
   height: 3px;
-  /* 線の太さ（高さ）を3pxにします */
   width: 100%;
-  /* 線の長さを、ボタンの横幅（25px）といっぱいに広げます */
   background-color: #fff;
-  /* 線の色を白にします */
 }
 
-/* ナビメニュー（クリックで展開） */
+/* 
+*ハンバーガーボタンを押した場合に表示される、
+*ナビメニュー（クリックで展開)
+ */
 .nav-content {
   /*固定表示*/
   position: fixed;
   top: 0;
-  /*right:-100で隠す*/
-  right: -100%;
   width: 70%;
   height: 100%;
   background-color: rgba(51, 51, 51, 0.95);
@@ -70,6 +60,8 @@
   z-index: 90;
   padding-top: 80px;
   overflow-y: auto;
+  /*right:-100で隠す*/
+  right: -100%;
 }
 
 /*スマホでのナビメニュー表示*/
@@ -80,44 +72,35 @@
 }
 
 
-/* JavaScriptによって「is-open」という目印がメニューについた瞬間の命令 */
+/* ナビメニュー展開時 */
 .nav-content.is-open {
   right: 0;
-  /* 右側の隠し場所から、画面の右端（0の位置）へスライドして出現させます */
 }
 
-/* メニュー内の「箇条書きリスト（ulタグ）」への命令 */
+/* メニュー内の箇条書きリスト */
 .nav-list {
+  /* 箇条書きの「・（黒丸）」を消す */
   list-style: none;
-  /* 箇条書きの「・（黒丸）」を消します */
   padding: 0;
-  /* リスト特有の左側のズレ（余白）をゼロにします */
   margin: 0;
-  /* 上下の余計な隙間をゼロにします */
 }
 
 /* メニュー内のaタグ */
 .nav-list li a {
   display: block;
-  /* 文字の周りの余白も含めて「ボタン全体」をクリックできるようにします */
   color: #fff;
-  /* 文字の色を白にします */
   text-decoration: none;
-  /* リンクの下線を消します */
   padding: 15px 30px;
-  /* 押しやすいように、文字の周りに大きな余白を作ります（上下15px、左右30px） */
   font-size: 1.1rem;
-  /* 文字の大きさを少しだけ大きくします */
   border-bottom: 1px solid #444;
-  /* メニューの項目ごとに、区切りとなる薄い線（下線）を引きます */
 }
 
 /* 初期状態は非表示にする、ドロップダウンメニュー */
 .dropdown-menu {
   display: none;
   list-style: none;
-  padding-left: 30px;
   /* 少し右にずらして階層をわかりやすくする */
+  padding-left: 30px;
 }
 
 /* クラスがついたら表示 */
@@ -129,25 +112,18 @@
 .dropdown-btn {
   display: block;
   width: 100%;
-  /* ボタンの横幅を100%いっぱいに広げる */
   background: none;
-  /* ブラウザ標準の「白い背景」を消す */
   border: none;
-  /* ブラウザ標準の「枠線」を消す */
-  font: inherit;
   /* 文字のフォントや太さを親から引き継ぐ */
+  font: inherit;
   text-align: left;
   /* 中央寄せになっている文字を左寄せにする */
   cursor: pointer;
-  /* マウスを乗せたときに指マークにする */
   color: #fff;
-  /* 文字の色を白にします */
   text-decoration: none;
-  /* リンクの下線を消します */
+  /* 押しやすいように、文字の周りに大きな余白を作成 */
   padding: 15px 30px;
-  /* 押しやすいように、文字の周りに大きな余白を作る */
   font-size: 1.1rem;
-  /* メニューの項目ごとに、区切りとなる薄い線（下線）を引く */
   border-bottom: 1px solid #444;
 }
 
@@ -189,6 +165,5 @@
   font-size: 28px;
   color: #fff;
   font-family: sans-serif;
-  /* きれいな十字になりやすいゴシック体 */
   line-height: 1;
 }

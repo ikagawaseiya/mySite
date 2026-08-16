@@ -7,7 +7,8 @@ define("MAX_PAGE_COUNT_IN_DROPDOWN", 5);
 function showHeader(string $activePage = ''): void
 {
   $displayHeaderTitle = SITE_NAME . ":" . $activePage;
-  $blogPosts =  FileGetter::getArrayNewestPageFirst(BlogPathGetter::getBlogFilePathFromController());
+  $blogPosts =  FileGetter::getArrayNewestPageFirst(PathGetter::getBlogFilePathFromController());
+  $galleryPosts = FileGetter::getArrayNewestPageFirst(PathGetter::getGalleryFilePathFromController());
 ?>
   <link rel="stylesheet" href="/public/css/header.css">
   <header class="site-header">
@@ -34,17 +35,41 @@ function showHeader(string $activePage = ''): void
 
       <!-- ブログ一覧の親メニュー（クリックで開閉） -->
       <li class="nav-item-dropdown">
-        <button type="button" class="dropdown-btn" id="js-dropdown-btn">
+        <button type="button" class="dropdown-btn" id="js-blog-dropdown-btn">
           ブログ
           <span class="arrow"></span>
         </button>
 
-        <!-- 子メニュー（ブログ記事のリスト） -->
-        <ul class="dropdown-menu" id="js-dropdown-menu">
+        <!-- ブログの子メニュー -->
+        <ul class="dropdown-menu" id="js-blog-dropdown-menu">
           <?php
           $maxCount = min(MAX_PAGE_COUNT_IN_DROPDOWN, count($blogPosts));
           for ($i = 0; $i < $maxCount; $i++):
-            $post = $blogPosts[$i];
+            $blogPost = $blogPosts[$i];
+          ?>
+            <li>
+              <a href="<?php echo Common::h($blogPost['url']); ?>">
+                <?php echo Common::h($blogPost['title']); ?>
+              </a>
+            </li>
+          <?php endfor; ?>
+          <li><a href="/blogList"><span class="arrow-icon">▶</span>ブログ一覧</a></li>
+        </ul>
+      </li>
+
+      <!-- ギャラリー一覧の親メニュー（クリックで開閉） -->
+      <li class="nav-item-dropdown">
+        <button type="button" class="dropdown-btn" id="js-gallery-dropdown-btn">
+          ギャラリー
+          <span class="arrow"></span>
+        </button>
+
+        <!-- ギャラリーの子メニュー -->
+        <ul class="dropdown-menu" id="js-gallery-dropdown-menu">
+          <?php
+          $maxCount = min(MAX_PAGE_COUNT_IN_DROPDOWN, count($galleryPosts));
+          for ($i = 0; $i < $maxCount; $i++):
+            $post = $galleryPosts[$i];
           ?>
             <li>
               <a href="<?php echo Common::h($post['url']); ?>">
@@ -52,7 +77,6 @@ function showHeader(string $activePage = ''): void
               </a>
             </li>
           <?php endfor; ?>
-          <li><a href="/blogList"><span class="arrow-icon">▶</span>ブログ一覧</a></li>
         </ul>
       </li>
     </ul>

@@ -4,6 +4,9 @@
 
 /**
  * ハンバーガーメニューのjs
+ * 
+ * ハンバーガーメニューのクリックにより開き、
+ * 閉じるボタンで仕舞われる
  */
 document.addEventListener('DOMContentLoaded', () => {
   const menuBtn = document.getElementById('js-menu-btn');
@@ -25,10 +28,23 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 });
 
-/**ハンバーガーメニュー内にある、ドロップダウンのjs */
+/**ブログのドロップダウン */
 document.addEventListener('DOMContentLoaded', () => {
-  const dropdownBtn = document.getElementById('js-dropdown-btn');
-  const dropdownMenu = document.getElementById('js-dropdown-menu');
+  const dropdownBtn = document.getElementById('js-blog-dropdown-btn');
+  const dropdownMenu = document.getElementById('js-blog-dropdown-menu');
+
+  if (dropdownBtn && dropdownMenu) {
+    dropdownBtn.addEventListener('click', () => {
+      dropdownBtn.classList.toggle('is-open');
+      dropdownMenu.classList.toggle('is-open');
+    });
+  }
+});
+
+/**ギャラリーのドロップダウン */
+document.addEventListener('DOMContentLoaded', () => {
+  const dropdownBtn = document.getElementById('js-gallery-dropdown-btn');
+  const dropdownMenu = document.getElementById('js-gallery-dropdown-menu');
 
   if (dropdownBtn && dropdownMenu) {
     dropdownBtn.addEventListener('click', () => {

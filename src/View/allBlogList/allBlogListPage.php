@@ -1,10 +1,18 @@
+<?php
+
+/**
+ * @var string $titleInHtml HTMLのtitleに入れるタイトル
+ * @var string $pageTitle 
+ * @var array $blogPosts 新着順のブログページ一覧
+ */
+?>
 <!DOCTYPE html>
 <html lang="ja">
 
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title><?php echo Common::h($htmlTitle); ?></title>
+  <title><?php echo Common::h($titleInHtml); ?></title>
   <link rel="stylesheet" href="/public/css/topPage.css">
   <script src="/public/js/header.js" defer></script>
 </head>

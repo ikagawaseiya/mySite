@@ -1,10 +1,18 @@
+<?php
+
+/**
+ * @var string $titleInHtml HTMLのtitleに渡すページタイトル
+ * @var array $newestPosts 最新順の記事リスト / ブログ / ゲーム / ギャラリー / が該当
+ * @var int $newestPageLoopLimit 表示する新着記事の限界数
+ */
+?>
 <!DOCTYPE html>
 <html lang="ja">
 
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title><?php echo Common::h($htmlTitle); ?></title>
+  <title><?php echo Common::h($titleInHtml); ?></title>
   <link rel="stylesheet" href="/public/css/topPage.css">
   <script src="/public/js/header.js" defer></script>
 </head>

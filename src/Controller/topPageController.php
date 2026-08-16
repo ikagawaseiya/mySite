@@ -18,31 +18,37 @@ class topPageController
   {
     $pageTitle = "トップページ";
     showHeader($pageTitle);
-    $htmlTitle = Common::getHtmlPageTitle($pageTitle);
-    $newestPosts = $this->getBlogAndGameArrayNewestPageFirst();
+    $titleInHtml = Common::getTitleInHtml($pageTitle);
+    $newestPosts = $this->getContentsArrayNewestPageFirst();
     $newestPageLoopLimit = min(5, count($newestPosts));
-    require_once __DIR__ . '/../View/topPageView.php';
+    require_once __DIR__ . '/../View/topPage/topPageView.php';
   }
 
-
   /**
-   * 新着順に並べた、ブログとゲームの記事を生成する
+   * 以下の種類のページのタイトル、日時、URLを格納した配列を生成する
+   * ・ブログ
+   * ・ゲーム
+   * ・ギャラリー
+   * 
+   * 
+   * その後、新着順に並べ変える
    * それを返す
+   * 
    * 新着記事の表示のために使う
    *
    * @return array 新着順に並べた、ブログとゲームの記事
    */
-  public function getBlogAndGameArrayNewestPageFirst(): array
+  public function getContentsArrayNewestPageFirst(): array
   {
-    $blogFiles = FileGetter::getPhpFilesFromDir(BlogPathGetter::getBlogFilePathFromController());
-
+    $blogFiles = FileGetter::getPhpFilesFromDir(PathGetter::getBlogFilePathFromController());
+    $galleryFiles = FileGetter::getPhpFilesFromDir(PathGetter::getGalleryFilePathFromController());
 
     //ゲーム記事は現在未実装
     $gameFilePath = __DIR__ . '/../View/game';
     //$gameFiles;
     $gameFiles = FileGetter::getPhpFilesFromDir($gameFilePath);
 
-    $targetFiles = array_merge($blogFiles, $gameFiles);
+    $targetFiles = array_merge($blogFiles, $gameFiles, $galleryFiles);
     return FileGetter::createArrayNewestPageFirst($targetFiles);
   }
 
@@ -56,6 +62,6 @@ class topPageController
   public static function showNewestPostsList(array $newestPosts, int $limit = 5): void
   {
     define("NEWEST_PAGE_LOOP_COUNT", min($limit, count($newestPosts)));
-    include __DIR__ . '/../View/newestPostDisplayer.php';
+    include __DIR__ . '/../View/topPage/newestPostDisplayer.php';
   }
 }

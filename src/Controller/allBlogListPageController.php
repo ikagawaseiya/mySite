@@ -3,7 +3,7 @@
 /**
  * ブログリストページのコントローラー
  */
-class blogListPageController
+class AllBlogListPageController
 {
   /**
    * ブログリストページに渡す値を宣言し、viewを呼び出す
@@ -15,8 +15,8 @@ class blogListPageController
   {
     $pageTitle = "ブログ一覧";
     showHeader($pageTitle);
-    $htmlTitle = Common::getHtmlPageTitle($pageTitle);
-    $blogPosts = FileGetter::getArrayNewestPageFirst(BlogPathGetter::getBlogFilePathFromController());
-    require_once __DIR__ . '/../View/blogListPage.php';
+    $titleInHtml = Common::getTitleInHtml($pageTitle);
+    $blogPosts = FileGetter::getArrayNewestPageFirst(PathGetter::getBlogFilePathFromController());
+    require_once __DIR__ . '/../View/allBlogList/allBlogListPage.php';
   }
 }

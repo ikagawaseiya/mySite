@@ -28,7 +28,10 @@ class Router
         $page = trim($cleanPath, '/');
         $this->checkIsTopPage($page);
         $this->checkIsBlogDirectory($page);
-        $this->checkIsBlogListPage($page);
+        $this->checkIsAllBlogListPage($page);
+        $this->checkIsGalleryDirectory($page);
+
+        echo "ファイルが読み込めませんでした";
         Common::show404();
     }
 
@@ -54,7 +57,7 @@ class Router
     *汎用関数  common
     *ヘッダー  header
     *汎用パス取得関数　commonPathGetter
-    *ブログパス取得関数　blogPathGetter
+    *ファイル関係の関数　fileGetter
     *汎用css  allPage
      */
     public function loadingCommonFiles()
@@ -80,9 +83,9 @@ class Router
             echo "読み込みエラー：ファイル取得関数";
         }
 
-        $BlogPathGetterFile = __DIR__ . '/src/Common/getter/blogPathGetter.php';
-        if (file_exists($BlogPathGetterFile)) {
-            require_once $BlogPathGetterFile;
+        $PathGetterFile = __DIR__ . '/src/Common/getter/pathGetter.php';
+        if (file_exists($PathGetterFile)) {
+            require_once $PathGetterFile;
         } else {
             echo "読み込みエラー：ブログパス取得関数";
         }
@@ -92,16 +95,33 @@ class Router
 
     /**
      * ブログのページであるか確認する。
-     * その場合、blogControllerを呼び出す
+     * その場合、BlogPageControllerを呼び出す
      * 
      * @param string $page 現在のページ名
      */
     public function checkIsBlogDirectory(string $page)
     {
         if (strpos($page, 'blog/') === 0) {
-            require_once __DIR__ . '/src/Controller/blogController.php';
-            $controller = new blogController();
+            require_once __DIR__ . '/src/Controller/blogPageController.php';
+            $controller = new BlogPageController();
             $articleName = substr($page, 5);
+            $controller->show($articleName);
+            exit;
+        }
+    }
+
+    /**
+     * ギャラリーのページであるか確認する。
+     * その場合、GalleryPageControllerを呼び出す
+     * 
+     * @param string $page 現在のページ名
+     */
+    public function checkIsGalleryDirectory(string $page)
+    {
+        if (strpos($page, 'gallery/') === 0) {
+            require_once __DIR__ . '/src/Controller/galleryPageController.php';
+            $controller = new GalleryPageController();
+            $articleName = substr($page, 8);
             $controller->show($articleName);
             exit;
         }
@@ -114,11 +134,11 @@ class Router
      * 
      * @param string $page 現在のページ名
      */
-    public function checkIsBlogListPage(string $page)
+    public function checkIsAllBlogListPage(string $page)
     {
         if (strpos($page, "blogList") !== false) {
-            require_once __DIR__ . '/src/Controller/blogListPageController.php';
-            $controller = new BlogListPageController();
+            require_once __DIR__ . '/src/Controller/allBlogListPageController.php';
+            $controller = new AllBlogListPageController();
             $controller->show();
             exit;
         }

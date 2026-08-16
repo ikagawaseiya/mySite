@@ -1,7 +1,7 @@
 <?php
 $title = '今後の予定';
 $date = '2026-08-12';
-$displayTitle = Common::getHtmlPageTitle($title);
+$displayTitle = Common::getTitleInHtml($title);
 ?>
 <!DOCTYPE html>
 <html lang="ja">
@@ -17,6 +17,9 @@ $displayTitle = Common::getHtmlPageTitle($title);
 <body>
   <div>
     <main class="main-content">
+      <div>
+        <?php echo Common::h($date); ?>
+      </div>
       <h1><?php echo Common::h($title); ?></h1>
       <p>初期設定を完了し、本日ページを公開することができました。<br>
         当サイトの作成、公開にかかった期間は2日でした。</br>

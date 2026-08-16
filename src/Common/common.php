@@ -59,8 +59,29 @@ class Common
    * 
    * ブラウザで表示されるページに用いる
    */
-  public static function getHtmlPageTitle(string $title)
+  public static function getTitleInHtml(string $title)
   {
     return Common::getSiteName() . "-" . $title;
+  }
+
+
+  /**
+   *ページからタイトルを取得し、
+   *それによるヘッダーを表示する
+   *
+   * @param  mixed $viewFile
+   * @return void
+   */
+  public static function showHeaderGetTatleFronThePage(string $viewFile)
+  {
+    $content = file_get_contents($viewFile, false, null, 0, 1024);
+    if (preg_match('/\$title\s*=\s*[\'"](.+?)[\'"]\s*;/', $content, $matches)) {
+      $title = trim($matches[1]);
+    } else {
+      $title = ' '; // デフォルトの名前　※通常は取得しない
+    }
+    if (function_exists('showHeader')) {
+      showHeader($title);
+    }
   }
 }
