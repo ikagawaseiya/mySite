@@ -34,11 +34,16 @@ class topPageController
    */
   public function getBlogAndGameArrayNewestPageFirst(): array
   {
-    $blogFiles = Common::getPhpFilesFromDir(Common::getBlogFilePathFromController());
+    $blogFiles = FileGetter::getPhpFilesFromDir(BlogPathGetter::getBlogFilePathFromController());
+
+
+    //ゲーム記事は現在未実装
     $gameFilePath = __DIR__ . '/../View/game';
-    $gameFiles = Common::getPhpFilesFromDir($gameFilePath);
+    //$gameFiles;
+    $gameFiles = FileGetter::getPhpFilesFromDir($gameFilePath);
+
     $targetFiles = array_merge($blogFiles, $gameFiles);
-    return Common::createArrayNewestPageFirst($targetFiles);
+    return FileGetter::createArrayNewestPageFirst($targetFiles);
   }
 
   /**

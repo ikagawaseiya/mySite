@@ -3,7 +3,8 @@
 /**
  * ルーターの役割を担うクラス
  * 
- * 初期設定と、URLに応じたコントローラーの呼び出しを行う
+ * 初期設定を読み込んだ後、
+ * URLに応じたコントローラーの呼び出しを行う
  */
 class Router
 {
@@ -50,24 +51,42 @@ class Router
     /*
     *初期設定を読み込む
     *各種controllerを起動する前に、以下のファイルを読み込む
-    *汎用関数 
-    *ヘッダー 
-    *汎用css 
+    *汎用関数  common
+    *ヘッダー  header
+    *汎用パス取得関数　commonPathGetter
+    *ブログパス取得関数　blogPathGetter
+    *汎用css  allPage
      */
     public function loadingCommonFiles()
     {
-        $commonFile = __DIR__ . '/src/Controller/common.php';
-        if (file_exists($commonFile)) {
-            require_once $commonFile;
+        $genetralFunctionFile = __DIR__ . '/src/Common/common.php';
+        if (file_exists($genetralFunctionFile)) {
+            require_once $genetralFunctionFile;
         } else {
-            echo "読み込みエラーです。";
+            echo "読み込みエラー：汎用関数";
         }
+
         $headerFile = __DIR__ . '/src/Component/header.php';
         if (file_exists($headerFile)) {
             require_once $headerFile;
         } else {
-            echo "読み込みエラーです。";
+            echo "読み込みエラー；ヘッダー";
         }
+
+        $commonPathGetterFile = __DIR__ . '/src/Common/getter/fileGetter.php';
+        if (file_exists($commonPathGetterFile)) {
+            require_once $commonPathGetterFile;
+        } else {
+            echo "読み込みエラー：ファイル取得関数";
+        }
+
+        $BlogPathGetterFile = __DIR__ . '/src/Common/getter/blogPathGetter.php';
+        if (file_exists($BlogPathGetterFile)) {
+            require_once $BlogPathGetterFile;
+        } else {
+            echo "読み込みエラー：ブログパス取得関数";
+        }
+
         echo '<link rel="stylesheet" href="/public/css/allPage.css">';
     }
 

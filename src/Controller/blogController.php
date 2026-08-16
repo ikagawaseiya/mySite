@@ -1,7 +1,8 @@
 <?php
 
 /**
- * ブログ記事を動的に管理・表示するコントローラー
+ * ブログ記事全ページのコントローラー
+ * ヘッダーの表示の後、ページを表示する
  */
 class BlogController
 {
@@ -14,17 +15,17 @@ class BlogController
       $this->show404();
     }
 
-    $viewFile = Common::getBlogFilePathFromController() . '/' . $articleName . '.php';
+    $viewFile = BlogPathGetter::getBlogFilePathFromController() . '/' . $articleName . '.php';
 
     if (file_exists($viewFile)) {
       $content = file_get_contents($viewFile, false, null, 0, 1024);
       if (preg_match('/\$title\s*=\s*[\'"](.+?)[\'"]\s*;/', $content, $matches)) {
         $title = trim($matches[1]);
       } else {
-        $title = 'ブログ'; // デフォルト値
+        $title = 'ブログ'; // デフォルトの名前　※通常は取得しない
       }
 
-      // 共通ヘッダーを表示
+      // ヘッダーを表示
       if (function_exists('showHeader')) {
         showHeader($title);
       }

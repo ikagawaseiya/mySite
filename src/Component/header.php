@@ -7,7 +7,7 @@ define("MAX_PAGE_COUNT_IN_DROPDOWN", 5);
 function showHeader(string $activePage = ''): void
 {
   $displayHeaderTitle = SITE_NAME . ":" . $activePage;
-  $blogPosts =  Common::getArrayNewestPageFirst(Common::getBlogFilePathFromController());
+  $blogPosts =  FileGetter::getArrayNewestPageFirst(BlogPathGetter::getBlogFilePathFromController());
 ?>
   <link rel="stylesheet" href="/public/css/header.css">
   <header class="site-header">
@@ -47,8 +47,8 @@ function showHeader(string $activePage = ''): void
             $post = $blogPosts[$i];
           ?>
             <li>
-              <a href="<?php echo common::h($post['url']); ?>">
-                <?php echo common::h($post['title']); ?>
+              <a href="<?php echo Common::h($post['url']); ?>">
+                <?php echo Common::h($post['title']); ?>
               </a>
             </li>
           <?php endfor; ?>
