@@ -30,7 +30,7 @@ $displayTitle = Common::getTitleInHtml($title);
         ディレクトリを見やすく分けたり、関数を切り分けて汎用性を持たせたり。
         大変ですが、根本的な機能の改修は作り始めのうちに済ませておきたいです。要素が増えてからではより難しくなるので。<br>
       </div>
-      <div class="top-space"> 今週はフッターの実装を目標とします。</div>
+      <div class="top-space"> 来週はフッターの実装を目標とします。</div>
     </main>
     <footer>
     </footer>
