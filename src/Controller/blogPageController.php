@@ -51,4 +51,25 @@ class BlogPageController
       showHeader($title);
     }
   }
+
+  /**
+   * ブログのheadを表示する
+   *
+   * @param string $displayTitle 表示されるページのタイトル
+   * @return void
+   */
+  public function displayBlogHead(string $displayTitle)
+  {
+?>
+
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title><?php echo Common::h($displayTitle); ?></title>
+      <link rel="stylesheet" href="/public/css/blog.css">
+      <script src="/public/js/header.js" defer></script>
+    </head>
+
+<?php
+  }
 }

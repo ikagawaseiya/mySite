@@ -6,13 +6,7 @@ $displayTitle = Common::getTitleInHtml($title);
 <!DOCTYPE html>
 <html lang="ja">
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title><?php echo Common::h($displayTitle); ?></title>
-  <link rel="stylesheet" href="/public/css/blog.css">
-  <script src="/public/js/header.js" defer></script>
-</head>
+<?php $this->displayBlogHead($displayTitle) ?>
 
 <body>
   <div>
