@@ -18,8 +18,8 @@
 </head>
 
 <body>
-  <div>
-    <main class="main-content center-element">
+  <main>
+    <div class="main-content center-element">
       <h1>Hello, World!</h1>
       <p>かわいいうさぎの世界にようこそ</p>
       <div>
@@ -28,7 +28,7 @@
         </div>
         <span class="profile-card">
           <span class="bold-text">五十川誠也</span><br>
-          うさぎと暮らすエンジニア。<br>
+          うさぎと暮らすプログラマ。<br>
           現在求職活動中。<br>
           使用言語はPHP、JavaScript、Java。<br>
         </span>
@@ -63,10 +63,5 @@
         <div class="cute-advertise-text"> お問い合わせ</div>
         <span class="min-text">ikagawa.office@gmail.com</span>
       </div>
-    </main>
-    <footer>
-    </footer>
-  </div>
-</body>
-
-</html>
+    </div>
+    <?php showFooter(); ?>

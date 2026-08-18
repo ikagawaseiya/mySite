@@ -17,11 +17,6 @@ class Router
 
         $this->checkIsCssOrJsFile($targetFile);
 
-
-        /**
-         * 初期設定
-         * 汎用ファイルとCSSを読み込む
-         */
         $this->loadingCommonFiles();
 
 
@@ -30,6 +25,7 @@ class Router
         $this->checkIsBlogDirectory($page);
         $this->checkIsAllBlogListPage($page);
         $this->checkIsGalleryDirectory($page);
+        $main_content = ob_get_clean();
 
         echo "ファイルが読み込めませんでした";
         Common::show404();
@@ -56,9 +52,11 @@ class Router
     *各種controllerを起動する前に、以下のファイルを読み込む
     *汎用関数  common
     *ヘッダー  header
+    *フッター　footer
     *汎用パス取得関数　commonPathGetter
     *ファイル関係の関数　fileGetter
     *汎用css  allPage
+    *フッター用css
      */
     public function loadingCommonFiles()
     {
@@ -76,6 +74,13 @@ class Router
             echo "読み込みエラー；ヘッダー";
         }
 
+        $footerFile = __DIR__ .  '/src/Component/footer/footerDisplayer.php';
+        if (file_exists($footerFile)) {
+            require_once $footerFile;
+        } else {
+            echo "読み込みエラー：フッター";
+        }
+
         $commonPathGetterFile = __DIR__ . '/src/Common/getter/fileGetter.php';
         if (file_exists($commonPathGetterFile)) {
             require_once $commonPathGetterFile;
@@ -91,6 +96,7 @@ class Router
         }
 
         echo '<link rel="stylesheet" href="/public/css/allPage.css">';
+        echo '<link rel="stylesheet" href="/public/css/footer.css">';
     }
 
     /**

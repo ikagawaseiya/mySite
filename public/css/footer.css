@@ -1,0 +1,21 @@
+/* フッター*/
+.footer {
+  left: 0;
+  width: 100%;
+  background-color: olive;
+  padding: 10px 0;
+  margin-top: 40px;
+  box-sizing: border-box;
+}
+
+/* 4. フッター内のボタン */
+.footer-button {
+  display: flex;
+  justify-content: space-between;
+  color: white;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  box-sizing: border-box;
+}

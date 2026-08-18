@@ -55,9 +55,4 @@
         <?php endif; ?>
   </div>
   </main>
-  <footer>
-  </footer>
-  </div>
-</body>
-
-</html>
+  <?php showFooter(); ?>
