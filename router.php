@@ -151,6 +151,22 @@ class Router
     }
 
     /**
+     * ギャラリー一覧ページであるか確認する。
+     * その場合、blogListPagePageControllerを呼び出す
+     * 
+     * @param string $page 現在のページ名
+     */
+    public function checkIsAllGalleryListPage(string $page)
+    {
+        if (strpos($page, "blogList") !== false) {
+            require_once __DIR__ . '/src/Controller/allGalleryListPageController.php';
+            $controller = new AllBlogListPageController();
+            $controller->show();
+            exit;
+        }
+    }
+
+    /**
      * トップページであるか確認する。
      * その場合、topPageControllerを呼び出す
      * 

@@ -17,7 +17,7 @@ class BlogPageController
 
     $viewFile = PathGetter::getBlogFilePathFromController() . '/' . $blogPageName . '.php';
     if (file_exists($viewFile)) {
-      $this->showHeaderGetTatleFronThePage($viewFile);
+      $this->showHeaderGetTitleFromThePage($viewFile);
       require_once $viewFile;
       exit;
     } else {
@@ -39,7 +39,7 @@ class BlogPageController
    * @param  mixed $viewFile
    * @return void
    */
-  private function showHeaderGetTatleFronThePage(string $viewFile)
+  private function showHeaderGetTitleFromThePage(string $viewFile)
   {
     $content = file_get_contents($viewFile, false, null, 0, 1024);
     if (preg_match('/\$title\s*=\s*[\'"](.+?)[\'"]\s*;/', $content, $matches)) {

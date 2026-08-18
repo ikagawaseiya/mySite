@@ -33,7 +33,7 @@ class GalleryPageController
   private function show404()
   {
     header("HTTP/1.0 404 Not Found");
-    echo "<h1>404 Not Found</h1>指定されたブログ記事が見つかりません。";
+    echo "<h1>404 Not Found</h1>指定されたギャラリー記事が見つかりません。";
     exit;
   }
 
@@ -59,8 +59,8 @@ class GalleryPageController
 ?>
 
     <?php
-    $gallryFilePath = "images/gallery/" . $galleryDirName;
-    $images = FileGetter::getImageFilePathsFromDir($gallryFilePath);
+    $galleryFilePath = "images/gallery/" . $galleryDirName;
+    $images = FileGetter::getImageFilePathsFromDir($galleryFilePath);
     ?>
     <?php foreach ($images as $key => $imagePath): ?>
       <div>
