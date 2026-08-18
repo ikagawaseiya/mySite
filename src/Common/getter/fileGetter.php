@@ -10,11 +10,11 @@ class FileGetter
 {
   /**
    * 対象フォルダへのpathを受け取り、
-   * そのフォルダ内の記事のpathを新着順に並べた配列を返す
+   * そのフォルダ内の記事のデータ（パス、タイトル、日時）を最新順に並べた配列を返す
    * passの書式例:"__DIR__ . '/../View/blog';"
    *
    * @param  mixed $filePass フォルダへのパス 書式例:"__DIR__ . '/../View/blog';"
-   * @return array フォルダ内のページへのパスを新着順に並べたもの
+   * @return array フォルダ内のページのdate(パス、タイトル、日時)を最新順に並べたもの
    */
   public static function getArrayNewestPageFirst($filePass): array
   {
@@ -49,7 +49,7 @@ class FileGetter
   }
 
   /**
-   * 単一のファイルからタイトル、日時、URLを取得する
+   * 単一のファイルのパスからタイトル、日時、URLを取得する
    * それを返す
    *
    * @param string $file ファイルの絶対パス
