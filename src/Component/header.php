@@ -77,6 +77,7 @@ function showHeader(string $activePage = ''): void
               </a>
             </li>
           <?php endfor; ?>
+          <li><a href="/galleryList"><span class="arrow-icon">▶</span>ギャラリー一覧</a></li>
         </ul>
       </li>
     </ul>

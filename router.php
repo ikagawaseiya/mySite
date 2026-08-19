@@ -19,15 +19,14 @@ class Router
 
         $this->loadingCommonFiles();
 
-
         $page = trim($cleanPath, '/');
         $this->checkIsTopPage($page);
         $this->checkIsBlogDirectory($page);
-        $this->checkIsAllBlogListPage($page);
         $this->checkIsGalleryDirectory($page);
-        $main_content = ob_get_clean();
+        $this->checkIsAllBlogListPage($page);
+        $this->checkIsAllGalleryListPage($page);
 
-        echo "ファイルが読み込めませんでした";
+        echo "エラー：router";
         Common::show404();
     }
 
@@ -60,9 +59,9 @@ class Router
      */
     public function loadingCommonFiles()
     {
-        $genetralFunctionFile = __DIR__ . '/src/Common/common.php';
-        if (file_exists($genetralFunctionFile)) {
-            require_once $genetralFunctionFile;
+        $commonFunctionFile = __DIR__ . '/src/Common/common.php';
+        if (file_exists($commonFunctionFile)) {
+            require_once $commonFunctionFile;
         } else {
             echo "読み込みエラー：汎用関数";
         }
@@ -158,7 +157,7 @@ class Router
      */
     public function checkIsAllGalleryListPage(string $page)
     {
-        if (strpos($page, "blogList") !== false) {
+        if (strpos($page, "galleryList") !== false) {
             require_once __DIR__ . '/src/Controller/allGalleryListPageController.php';
             $controller = new AllBlogListPageController();
             $controller->show();
