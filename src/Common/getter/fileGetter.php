@@ -9,30 +9,28 @@
 class FileGetter
 {
   /**
-   * 対象フォルダへのpathを受け取り、
+   * 対象フォルダへのパスを受け取り、
    * そのフォルダ内の記事のデータ（パス、タイトル、日時）を最新順に並べた配列を返す
    * passの書式例:"__DIR__ . '/../View/blog';"
    *
-   * @param  mixed $filePass フォルダへのパス 書式例:"__DIR__ . '/../View/blog';"
+   * @param  mixed $filePath フォルダへのパス 書式例:"__DIR__ . '/../View/blog';"
    * @return array フォルダ内のページのdate(パス、タイトル、日時)を最新順に並べたもの
    */
-  public static function getArrayNewestPageFirst($filePass): array
+  public static function getArrayNewestPageFirst($filePath): array
   {
-    $targetFiles = FileGetter::getPhpFilesFromDir($filePass);
+    $targetFiles = FileGetter::getPhpFilesFromDir($filePath);
     $NewestPageFirstPosts = FileGetter::createArrayNewestPageFirst($targetFiles);
     return $NewestPageFirstPosts;
   }
 
   /**
-   * ページのpathを格納した配列を受け取り、
+   * ページのパスを格納した配列を受け取り、
    * そのすべてのページからタイトル、作成日時、URLを取得する。
    * その後、それを新着順にした配列を作成する。
    * それを返す。
-   * 引数例:($files = __DIR__ . '/../View/blog';)
    * 
-   * 
-   * @param array $files ページ種別の保存されたフォルダ
-   * @return  array 受け取った種別のページを新着順に格納したリスト
+   * @param array $files ページのパスが格納された配列
+   * @return  array 受け取った配列のページの内容（タイトル、日時、URL）を新着順に格納した配列
    */
   public static function createArrayNewestPageFirst(array $files): array
   {
@@ -78,12 +76,10 @@ class FileGetter
       ];
     }
 
-    /*
-    *例外処理
-    * タイトルと日付のどちらかが欠けている場合など
-    */
+    echo "エラー：getFileTitleDateUrl";
     return null;
   }
+
   /**
    * 記事の配列を日付の新しい順（降順）にソートする
    *
@@ -92,12 +88,11 @@ class FileGetter
    */
   public static function sortByDateDesc(array $posts): array
   {
-    usort($posts, function ($a, $b) {
-      return strtotime($b['date']) <=> strtotime($a['date']);
+    usort($posts, function ($i, $j) {
+      return strtotime($j['date']) <=> strtotime($i['date']);
     });
     return $posts;
   }
-
 
   /**
    * フォルダのパスを受け取り、そのファイル及び、一つ下の階層のPHPファイルを全て配列に格納する
@@ -108,8 +103,8 @@ class FileGetter
    */
   public static function getPhpFilesFromDir(string $dirPath): array
   {
-    // フォルダが存在しない、またはフォルダではない場合
     if (!is_dir($dirPath)) {
+      echo "エラー：getPhpFilesFromDir";
       return [];
     }
 

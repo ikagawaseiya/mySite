@@ -2,6 +2,13 @@
 define("MAX_PAGE_COUNT_IN_DROPDOWN", 5);
 /**
  * 共通ヘッダーを表示する関数
+ * 
+ * ハンバーガーメニューによって、以下のボタンを表示する
+ * ・トップページ
+ * ・ゲーム（TODO　追加予定）
+ * ・ブログ
+ * ・ギャラリー
+ * 
  * @param string $activePage 現在のページ名
  */
 function showHeader(string $activePage = ''): void

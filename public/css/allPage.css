@@ -9,7 +9,7 @@ body {
 }
 
 /**
- * 中央寄せに配置される要素
+ * 中央寄せに配置する要素
  */
 .center-element {
   align-items: center;
@@ -48,16 +48,11 @@ body {
 /* リンクボタン */
 .link-button {
   display: inline-block;
-  /* inline-block に戻します */
   box-sizing: border-box;
-  /* paddingで潰れないようにする必須設定 */
   text-align: center;
-  /* ボタン内の文字を中央寄せ */
 
   max-width: 400px;
-  /* ボタンの最大横幅 */
   width: 90%;
-  /* スマホ画面での横幅 */
   margin: 12px auto;
   padding: 14px 20px;
   background-color: #ffffff;
@@ -71,9 +66,7 @@ body {
 /*ボタンの追加設定*/
 .button-wrapper {
   display: block;
-  /* 縦並びのブロックにする */
   text-align: center;
-  /* 中にあるボタンを中央に寄せる */
   width: 100%;
 }
 
@@ -83,17 +76,13 @@ body {
 .link-button-text {
   color: #222222;
   font-size: 13px;
-  /* 文字間隔*/
   letter-spacing: 0.08em;
   font-weight: bold;
 }
 
 /* ボタンにカーソルを乗せた場合 */
 .link-button:hover {
-  /* 少し浮き上がらせる */
   transform: translateY(-2px);
-  /* 影を濃くする */
   box-shadow: 0 6px 15px rgba(255, 105, 180, 0.25);
-  /* 背景が変化 */
   background-color: #fff0f5;
 }
