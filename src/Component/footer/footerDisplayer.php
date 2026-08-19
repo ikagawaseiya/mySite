@@ -13,13 +13,18 @@ function showFooter()
   $thisUri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
   $thisPagePath = trim($thisUri, '/');
 
-  $homeButton = "<span>　</span>";
-  if ($thisPagePath  !== '' && $thisPagePath !== "index.php") {
-    $homeButton = '<a href="/">ホームへ戻る</a>';
+  $checkHomeButtonHidden = " ";
+  $hiddenClass = "class = 'is-button-hidden'";
+
+  $homeButton = "<a href =' / '>ホームへ戻る</a>";
+  if ($thisPagePath  === '' || $thisPagePath === "index.php") {
+    $checkHomeButtonHidden =  $hiddenClass;
   }
 
-  $PreviousPageButton = "<span>　</span>";
-  $nextPageButton = "<span>　</span>";
+  //todo
+  //hiddenで消す仕様に変更する
+  $PreviousPageButton = "<span>前の記事へ</span>";
+  $nextPageButton = "<span>次の記事へ</span>";
   if (strpos($thisPagePath, 'blog/') === 0 || strpos($thisPagePath, 'gallery/') === 0) {
 
     $blogPosts =  FileGetter::getArrayNewestPageFirst(PathGetter::getBlogFilePathFromController());

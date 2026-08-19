@@ -8,15 +8,21 @@
 ?>
 <footer class="footer">
   <div class="footer-button">
-    <?php
-    echo $PreviousPageButton;
-    ?>
-    <?php
-    echo $homeButton;
-    ?>
-    <?php
-    echo $nextPageButton;
-    ?>
+    <span>
+      <?php
+      echo $PreviousPageButton;
+      ?>
+    </span>
+    <span <?php echo $checkHomeButtonHidden ?>>
+      <?php
+      echo $homeButton;
+      ?>
+    </span>
+    <span>
+      <?php
+      echo $nextPageButton;
+      ?>
+    </span>
   </div>
 </footer>
 </body>
