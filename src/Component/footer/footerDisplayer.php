@@ -23,8 +23,8 @@ function showFooter()
 
   //todo
   //hiddenで消す仕様に変更する
-  $PreviousPageButton = "<span>前の記事へ</span>";
-  $nextPageButton = "<span>次の記事へ</span>";
+  $PreviousPageButton = "<span" . " " . $hiddenClass . ">前の記事へ</span>";
+  $nextPageButton = "<span" . " " . $hiddenClass . ">次の記事へ</span>";
   if (strpos($thisPagePath, 'blog/') === 0 || strpos($thisPagePath, 'gallery/') === 0) {
 
     $blogPosts =  FileGetter::getArrayNewestPageFirst(PathGetter::getBlogFilePathFromController());
