@@ -2,7 +2,7 @@
 
 /**
  * フッターを表示する
- * ページによって、ホームへ戻る、前の記事へ、次の記事へのボタンをそれぞれ表示するか判定する
+ * ページによって、ホームへ戻る、前の記事へ、次の記事へのボタンをそれぞれ表示する
  * 
  * フッターには、</body></html>が含まれる
  *
@@ -13,18 +13,19 @@ function showFooter()
   $thisUri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
   $thisPagePath = trim($thisUri, '/');
 
-  $checkHomeButtonHidden = " ";
   $hiddenClass = "class = 'is-button-hidden'";
 
-  $homeButton = "<a href =' / '>ホームへ戻る</a>";
-  if ($thisPagePath  === '' || $thisPagePath === "index.php") {
-    $checkHomeButtonHidden =  $hiddenClass;
+  $homeButtonMessage = "ホームへ戻る";
+  $homeButton = "<span" . " " . $hiddenClass . ">" . $homeButtonMessage . "</span>";
+  if ($thisPagePath  !== '' && $thisPagePath !== "index.php") {
+    $homeButton =  '<a href = "/">' . $homeButtonMessage . '</a>';
   }
 
-  //todo
-  //hiddenで消す仕様に変更する
-  $PreviousPageButton = "<span" . " " . $hiddenClass . ">前の記事へ</span>";
-  $nextPageButton = "<span" . " " . $hiddenClass . ">次の記事へ</span>";
+
+  $PreviousPageButtonMessage = "前の記事へ";
+  $nextPageButtonMessage = "次の記事へ";
+  $PreviousPageButton = "<span" . " " . $hiddenClass . ">" . $PreviousPageButtonMessage . "</span>";
+  $nextPageButton = "<span" . " " . $hiddenClass . ">" . $nextPageButtonMessage . "</span>";
   if (strpos($thisPagePath, 'blog/') === 0 || strpos($thisPagePath, 'gallery/') === 0) {
 
     $blogPosts =  FileGetter::getArrayNewestPageFirst(PathGetter::getBlogFilePathFromController());
@@ -36,7 +37,7 @@ function showFooter()
         if ($isLatestPage) {
           $nextPost = $blogPosts[$index - 1];
           if ($nextPost["url"] !== '') {
-            $nextPageButton = '<a href="' . Common::h($nextPost["url"]) . '">次の記事へ</a>';
+            $nextPageButton = '<a href=' . Common::h($nextPost["url"]) . '>' . $nextPageButtonMessage . '</a>';
           }
         }
 
@@ -44,7 +45,7 @@ function showFooter()
         if ($isOldestPage) {
           $PreviousPost = $blogPosts[$index + 1];
           if ($PreviousPost["url"] !== '') {
-            $PreviousPageButton = '<a href="' . Common::h($PreviousPost["url"]) . '">前の記事へ</a>';
+            $PreviousPageButton = '<a href=' . Common::h($PreviousPost["url"]) . '>' . $PreviousPageButtonMessage . '</a>';
           }
         }
         break;
