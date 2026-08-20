@@ -6,6 +6,10 @@
  * @var string $nextPageButton 次の記事へボタン
  */
 ?>
+<!--いいねボタンをここに実装-->
+<div class="like-section"">
+  <button type=" button" class="like-btn"></button>
+</div>
 <footer class="footer">
   <div class="footer-button">
     <?php

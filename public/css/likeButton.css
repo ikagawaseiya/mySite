@@ -1,0 +1,16 @@
+/*いいねボタン*/
+.like-btn {
+cursor: pointer;
+font-size: 24px;
+background: none;
+border: none;
+text-align: center;
+margin-bottom: 15px;
+}
+
+/*押した後
+*TODO 修正予定
+*/
+.like-btn .liked {
+color: red;
+}

@@ -3,7 +3,8 @@
 /**
  * ルーターの役割を担うクラス
  * 
- * 初期設定を読み込んだ後、
+ * 対象がCSSまたはJsファイルであればそのまま読み込む
+ * そうでない場合、初期設定を読み込んだ後、
  * URLに応じたコントローラーの呼び出しを行う
  */
 class Router
@@ -59,6 +60,7 @@ class Router
      */
     public function loadingCommonFiles()
     {
+
         $commonFunctionFile = __DIR__ . '/src/Common/common.php';
         if (file_exists($commonFunctionFile)) {
             require_once $commonFunctionFile;

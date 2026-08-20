@@ -24,7 +24,6 @@ function showHeader(string $activePage = ''): void
     </div>
 
     <!-- ハンバーガーボタン -->
-    <!-- クリックでメニューが開閉 -->
     <button class="menu-open-btn" id="js-menu-btn" aria-label="メニューを開く">
       <span></span>
       <span></span>
