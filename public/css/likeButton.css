@@ -1,16 +1,62 @@
-/*いいねボタン*/
-.like-btn {
-cursor: pointer;
-font-size: 24px;
-background: none;
-border: none;
-text-align: center;
-margin-bottom: 15px;
+/*いいねボタン全体*/
+.like-button {
+  color: #888;
+  font-size: 1em;
+  border: 0.1em solid;
+  border-radius: 1em;
+  padding: 0.333em 1em 0.25em;
+  line-height: 1.2em;
+  cursor: pointer;
+  transition: color 150ms ease-in-out, background-color 150ms ease-in-out, transform 150ms ease-in-out;
+  outline: 0;
+  background-color: white;
+  margin-top: 10;
 }
 
-/*押した後
-*TODO 修正予定
-*/
-.like-btn .liked {
-color: red;
+/*中のハートマーク*/
+.like-button-icon {
+  display: inline-block;
+  fill: currentColor;
+  width: 0.8em;
+  height: 0.8em;
+  margin-right: 0.2em;
+}
+
+/*カーソルを合わせた時*/
+.like-button:hover {
+  color: #e5348c;
+}
+
+/*ボタンが押された場合*/
+.like-button.liked {
+  color: #ffffff;
+  background-color: #e5348c;
+  border-color: #e5348c;
+}
+
+/*中央に配置する*/
+.center-element {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* 押した場合のアニメーション表示 */
+@keyframes pop-animation {
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.3);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* 押した場合のアニメーション実行*/
+.like-button.is-popping {
+  animation: pop-animation 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }

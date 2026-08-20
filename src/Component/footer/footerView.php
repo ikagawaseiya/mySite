@@ -7,8 +7,8 @@
  */
 ?>
 <!--いいねボタンをここに実装-->
-<div class="like-section"">
-  <button type=" button" class="like-btn"></button>
+<div>
+  <?php showLikeButton(); ?>
 </div>
 <footer class="footer">
   <div class="footer-button">
@@ -24,6 +24,5 @@
   </div>
 </footer>
 </body>
-
 
 </html>

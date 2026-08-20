@@ -1,22 +1,18 @@
-<?php
-define("MAX_PAGE_COUNT_IN_DROPDOWN", 5);
-/**
- * 共通ヘッダーを表示する関数
- * 
- * ハンバーガーメニューによって、以下のボタンを表示する
- * ・トップページ
- * ・ゲーム（TODO　追加予定）
- * ・ブログ
- * ・ギャラリー
- * 
- * @param string $activePage 現在のページ名
- */
-function showHeader(string $activePage = ''): void
-{
-  $displayHeaderTitle = SITE_NAME . ":" . $activePage;
-  $blogPosts =  FileGetter::getArrayNewestPageFirst(PathGetter::getBlogFilePathFromController());
-  $galleryPosts = FileGetter::getArrayNewestPageFirst(PathGetter::getGalleryFilePathFromController());
-?>
+  <?php
+  /**
+   * 共通ヘッダーを表示する
+   *
+   * ハンバーガーメニューによって、以下のボタンを表示する
+   * ・トップページ
+   * ・ゲーム（TODO　追加予定）
+   * ・ブログ
+   * ・ギャラリー
+   *
+   * @var string $displayHeaderTitle 表示するタイトル
+   * @var array $blogPosts 新着順のブログ配列
+   * @var array $galleryPosts 新着順のギャラリー配列
+   */
+  ?>
   <link rel="stylesheet" href="/public/css/header.css">
   <header class="site-header">
     <div class="header-text">
@@ -48,17 +44,11 @@ function showHeader(string $activePage = ''): void
 
         <!-- ブログの子メニュー -->
         <ul class="dropdown-menu" id="js-blog-dropdown-menu">
-          <?php
-          $maxCount = min(MAX_PAGE_COUNT_IN_DROPDOWN, count($blogPosts));
-          for ($i = 0; $i < $maxCount; $i++):
-            $blogPost = $blogPosts[$i];
-          ?>
-            <li>
-              <a href="<?php echo Common::h($blogPost['url']); ?>">
-                <?php echo Common::h($blogPost['title']); ?>
-              </a>
-            </li>
-          <?php endfor; ?>
+
+          <li>
+            <?php echo displayDropdownLinksHtml($blogPosts); ?>
+          </li>
+
           <li><a href="/blogList"><span class="arrow-icon">▶</span>ブログ一覧</a></li>
         </ul>
       </li>
@@ -72,23 +62,13 @@ function showHeader(string $activePage = ''): void
 
         <!-- ギャラリーの子メニュー -->
         <ul class="dropdown-menu" id="js-gallery-dropdown-menu">
-          <?php
-          $maxCount = min(MAX_PAGE_COUNT_IN_DROPDOWN, count($galleryPosts));
-          for ($i = 0; $i < $maxCount; $i++):
-            $post = $galleryPosts[$i];
-          ?>
-            <li>
-              <a href="<?php echo Common::h($post['url']); ?>">
-                <?php echo Common::h($post['title']); ?>
-              </a>
-            </li>
-          <?php endfor; ?>
+
+          <li>
+            <?php echo displayDropdownLinksHtml($galleryPosts); ?>
+          </li>
+
           <li><a href="/galleryList"><span class="arrow-icon">▶</span>ギャラリー一覧</a></li>
         </ul>
       </li>
     </ul>
   </nav>
-
-<?php
-}
-?>

@@ -1,4 +1,8 @@
 <?php
+session_start();
+if (empty($_SESSION['csrf_token'])) {
+  $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+}
 const SITE_NAME = "かわいいうさぎ";
 // エラー表示を有効化
 @ini_set('display_errors', 'On');

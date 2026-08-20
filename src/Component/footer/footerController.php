@@ -17,7 +17,8 @@ function showFooter()
 
   $homeButtonMessage = "ホームへ戻る";
   $homeButton = "<span" . " " . $hiddenClass . ">" . $homeButtonMessage . "</span>";
-  if ($thisPagePath  !== '' && $thisPagePath !== "index.php") {
+  $isNotTopPage = $thisPagePath  !== '' && $thisPagePath !== "index.php";
+  if ($isNotTopPage) {
     $homeButton =  '<a href = "/">' . $homeButtonMessage . '</a>';
   }
 
@@ -52,6 +53,5 @@ function showFooter()
       }
     }
   }
-
-  require_once __DIR__ . '/footer.php';
+  require_once __DIR__ . '/footerView.php';
 }
