@@ -14,8 +14,11 @@ document.addEventListener('DOMContentLoaded', function () {
   if (!LIKE_BUTTON) return;
 
   LIKE_BUTTON.addEventListener('click', function () {
+    document.querySelector('.like-button').disabled = true;
 
     setLikeCount(LIKE_BUTTON, LIKE_COUNT);
+
+    document.querySelector('.like-button').disabled = false;
 
     LIKE_BUTTON.classList.add('liked');
     LIKE_BUTTON.classList.remove('like-button-animation');
@@ -39,5 +42,5 @@ document.addEventListener('DOMContentLoaded', function () {
  */
 function setLikeCount(LIKE_BUTTON, LIKE_COUNT) {
   let currentCount = Number(LIKE_COUNT.textContent);
-    LIKE_COUNT.textContent = currentCount + 1;
+  LIKE_COUNT.textContent = currentCount + 1;
 }

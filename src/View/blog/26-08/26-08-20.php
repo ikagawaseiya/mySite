@@ -96,35 +96,35 @@ $this->displayBlogHead($title);
 
   <script>
     document.addEventListener('DOMContentLoaded', function() {
-      const LIKE_BUTTON = document.querySelector('.like-button2');
-      const LIKE_COUNT = document.querySelector('.like_count2');
-      if (!LIKE_BUTTON) return;
+      const LIKE_BUTTON_2 = document.querySelector('.like-button2');
+      const LIKE_COUNT_2 = document.querySelector('.like_count2');
+      if (!LIKE_BUTTON_2) return;
 
-      LIKE_BUTTON.addEventListener('click', function() {
+      LIKE_BUTTON_2.addEventListener('click', function() {
 
-        setLikeCount(LIKE_BUTTON, LIKE_COUNT);
+        setLikeCount(LIKE_BUTTON_2, LIKE_COUNT_2);
 
-        LIKE_BUTTON.classList.toggle('liked');
-        LIKE_BUTTON.classList.remove('is-popping');
+        LIKE_BUTTON_2.classList.toggle('liked');
+        LIKE_BUTTON_2.classList.remove('is-popping');
         requestAnimationFrame(function() {
-          LIKE_BUTTON.classList.add('is-popping');
+          LIKE_BUTTON_2.classList.add('is-popping');
         });
       });
-      LIKE_BUTTON.addEventListener('animationend', function() {
-        LIKE_BUTTON.classList.remove('is-popping');
+      LIKE_BUTTON_2.addEventListener('animationend', function() {
+        LIKE_BUTTON_2.classList.remove('is-popping');
       });
     });
 
-    function setLikeCount(LIKE_BUTTON, LIKE_COUNT) {
-      let currentCount = Number(LIKE_COUNT.textContent);
+    function setLikeCount(LIKE_BUTTON, LIKE_COUNT_2) {
+      let currentCount = Number(LIKE_COUNT_2.textContent);
       const isLiked = LIKE_BUTTON.classList.contains('liked');
       if (isLiked) {
-        LIKE_COUNT.textContent = currentCount - 1;
+        LIKE_COUNT_2.textContent = currentCount - 1;
         if (currentCount < 0) {
           currentCount = 0;
         }
       } else {
-        LIKE_COUNT.textContent = currentCount + 1;
+        LIKE_COUNT_2.textContent = currentCount + 1;
       }
     }
   </script>
