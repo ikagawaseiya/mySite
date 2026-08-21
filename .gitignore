@@ -1,0 +1,2 @@
+# DockerのMySQLデータディレクトリを除外
+docker-mysql/data/

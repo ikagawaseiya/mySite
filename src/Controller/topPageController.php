@@ -21,6 +21,7 @@ class topPageController
     $titleInHtml = Common::getTitleInHtml($pageTitle);
     $newestPosts = $this->getContentsArrayNewestPageFirst();
     $newestPageLoopLimit = min(5, count($newestPosts));
+
     require_once __DIR__ . '/../View/topPage/topPageView.php';
   }
 
@@ -44,9 +45,9 @@ class topPageController
     $galleryFiles = FileGetter::getPhpFilesFromDir(PathGetter::getGalleryFilePathFromController());
 
     //ゲーム記事は現在未実装
-    $gameFilePath = __DIR__ . '/../View/game';
-    //$gameFiles;
-    $gameFiles = FileGetter::getPhpFilesFromDir($gameFilePath);
+    //$gameFilePath = __DIR__ . '/../View/game';
+    $gameFiles = [];
+    //$gameFiles = FileGetter::getPhpFilesFromDir($gameFilePath);
 
     $targetFiles = array_merge($blogFiles, $gameFiles, $galleryFiles);
     return FileGetter::createArrayNewestPageFirst($targetFiles);

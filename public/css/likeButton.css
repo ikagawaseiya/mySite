@@ -1,6 +1,6 @@
 /*いいねボタン全体*/
 .like-button {
-  color: #888;
+  color: gray;
   font-size: 1em;
   border: 0.1em solid;
   border-radius: 1em;
@@ -42,7 +42,7 @@
 }
 
 /* 押した場合のアニメーション表示 */
-@keyframes pop-animation {
+@keyframes like-button-animation {
   0% {
     transform: scale(1);
   }
@@ -57,6 +57,6 @@
 }
 
 /* 押した場合のアニメーション実行*/
-.like-button.is-popping {
-  animation: pop-animation 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+.like-button.like-button-animation {
+  animation: like-button-animation 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }

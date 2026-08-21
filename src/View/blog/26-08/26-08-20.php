@@ -83,7 +83,7 @@ $this->displayBlogHead($title);
         animation: pop-animation 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
       }
     </style>
-  <div class="center-element">
+  <div>
     <button type="button" class="like-button2" id="link-button">
       <!--ハートマークをSVGで表示-->
       <svg class="like-button-icon2" viewBox="0 0 100 100">
@@ -92,8 +92,8 @@ $this->displayBlogHead($title);
       <!--いいねボタンのテキスト-->
       いいね！<?php echo '<span class = "like_count2" id="link_count2">' . 999 . '<span>' ?>
     </button>
+  </div><br>
 
-  </div>
   <script>
     document.addEventListener('DOMContentLoaded', function() {
       const LIKE_BUTTON = document.querySelector('.like-button2');
@@ -130,13 +130,13 @@ $this->displayBlogHead($title);
   </script>
 
   <div>
-    いいねボタンのデザインは、こちらを参考にさせていただきました。偶然見つけたものです。
+    いいねボタンのデザインは、こちらを参考にさせていただきました。
     <a href="https://www.geo-brain.com/blog/?p=11075">
       <br>株式会社ジオブレイン　公式ブログ</a>
   </div>
   <div>
     <br>とてもいいデザインです。<br>
-    今はAIが便利な時代ですが、自分で探す心意気も大切ですね。
+    今はAIが便利な時代ですが、こういった有意義なサイトも多いため、自分で探す心意気も大切ですね。
   </div>
 
   </p>

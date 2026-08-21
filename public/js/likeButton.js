@@ -17,35 +17,27 @@ document.addEventListener('DOMContentLoaded', function () {
 
     setLikeCount(LIKE_BUTTON, LIKE_COUNT);
 
-    LIKE_BUTTON.classList.toggle('liked');
-    LIKE_BUTTON.classList.remove('is-popping');
+    LIKE_BUTTON.classList.add('liked');
+    LIKE_BUTTON.classList.remove('like-button-animation');
     requestAnimationFrame(function () {
-      LIKE_BUTTON.classList.add('is-popping');
+      LIKE_BUTTON.classList.add('like-button-animation');
     });
   });
   LIKE_BUTTON.addEventListener('animationend', function () {
-    LIKE_BUTTON.classList.remove('is-popping');
+    LIKE_BUTTON.classList.remove('like-button-animation');
+    LIKE_BUTTON.classList.remove('liked');
   });
 });
 
 /**
  * いいねの数を増やす
- * いいね済みなら、数を減らす
  * 
- * TODO いいねのDBへの登録、または削除処理を行う予定
+ * TODO いいねのDBへの登録処理を行う予定
  * 
  * @param {*} LIKE_BUTTON 
  * @param {*} LIKE_COUNT 
  */
 function setLikeCount(LIKE_BUTTON, LIKE_COUNT) {
   let currentCount = Number(LIKE_COUNT.textContent);
-  const isLiked = LIKE_BUTTON.classList.contains('liked');
-  if (isLiked) {
-    LIKE_COUNT.textContent = currentCount - 1;
-    if (currentCount < 0) {
-      currentCount = 0;
-    }
-  } else {
     LIKE_COUNT.textContent = currentCount + 1;
-  }
 }
