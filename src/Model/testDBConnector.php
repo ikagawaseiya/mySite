@@ -26,8 +26,8 @@ class TestDBConnector
     ];
 
     try {
-      echo "DB接続に成功しました";
       $pdo = new PDO($dataSourceName, $username, $password, $options);
+      echo "DB接続に成功しました";
       $this->pdoInstance = $pdo;
     } catch (\PDOException $e) {
       echo "エラー：DB接続失敗 testDBConnector";
