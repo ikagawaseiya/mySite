@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', function () {
   LIKE_BUTTON.addEventListener('click', function () {
     document.querySelector('.like-button').disabled = true;
   //ここに登録処理を追加
-  // 【修正】PHPへ非同期でデータを送信する（例: like.phpへ送る）
+  // 【修正】PHPへ非同期でデータを送信する
 
     setLikeCount(LIKE_BUTTON, LIKE_COUNT);
     document.querySelector('.like-button').disabled = false;

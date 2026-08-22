@@ -50,7 +50,7 @@ $this->displayBlogHead($title);
       }
 
       /*ボタンが押された場合*/
-      .like-button2.liked {
+      .like-button2.liked2 {
         color: #ffffff;
         background-color: #e5348c;
         border-color: #e5348c;
@@ -64,7 +64,7 @@ $this->displayBlogHead($title);
       }
 
       /* 押した場合のアニメーション表示 */
-      @keyframes pop-animation {
+      @keyframes pop-animation2 {
         0% {
           transform: scale(1);
         }
@@ -79,18 +79,18 @@ $this->displayBlogHead($title);
       }
 
       /* 押した場合のアニメーション実行*/
-      .like-button2.is-popping {
-        animation: pop-animation 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      .like-button2.is-popping2 {
+        animation: pop-animation2 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
       }
     </style>
   <div>
-    <button type="button" class="like-button2" id="link-button">
+    <button type="button" class="like-button2">
       <!--ハートマークをSVGで表示-->
       <svg class="like-button-icon2" viewBox="0 0 100 100">
         <path d="M91.6 13A28.7 28.7 0 0 0 51 13l-1 1-1-1A28.7 28.7 0 0 0 8.4 53.8l1 1L50 95.3l40.5-40.6 1-1a28.6 28.6 0 0 0 0-40.6z" />
       </svg>
       <!--いいねボタンのテキスト-->
-      いいね！<?php echo '<span class = "like_count2" id="link_count2">' . 999 . '<span>' ?>
+      いいね！<?php echo '<span class = "like_count2">' . 999 . '</span>' ?>
     </button>
   </div><br>
 
@@ -102,29 +102,29 @@ $this->displayBlogHead($title);
 
       LIKE_BUTTON_2.addEventListener('click', function() {
 
-        setLikeCount(LIKE_BUTTON_2, LIKE_COUNT_2);
-
-        LIKE_BUTTON_2.classList.toggle('liked');
-        LIKE_BUTTON_2.classList.remove('is-popping');
+        LIKE_BUTTON_2.classList.toggle('liked2');
+        setLikeCount2(LIKE_BUTTON_2, LIKE_COUNT_2);
+        LIKE_BUTTON_2.classList.remove('is-popping2');
         requestAnimationFrame(function() {
-          LIKE_BUTTON_2.classList.add('is-popping');
+          LIKE_BUTTON_2.classList.add('is-popping2');
         });
       });
       LIKE_BUTTON_2.addEventListener('animationend', function() {
-        LIKE_BUTTON_2.classList.remove('is-popping');
+        LIKE_BUTTON_2.classList.remove('is-popping2');
       });
     });
 
-    function setLikeCount(LIKE_BUTTON, LIKE_COUNT_2) {
+    function setLikeCount2(LIKE_BUTTON_2, LIKE_COUNT_2) {
       let currentCount = Number(LIKE_COUNT_2.textContent);
-      const isLiked = LIKE_BUTTON.classList.contains('liked');
+      const isLiked = LIKE_BUTTON_2.classList.contains('liked2');
       if (isLiked) {
-        LIKE_COUNT_2.textContent = currentCount - 1;
+        LIKE_COUNT_2.textContent = currentCount + 1;
+      } else {
+        currentCount = currentCount - 1;
         if (currentCount < 0) {
           currentCount = 0;
         }
-      } else {
-        LIKE_COUNT_2.textContent = currentCount + 1;
+        LIKE_COUNT_2.textContent = currentCount;
       }
     }
   </script>
