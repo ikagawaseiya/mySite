@@ -11,14 +11,14 @@
 function showLikeButton(): void
 {
   //DB接続
-  $db = getDb();
+  $likeButtonDb = getDb();
 
   try {
-    $likeCount = $db->getLikeCount();
+    $likeCount = $likeButtonDb->getLikeCount();
   } catch (Exception $e) {
+    $likeCount = 0;
     echo "エラー：getLikeCount";
   }
-
 
   require_once __DIR__ . '/likeButtonView.php';
 }
@@ -43,14 +43,7 @@ function getDb(): LikeButtonDb
   return $db;
 }
 
-/**
- * TODO　いいねの数をDBから取得する処理を実装する
- * 
- * DBからページのURLが一致する「いいね」の数を取得して、それを返す
- *
- * @return integer いいね数
- */
-function getLikeCount($db): int
+function setLike(LikeButtonDb $db, string $uri)
 {
-  return 0;
+  $db->insertLike($uri);
 }

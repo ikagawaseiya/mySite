@@ -6,19 +6,24 @@
  * 
  * DBの内部構造は以下とすること
  * テーブル名：like_button
- * カラム名:like_uri
+ * カラム名:like_uri TEXT型
  * 
  */
 class LikeButtonDb
 {
+  /**PDOのインスタンス */
   private PDO $pdo;
+  /**URIのインスタンス */
   private string $uri;
-  /*いいねの表示最大値*/
+  /*いいね数の最大値*/
   private const MAX_LIKE_COUNT = 999999;
+  /**トップページのURI */
+  private const TOP_PAGE_URI = "/";
 
   /**
    * DB接続を試みる
    * 成功した場合、PDO及びURIを自身のインスタンスに代入する
+   * トップページのURIは、"/index.php"の場合でも"/"とする
    *
    * @return void
    */
@@ -32,7 +37,7 @@ class LikeButtonDb
 
 
     //  DSN（データソースネーム）を設定
-    $dataSourceName = "mysql:host=$host;dbname=$dbname;charset=$charset";
+    $DNS = "mysql:host=$host;dbname=$dbname;charset=$charset";
 
     $options = [
       PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
@@ -40,11 +45,7 @@ class LikeButtonDb
     ];
 
     try {
-      $pdo = new PDO($dataSourceName, $username, $password, $options);
-
-      //TODO
-      echo "DB接続に成功しました/LikeButtonDbテスト表示";
-
+      $pdo = new PDO($DNS, $username, $password, $options);
       $this->pdo  = $pdo;
     } catch (\PDOException $e) {
       echo "エラー：LikeButtonDb::connect";
@@ -53,8 +54,8 @@ class LikeButtonDb
     //URIを取得する
     //同一ページであるため、"index.php"である場合、"/"とする
     $uri = $_SERVER['REQUEST_URI'];
-    if ($uri === "index.php") {
-      $uri = "/";
+    if ($uri === "/index.php") {
+      $uri = self::TOP_PAGE_URI;
     }
     $this->uri = $uri;
 
@@ -76,6 +77,7 @@ class LikeButtonDb
 
   /**
    * 現在のページの、いいねの総数を返す
+   * 最大値を超える場合は、最大値とする
    *
    * @return integer
    */
@@ -84,12 +86,39 @@ class LikeButtonDb
     $sql = "SELECT * FROM like_button WHERE like_uri = :uri";
     $sth = $this->pdo->prepare($sql);
     $sth->execute([
-      ':uri' => $this->uri
+      ':uri' =>  $this->uri
     ]);
     $likeCount = $sth->rowCount();
     if ($likeCount > self::MAX_LIKE_COUNT) {
       $likeCount = self::MAX_LIKE_COUNT;
     }
     return $likeCount;
+  }
+
+  /**
+   * 現在のページの、いいねをDBに登録する
+   * 
+   * 送られたURIが自身のページのURIと異なる場合、登録しない
+   * 
+   * TODO 後で直す　不要かも？
+   *
+   * @return bool 登録成否
+   */
+  function insertLike(string $uri)
+  {
+    $like_uri = $uri ?? null;
+    if ($like_uri !== $this->uri) {
+      return;
+    }
+    $sql = "INSERT INTO like_button (like_uri) VALUES (:uri)";
+    $sth = $this->pdo->prepare($sql);
+
+    try {
+      $sth->execute([
+        ':uri' => $this->uri
+      ]);
+    } catch (Exception $e) {
+      echo "エラー：registerLike";
+    }
   }
 }

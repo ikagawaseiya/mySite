@@ -3,7 +3,9 @@
  */
 
 /*
-*ボタンが押された時の表示変更処理 
+*いいねボタンが押された時の処理 
+*
+*登録処理が終わるまでは再度クリックできないものとする
 *
 * アニメーションのクラスは外してから付け直す処理としている
 * これにより、二度目以降も動作するようにする
@@ -15,9 +17,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
   LIKE_BUTTON.addEventListener('click', function () {
     document.querySelector('.like-button').disabled = true;
+  //ここに登録処理を追加
+  // 【修正】PHPへ非同期でデータを送信する（例: like.phpへ送る）
 
     setLikeCount(LIKE_BUTTON, LIKE_COUNT);
-
     document.querySelector('.like-button').disabled = false;
 
     LIKE_BUTTON.classList.add('liked');
