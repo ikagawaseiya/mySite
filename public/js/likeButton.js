@@ -15,20 +15,30 @@ document.addEventListener('DOMContentLoaded', function () {
   const LIKE_COUNT = document.querySelector('.like_count');
   if (!LIKE_BUTTON) return;
 
-  LIKE_BUTTON.addEventListener('click', function () {
-    document.querySelector('.like-button').disabled = true;
-  //ここに登録処理を追加
-  // 【修正】PHPへ非同期でデータを送信する
-
-    setLikeCount(LIKE_BUTTON, LIKE_COUNT);
-    document.querySelector('.like-button').disabled = false;
-
-    LIKE_BUTTON.classList.add('liked');
+  LIKE_BUTTON.addEventListener('click', async function () {
+    if (LIKE_BUTTON.disabled) return;
+    LIKE_BUTTON.disabled = true;
     LIKE_BUTTON.classList.remove('like-button-animation');
+    LIKE_BUTTON.classList.remove('liked');
+
+    //  データ送信処理
+    const IS_SUCCESS = await clickLikeButton();
+
+    if (IS_SUCCESS) {
+      upDisplayLikeCount(LIKE_BUTTON, LIKE_COUNT);
+    } else {
+      alert('いいねの登録に失敗しました。');
+    }
+
+    // アニメーション
+    LIKE_BUTTON.classList.add('liked');
     requestAnimationFrame(function () {
       LIKE_BUTTON.classList.add('like-button-animation');
     });
+
+    LIKE_BUTTON.disabled = false;
   });
+
   LIKE_BUTTON.addEventListener('animationend', function () {
     LIKE_BUTTON.classList.remove('like-button-animation');
     LIKE_BUTTON.classList.remove('liked');
@@ -43,7 +53,32 @@ document.addEventListener('DOMContentLoaded', function () {
  * @param {*} LIKE_BUTTON 
  * @param {*} LIKE_COUNT 
  */
-function setLikeCount(LIKE_BUTTON, LIKE_COUNT) {
+function upDisplayLikeCount(LIKE_BUTTON, LIKE_COUNT) {
   let currentCount = Number(LIKE_COUNT.textContent);
   LIKE_COUNT.textContent = currentCount + 1;
+}
+
+
+/**
+ * PHPへ非同期リクエストを送信する
+ * @return true 成功 / false 失敗
+ */
+async function clickLikeButton() {
+  try {
+
+    const IS_LIKE_INSERT = await fetch('/src/Model/likeButton/insertLikeData.php', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ uri: window.location.pathname })
+    });
+
+    if (!IS_LIKE_INSERT.ok) {
+      throw new Error('エラー：clickLikeButton');
+    }
+    return true;
+  } catch (error) {
+    return false;
+  }
 }
