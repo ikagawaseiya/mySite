@@ -143,7 +143,7 @@ class LikeButtonDB
   {
 
     if ($this->isLikeDailyLimit($ipAddress, $todayDateYMD)) {
-      return "本日のいいね上限に達しました";
+      return "たくさんいいねありがとう！";
     }
     if ($this->getLikeCount() >= self::MAX_LIKE_COUNT) {
       return "これ以上いいねできません";
