@@ -5,6 +5,7 @@
  */
 /**
  * @var int $likeCount いいね数
+ * @var string $ipAddress IPアドレス 
  */
 ?>
 <link rel="stylesheet" href="/public/css/likeButton.css">
@@ -18,7 +19,9 @@
     <!--いいねボタンのテキスト-->
     いいね！<?php echo '<span class = "like_count">' . $likeCount . '<span>' ?>
   </button>
-
+  <div class="like-error hidden"></div>
 </div>
+<input type="hidden" id="ip-address" value=<?php echo $ipAddress ?>>
+<input type="hidden" id="today-date-ymd" value=<?php echo Common::getDateTodayYMD() ?>>
 <input type="hidden" id="csrf-token" value=<?php echo $_SESSION['csrf_token'] ?>>
 <script src="/public/js/likeButton.js" defer></script>

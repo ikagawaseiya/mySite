@@ -65,14 +65,13 @@ class Common
   }
 
   /**
-   * CSRFトークンを生成する
+   * 今日の日時をY-m-d形式で返す
    *
-   * @return void
+   * @return string 現在の日時(y-m-d表記)
    */
-  public static function createCsrfToken()
+  public static function getDateTodayYMD(): string
   {
-    if (empty($_SESSION['csrf_token'])) {
-      $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
-    }
+    $date = new DateTimeImmutable('now', new DateTimeZone('Asia/Tokyo'));
+    return $date->format('Y-m-d');
   }
 }

@@ -6,8 +6,10 @@
  * 
  * DBの内部構造は以下とすること
  * テーブル名：like_button
- * カラム名:like_uri TEXT型
- * 
+ * カラム名:
+ * like_uri TEXT型
+ * like_address TEXT型
+ * like_date TEXT型
  */
 class LikeButtonDB
 {
@@ -19,6 +21,8 @@ class LikeButtonDB
   private const TOP_PAGE_URI = "/";
   /**URIのインスタンス */
   public string $uri;
+  /**一日にけるいいねの最大数 */
+  const MAX_LIKE_DAILY_LIMIT = 10;
 
   /**
    * DB接続を試みる
@@ -130,21 +134,59 @@ class LikeButtonDB
    * 送られたURIが自身のページのURIと異なる場合
    * ページのいいねが最大値である場合
    *
-   * @return bool 登録成否
+   * TODO　後で直す
+   * @return bool true:登録可 false 本日のいいねが最大値
    */
-  function insertLike(string $uri)
+  function insertLike(string $uri, string $ipAddress, string $todayDateYMD)
   {
+
+    if ($this->isLikeDailyLimit($ipAddress, $todayDateYMD)) {
+      return false;
+    }
     $like_uri = $uri ?? null;
     if ($like_uri !== $this->uri || $this->getLikeCount() >= self::MAX_LIKE_COUNT) {
-      return;
+      return true;
     }
-    $sql = "INSERT INTO like_button (like_uri) VALUES (:uri)";
+
+    $sql = "INSERT INTO like_button (like_uri, `like_address`, `like_date`) VALUES (:uri, :ipAddress, :likeDate)";
     $sth = $this->pdo->prepare($sql);
 
     try {
       $sth->execute([
-        ':uri' => $this->uri
+        ':uri' => $this->uri,
+        ':ipAddress' => $ipAddress,
+        ':likeDate' => $todayDateYMD
       ]);
+    } catch (Exception $e) {
+      throw $e;
+    }
+  }
+
+
+  /**
+   * いいねの数が、一日にできる最大数に到達したか判定する
+   * 
+   * ipアドレスと、日付が同一のデータを数える
+   * それが最大数以上である場合、trueとする
+   *
+   * @param string $ipAddress ipアドレス
+   * @param string $todayDateYMD 今日の日付 y-m-d
+   * @return boolean 今日のいいねが最大数 / 最大数ではない
+   */
+  function isLikeDailyLimit(string $ipAddress, string $todayDateYMD): bool
+  {
+    $sql = "SELECT COUNT(*) FROM like_button WHERE `like_address` = :ipAddress AND `like_date` = :todayDate";
+    $sth = $this->pdo->prepare($sql);
+
+    try {
+      $sth->execute([
+        ':ipAddress' => $ipAddress,
+        ':todayDate' => $todayDateYMD
+      ]);
+
+      $currentCount = (int)$sth->fetchColumn();
+
+      return $currentCount >= self::MAX_LIKE_DAILY_LIMIT;
     } catch (Exception $e) {
       throw $e;
     }

@@ -9,9 +9,11 @@ header('Content-Type: application/json; charset=UTF-8');
 
 try {
   //jsからファイルを受け取り
-  //403エラーを回避する形式から元のURIへデコードする
+  //URIは403エラーを回避する形式から元のURIへデコードする
   $rawInput = file_get_contents('php://input');
   $input = json_decode($rawInput, true);
+  $ipAddress = $input['ipAddress'] ?? null;
+  $todayDateYMD = $input['todayDateYMD'] ?? null;
   $currentUri = $input['uri'] ?? null;
   $currentUri = urldecode($currentUri);
 
@@ -32,7 +34,15 @@ try {
   }
 
   $likeButtonDB->uri = $currentUri;
-  $likeButtonDB->insertLike($likeButtonDB->uri);
+  $isSuccess = $likeButtonDB->insertLike($likeButtonDB->uri, $ipAddress, $todayDateYMD);
+
+  if (!$isSuccess) {
+    echo json_encode([
+      'status' => 'limit_exceeded',
+      'message' => '本日のいいね上限数に達しました。'
+    ]);
+    exit;
+  }
 
   echo json_encode(['status' => 'success']);
   exit;

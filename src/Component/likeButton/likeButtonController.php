@@ -20,6 +20,8 @@ function showLikeButton(): void
     echo "エラー：getLikeCount";
   }
 
+  $ipAddress = $_SERVER['REMOTE_ADDR'] ?? null;
+
   require_once __DIR__ . '/likeButtonView.php';
 }
 
