@@ -20,4 +20,5 @@
   </button>
 
 </div>
+<input type="hidden" id="csrf-token" value=<?php echo $_SESSION['csrf_token'] ?>>
 <script src="/public/js/likeButton.js" defer></script>

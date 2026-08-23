@@ -13,6 +13,7 @@
 document.addEventListener('DOMContentLoaded', function () {
   const LIKE_BUTTON = document.querySelector('.like-button');
   const LIKE_COUNT = document.querySelector('.like_count');
+  const CSRF_TOKEN = document.getElementById('csrf-token').value;
   if (!LIKE_BUTTON) return;
 
   LIKE_BUTTON.addEventListener('click', async function () {
@@ -22,7 +23,7 @@ document.addEventListener('DOMContentLoaded', function () {
     LIKE_BUTTON.classList.remove('liked');
 
     //  データ送信処理
-    const IS_SUCCESS = await clickLikeButton();
+    const IS_SUCCESS = await registeredLikeInDB(CSRF_TOKEN);
 
     if (IS_SUCCESS) {
       upDisplayLikeCount(LIKE_BUTTON, LIKE_COUNT);
@@ -63,15 +64,15 @@ function upDisplayLikeCount(LIKE_BUTTON, LIKE_COUNT) {
  * PHPへ非同期リクエストを送信する
  * @return true 成功 / false 失敗
  */
-async function clickLikeButton() {
+async function registeredLikeInDB(csrfToken) {
   try {
-
     const IS_LIKE_INSERT = await fetch('/src/Model/likeButton/insertLikeData.php', {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'X-CSRF-Token': csrfToken
       },
-      body: JSON.stringify({ uri: window.location.pathname })
+      body: JSON.stringify({ uri: encodeURIComponent(window.location.pathname) })
     });
 
     if (!IS_LIKE_INSERT.ok) {
