@@ -70,9 +70,12 @@ async function registeredLikeInDB(csrfToken) {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'X-CSRF-Token': csrfToken
+
       },
-      body: JSON.stringify({ uri: encodeURIComponent(window.location.pathname) })
+      body: JSON.stringify({
+        uri: encodeURIComponent(window.location.pathname),
+        csrfToken: csrfToken
+      })
     });
 
     if (!IS_LIKE_INSERT.ok) {

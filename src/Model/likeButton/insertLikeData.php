@@ -15,11 +15,10 @@ try {
   $currentUri = $input['uri'] ?? null;
   $currentUri = urldecode($currentUri);
 
-  // 送られてきたヘッダーを取得
-  $headers = getallheaders();
-  $CSRFToken = isset($headers['X-CSRF-Token']) ? $headers['X-CSRF-Token'] : '';
+  $CSRFToken = $input['csrfToken'] ?? '';
   if ($CSRFToken !== $_SESSION['csrf_token']) {
-    echo "エラー：CSRFトークン";
+    http_response_code(403);
+    echo json_encode(['status' => 'error', 'message' => 'CSRFトークンが一致しません。']);
     exit;
   }
 

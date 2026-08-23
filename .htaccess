@@ -9,6 +9,9 @@ RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule . index.php [L]
 
 # srcフォルダへの直接アクセスを禁止
+#ただし以下のPOST用フォルダは除く
+#insertLikeData.php
+RewriteCond %{REQUEST_URI} !^/src/Model/likeButton/insertLikeData\.php$
 RewriteRule ^src/ - [F,L]
 
 # フォルダ内のファイル一覧をブラウザに表示させない
