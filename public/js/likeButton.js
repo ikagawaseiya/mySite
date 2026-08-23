@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', function () {
   const CSRF_TOKEN = document.getElementById('csrf-token').value;
   const IP_ADDRESS = document.getElementById('ip-address').value;
   const TODAY_DATE_YMD = document.getElementById('today-date-ymd').value;
-  const ERROR_MESSAGE_ELEMENT = document.querySelector('.like-error');
+  const LIKE_ERROR_MESSAGE = document.querySelector('.like-error');
 
   LIKE_BUTTON.addEventListener('click', async function () {
     if (LIKE_BUTTON.disabled) return;
@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     //  データ送信処理
     const responseResult = await registeredLikeInDB(CSRF_TOKEN, IP_ADDRESS, TODAY_DATE_YMD);
-    let shouldAnimate = getLikeResponse(responseResult, LIKE_COUNT, ERROR_MESSAGE_ELEMENT);
+    let shouldAnimate = getLikeResponse(responseResult, LIKE_COUNT, LIKE_ERROR_MESSAGE);
 
     // アニメーション
     if (shouldAnimate) {
@@ -105,10 +105,10 @@ function getLikeResponse(responseResult, likeCountElement, errorElement) {
   if (responseResult && responseResult.status === 'success') {
     upDisplayLikeCount(likeCountElement);
     shouldAnimate = true;
-  } else if (responseResult && responseResult.status === 'limit_exceeded') {
+  } else if (responseResult && responseResult.status === 'like_daily_limit') {
     if (errorElement) {
       errorElement.textContent = responseResult.message;
-      errorElement.classList.add('error-active');
+      errorElement.classList.add('like-button-error-text');
       errorElement.classList.remove('hidden');
     }
   } else {

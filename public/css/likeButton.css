@@ -60,3 +60,10 @@
 .like-button.like-button-animation {
   animation: like-button-animation 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
+
+/*いいねで問題が発生したときのテキスト*/
+.like-button-error-text {
+  color: white;
+  -webkit-text-stroke: 2px #e5348c;
+  paint-order: stroke fill;
+}

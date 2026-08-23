@@ -34,12 +34,12 @@ try {
   }
 
   $likeButtonDB->uri = $currentUri;
-  $isSuccess = $likeButtonDB->insertLike($likeButtonDB->uri, $ipAddress, $todayDateYMD);
+  $likeErrorMessage = $likeButtonDB->checkInsertLike($likeButtonDB->uri, $ipAddress, $todayDateYMD);
 
-  if (!$isSuccess) {
+  if ($likeErrorMessage !== "") {
     echo json_encode([
-      'status' => 'limit_exceeded',
-      'message' => '本日のいいね上限数に達しました。'
+      'status' => 'like_daily_limit',
+      'message' => $likeErrorMessage
     ]);
     exit;
   }

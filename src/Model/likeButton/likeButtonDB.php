@@ -21,7 +21,7 @@ class LikeButtonDB
   private const TOP_PAGE_URI = "/";
   /**URIのインスタンス */
   public string $uri;
-  /**一日にけるいいねの最大数 */
+  /**一日における、いいねの最大数 */
   const MAX_LIKE_DAILY_LIMIT = 10;
 
   /**
@@ -129,23 +129,29 @@ class LikeButtonDB
 
   /**
    * 現在のページの、いいねをDBに登録する
+   * 問題が発生した場合、エラーメッセージを返す
    * 
-   * ・以下の場合は登録を行わない
+   * ・以下の場合は登録を行わず、場合に応じたエラーメッセージを返す
+   * 本日のいいね数の上限に達している場合
    * 送られたURIが自身のページのURIと異なる場合
    * ページのいいねが最大値である場合
+   * SQL文のtryに失敗した場合
    *
-   * TODO　後で直す
-   * @return bool true:登録可 false 本日のいいねが最大値
+   * @return string 問題発生時のメッセージ
    */
-  function insertLike(string $uri, string $ipAddress, string $todayDateYMD)
+  function checkinsertLike(string $uri, string $ipAddress, string $todayDateYMD): string
   {
 
     if ($this->isLikeDailyLimit($ipAddress, $todayDateYMD)) {
-      return false;
+      return "本日のいいね上限に達しました";
     }
+    if ($this->getLikeCount() >= self::MAX_LIKE_COUNT) {
+      return "これ以上いいねできません";
+    }
+
     $like_uri = $uri ?? null;
-    if ($like_uri !== $this->uri || $this->getLikeCount() >= self::MAX_LIKE_COUNT) {
-      return true;
+    if ($like_uri !== $this->uri) {
+      return "エラー：URI";
     }
 
     $sql = "INSERT INTO like_button (like_uri, `like_address`, `like_date`) VALUES (:uri, :ipAddress, :likeDate)";
@@ -157,8 +163,9 @@ class LikeButtonDB
         ':ipAddress' => $ipAddress,
         ':likeDate' => $todayDateYMD
       ]);
+      return "";
     } catch (Exception $e) {
-      throw $e;
+      return "エラー：checkinsertLike";
     }
   }
 
@@ -171,7 +178,7 @@ class LikeButtonDB
    *
    * @param string $ipAddress ipアドレス
    * @param string $todayDateYMD 今日の日付 y-m-d
-   * @return boolean 今日のいいねが最大数 / 最大数ではない
+   * @return boolean 今日のいいね数が最大数 / 最大数ではない
    */
   function isLikeDailyLimit(string $ipAddress, string $todayDateYMD): bool
   {
