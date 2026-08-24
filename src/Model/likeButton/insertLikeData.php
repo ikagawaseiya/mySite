@@ -13,14 +13,15 @@ try {
   $rawInput = file_get_contents('php://input');
   $input = json_decode($rawInput, true);
   $ipAddress = $input['ipAddress'] ?? null;
+  $likeUserCookie = $input['likeUserCookie'] ?? null;
   $todayDateYMD = $input['todayDateYMD'] ?? null;
   $currentUri = $input['uri'] ?? null;
   $currentUri = urldecode($currentUri);
 
   $CSRFToken = $input['csrfToken'] ?? '';
   if ($CSRFToken !== $_SESSION['csrf_token']) {
-    http_response_code(403);
     echo json_encode(['status' => 'error', 'message' => 'CSRFトークンが一致しません。']);
+    http_response_code(403);
     exit;
   }
 
@@ -34,7 +35,7 @@ try {
   }
 
   $likeButtonDB->uri = $currentUri;
-  $likeErrorMessage = $likeButtonDB->checkInsertLike($likeButtonDB->uri, $ipAddress, $todayDateYMD);
+  $likeErrorMessage = $likeButtonDB->checkInsertLike($likeButtonDB->uri, $ipAddress, $likeUserCookie, $todayDateYMD);
 
   if ($likeErrorMessage !== "") {
     echo json_encode([

@@ -22,18 +22,7 @@ function showLikeButton(): void
 
   $ipAddress = $_SERVER['REMOTE_ADDR'] ?? null;
 
-  //クッキーを取得する
-  //期限は172800秒（二日とする）
-  //TODO 後に使う
-  $likeUserCookie = "like_user_cookie";
-  if (isset($_COOKIE[$likeUserCookie])) {
-    $currentUserCookie = $_COOKIE[$likeUserCookie];
-  } else {
-    $currentUserCookie = bin2hex(random_bytes(16));
-    $numberOfSecondsInTwoDays = 172800;
-    $expire_time = time() + $numberOfSecondsInTwoDays;
-    setcookie($likeUserCookie, $currentUserCookie, $expire_time, "/", "", true, true);
-  }
+  $likeCookieValue = creatCookie();
 
   require_once __DIR__ . '/likeButtonView.php';
 }
@@ -56,4 +45,30 @@ function getDB(): LikeButtonDB
     echo "DB接続に失敗しました。";
   };
   return $db;
+}
+
+/**
+ *乱数により生成した値をcookieに格納する
+ *その後、生成した値をStringで返す
+ *期限は二日（172800秒）とする
+ *
+ *$userCookieに$_COOKIE[$likeUserCookie]と同じ値が代入されている
+ *今後の処理は$userCookieを使用すること
+ *※初回のアクセス時はsetcookieが反映されないため
+ *
+ * @return string 乱数によって生成された$_COOKIE[$likeUserCookie]と同じ値
+ */
+function creatCookie(): string
+{
+  $likeUserCookie = "like_user_cookie";
+  if (isset($_COOKIE[$likeUserCookie])) {
+    return $_COOKIE[$likeUserCookie];
+  } else {
+    //cookieeikooccを生成
+    $randomLikeCookieValue = bin2hex(random_bytes(16));
+    $twoDaysSeconds = 172800;
+    $aliveTime = time() + $twoDaysSeconds;
+    setcookie($likeUserCookie, $randomLikeCookieValue, $aliveTime, "/", "", true, true);
+  }
+  return $randomLikeCookieValue;
 }

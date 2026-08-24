@@ -6,6 +6,7 @@
 /**
  * @var int $likeCount いいね数
  * @var string $ipAddress IPアドレス 
+ * @var string  $likeCookieValue cokkieに格納した値
  */
 ?>
 <link rel="stylesheet" href="/public/css/likeButton.css">
@@ -19,8 +20,9 @@
     <!--いいねボタンのテキスト-->
     いいね！<?php echo '<span class = "like_count">' . $likeCount . '<span>' ?>
   </button>
-  <div class="like-error hidden"></div>
+  <div class="like-error is-like-error-text-hidden">いいねメッセージ:デフォルト</div>
 </div>
+<input type="hidden" id="like_user_cookie" value=<?php echo $likeCookieValue ?>">
 <input type="hidden" id="ip-address" value=<?php echo $ipAddress ?>>
 <input type="hidden" id="today-date-ymd" value=<?php echo Common::getDateTodayYMD() ?>>
 <input type="hidden" id="csrf-token" value=<?php echo $_SESSION['csrf_token'] ?>>

@@ -8,21 +8,22 @@
  * テーブル名：like_button
  * カラム名:
  * like_uri TEXT型
- * like_address TEXT型
+ * like_ip_address TEXT型
+ * like_user_cookie TEXT型
  * like_date TEXT型
  */
 class LikeButtonDB
 {
   /**PDOのインスタンス */
   private PDO $pdo;
+  /**URIのインスタンス */
+  public string $uri;
   /*いいね数の最大値*/
   private const MAX_LIKE_COUNT = 999999;
   /**トップページのURI */
   private const TOP_PAGE_URI = "/";
-  /**URIのインスタンス */
-  public string $uri;
   /**一日における、いいねの最大数 */
-  const MAX_LIKE_DAILY_LIMIT = 10;
+  private const MAX_LIKE_DAILY_LIMIT = 10;
 
   /**
    * DB接続を試みる
@@ -139,10 +140,10 @@ class LikeButtonDB
    *
    * @return string 問題発生時のメッセージ
    */
-  function checkinsertLike(string $uri, string $ipAddress, string $todayDateYMD): string
+  function checkinsertLike(string $uri, string $ipAddress, string $likeUserCookie, string $todayDateYMD): string
   {
 
-    if ($this->isLikeDailyLimit($ipAddress, $todayDateYMD)) {
+    if ($this->isLikeDailyLimit($ipAddress, $likeUserCookie, $todayDateYMD)) {
       return "たくさんいいねありがとう！";
     }
     if ($this->getLikeCount() >= self::MAX_LIKE_COUNT) {
@@ -154,15 +155,14 @@ class LikeButtonDB
       return "エラー：URI";
     }
 
-    $sql = "INSERT INTO like_button (like_uri, `like_address`, `like_date`) VALUES (:uri, :ipAddress, :likeDate)";
-    $sth = $this->pdo->prepare($sql);
-
     try {
-      $sth->execute([
-        ':uri' => $this->uri,
-        ':ipAddress' => $ipAddress,
-        ':likeDate' => $todayDateYMD
-      ]);
+      $sql = "INSERT INTO like_button (like_uri, like_ip_address, like_date,like_user_cookie) VALUES (:uri, :ipAddress, :likeDate,:likeUserCookie)";
+      $stmt = $this->pdo->prepare($sql);
+      $stmt->bindValue(':uri', $this->uri, PDO::PARAM_STR);
+      $stmt->bindValue(':ipAddress', $ipAddress, PDO::PARAM_STR);
+      $stmt->bindValue(':likeDate', $todayDateYMD, PDO::PARAM_STR);
+      $stmt->bindValue(':likeUserCookie', $likeUserCookie, PDO::PARAM_STR);
+      $stmt->execute();
       return "";
     } catch (Exception $e) {
       return "エラー：checkinsertLike";
@@ -173,29 +173,29 @@ class LikeButtonDB
   /**
    * いいねの数が、一日にできる最大数に到達したか判定する
    * 
-   * ipアドレスと、日付が同一のデータを数える
-   * それが最大数以上である場合、trueとする
+   * 以下のデータの数が、いいねの最大値以上である場合をtrueとする
+   * ・日付及び、IPアドレスまたはcokkieの値が送信者と同一のデータ
    *
    * @param string $ipAddress ipアドレス
+   * @param string $likeUserCookie いいねした人のcookieの値
    * @param string $todayDateYMD 今日の日付 y-m-d
    * @return boolean 今日のいいね数が最大数 / 最大数ではない
    */
-  function isLikeDailyLimit(string $ipAddress, string $todayDateYMD): bool
+  function isLikeDailyLimit(string $ipAddress, string $likeUserCookie, string $todayDateYMD): bool
   {
-    $sql = "SELECT COUNT(*) FROM like_button WHERE `like_address` = :ipAddress AND `like_date` = :todayDate";
-    $sth = $this->pdo->prepare($sql);
+    $sql = "SELECT COUNT(*) FROM like_button WHERE `like_date` = :todayDate  AND (`like_ip_address` = :ipAddress OR `like_user_cookie` = :likeCookie)";
+    $stmt = $this->pdo->prepare($sql);
 
+    $stmt->bindValue(':todayDate', $todayDateYMD, PDO::PARAM_STR);
+    $stmt->bindValue(':ipAddress', $ipAddress, PDO::PARAM_STR);
+    $stmt->bindValue(':likeCookie', $likeUserCookie, PDO::PARAM_STR);
     try {
-      $sth->execute([
-        ':ipAddress' => $ipAddress,
-        ':todayDate' => $todayDateYMD
-      ]);
-
-      $currentCount = (int)$sth->fetchColumn();
-
+      $stmt->execute();
+      $currentCount = (int)$stmt->fetchColumn();
       return $currentCount >= self::MAX_LIKE_DAILY_LIMIT;
     } catch (Exception $e) {
-      throw $e;
+      error_log("エラー：isLikeDailyLimit - " . $e->getMessage());
+      return false;
     }
   }
 }

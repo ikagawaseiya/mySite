@@ -67,3 +67,7 @@
   -webkit-text-stroke: 2px #e5348c;
   paint-order: stroke fill;
 }
+
+.is-like-error-text-hidden {
+  visibility: hidden;
+}
