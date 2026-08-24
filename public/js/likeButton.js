@@ -32,6 +32,9 @@ document.addEventListener('DOMContentLoaded', function () {
     let shouldAnimate = checkResponseReaction(responseResult, LIKE_COUNT, LIKE_ERROR_MESSAGE);
 
     if (shouldAnimate) {
+      if (LIKE_ERROR_MESSAGE.classList.contains('is-like-error-text-hidden')) {
+        LIKE_ERROR_MESSAGE.classList.add('is-like-error-text-hidden');
+      }
       LIKE_BUTTON.classList.add('liked');
       requestAnimationFrame(function () {
         LIKE_BUTTON.classList.add('like-button-animation');
