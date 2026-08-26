@@ -21,17 +21,22 @@
 
 <body>
   <canvas id="myCanvas" width="480" height="320"></canvas>
-  <script>
+  <script type="module">
+    // import { ballRadius } from './object/ball.js';
     const canvas = document.getElementById("myCanvas");
     const ctx = canvas.getContext("2d");
     //ボールの各種設定
+    /*半径*/
     const ballRadius = 10;
+    /*初期位置*/
     let x = canvas.width / 2;
     let y = canvas.height / 2;
-    startDxSpeed = 2;
-    startDySpeed = 2;
+    /*初期速度*/
+    const startDxSpeed = 1;
+    const startDySpeed = 1;
     let dx = startDxSpeed;
     let dy = startDySpeed;
+    /*初期色*/
     const startBallColorNumber = 240;
     let ballColorStyle = `hsl(${startBallColorNumber}, 70%, 60%)`;
     //パドルの描画設定
@@ -52,12 +57,14 @@
     //スコアの描画設定
     let score = 0;
 
+    const brickExistsStatus = 1;
+    const brickDestroyStatus = 0;
     const bricks = [];
     for (let c = 0; c < brickColumnCount; c++) {
       bricks[c] = [];
       for (let r = 0; r < brickRowCount; r++) {
         //値x,y,破壊の判定statusのプロパティ
-        bricks[c][r] = { x: 0, y: 0, status: 1 };
+        bricks[c][r] = { x: 0, y: 0, status: brickExistsStatus };
       }
     }
 
@@ -69,7 +76,7 @@
     function drawBricks() {
       for (var c = 0; c < brickColumnCount; c++) {
         for (var r = 0; r < brickRowCount; r++) {
-          if (bricks[c][r].status == 1) {
+          if (bricks[c][r].status == brickExistsStatus) {
             var brickX = (c * (brickWidth + brickPadding)) + brickOffsetLeft;
             var brickY = (r * (brickHeight + brickPadding)) + brickOffsetTop;
             bricks[c][r].x = brickX;
@@ -118,13 +125,14 @@
         for (var r = 0; r < brickRowCount; r++) {
           var b = bricks[c][r];
           //衝突した場合の処理
-          if (b.status == 1) {
-            if (x > b.x &&
-              x < b.x + brickWidth &&
-              y > b.y &&
-              y < b.y + brickHeight) {
+          let isCollision = x > b.x &&
+            x < b.x + brickWidth &&
+            y > b.y &&
+            y < b.y + brickHeight;
+          if (b.status == brickExistsStatus) {
+            if (isCollision) {
               dy = -dy;
-              b.status = 0;
+              b.status = brickDestroyStatus;
               changeBallColorRandom()
               score++;
               if (score === brickRowCount * brickColumnCount) {
@@ -147,17 +155,16 @@
 
     /*
     *パドル反射時に変更されるボール速度
-    *TODO　現状では貫通するバグが発生するので使用不可
     */
     function changeSpeedForPaddleReflection() {
-      ballMaxSpeedLimit = 3;
-      if (dx < 0 && dx > -ballMaxSpeed) {
-        dx = dx - 1;
-      } else if (dx < ballMaxSpeedLimit) {
-        dx = dx + 1;
+      const ballMaxSpeedLimit = 2;
+      if (dx < 0) {
+        dx = Math.max(dx - 1, -ballMaxSpeedLimit);
+      } else if (dx > 0) {
+        dx = Math.min(dx + 1, ballMaxSpeedLimit);
       }
-      if (dy < -ballMaxSpeedLimit) {
-        dy - 1;
+      if (dy < 0) {
+        dy = Math.max(dy - 1, -ballMaxSpeedLimit);
       }
     }
 
@@ -177,15 +184,21 @@
         changeBallColorRandom();
       }
 
+      /*パドルの高さの当たり判定*/
+      const paddleY = canvas.height - ballRadius - paddleHeight;
       if (y + dy < ballRadius) {
         dy = -dy;
         changeBallColorRandom();
-      } else if (y + dy > canvas.height - ballRadius) {
-        //パドルで反射した場合
+      }
+      else if (y + dy > paddleY) {
+        // 横方向がパドルの幅の中に収まっているか
         if (x > paddleX && x < paddleX + paddleWidth) {
+          y = paddleY;
           dy = -dy;
+          changeSpeedForPaddleReflection();
           changeBallColorRandom();
-        } else {
+        }
+        else if (y + dy > canvas.height - ballRadius + 5) {
           alert("GAME OVER");
           document.location.reload();
           clearInterval(interval);
