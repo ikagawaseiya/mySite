@@ -3,9 +3,10 @@ const START_DX_SPEED = 1;
 const START_DY_SPEED = 1;
 const START_COLOR_NUMBER = 240;
 const BALL_MAX_SPEED_LIMIT = 4;
-let canvas;
-let startX;
-let startY;
+
+/**
+ * ボールクラス
+ */
 export class Ball {
   /**
    * ボールのコンストラクタ
@@ -45,6 +46,8 @@ export class Ball {
   /**
   *ボール速度を変更する
   *パドル反射時に呼び出す
+  *
+  *最大速度を超えることは無い
   */
   changeSpeedForPaddleReflection() {
     if (this.dx < 0) {
