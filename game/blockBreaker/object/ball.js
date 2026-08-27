@@ -2,6 +2,7 @@ export const BALL_RADIUS = 10;
 const START_DX_SPEED = 1;
 const START_DY_SPEED = 1;
 const START_COLOR_NUMBER = 240;
+const BALL_MAX_SPEED_LIMIT = 4;
 let canvas;
 let startX;
 let startY;
@@ -46,7 +47,6 @@ export class Ball {
   *パドル反射時に呼び出す
   */
   changeSpeedForPaddleReflection() {
-    const BALL_MAX_SPEED_LIMIT = 3;
     if (this.dx < 0) {
       this.dx = Math.max(this.dx - 1, -BALL_MAX_SPEED_LIMIT);
     } else if (this.dx > 0) {
