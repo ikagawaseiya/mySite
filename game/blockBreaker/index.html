@@ -20,13 +20,33 @@
     import { Bricks } from './object/bricks.js';
     const BRICKS = new Bricks(CANVAS);
 
+    //TODO 後々クラスで分ける
+    const STATE_START = 'start';
+    const STATE_PLAYING = 'playing';
+    const STATE_GAMEOVER = 'gameover';
+    const STATE_CLEAR = 'clear';
+    let gameState = STATE_START;
 
     //スコアの描画設定
     let score = 0;
     //プレイヤーのライフ
     let lives = 3;
 
-
+    /*
+    *オブジェクトの状態を初期状態に戻す
+    *TODO　※後々各オブジェクト側のjsへ移す
+    */
+    function resetGame() {
+      score = 0;
+      lives = 3;
+      BALL.drawRestartPosition(CANVAS);
+      PADDLE.paddleX = (CANVAS.width - PADDLE.Width) / 2;
+      for (let c = 0; c < BRICKS.brickColumnCount; c++) {
+        for (let r = 0; r < BRICKS.brickRowCount; r++) {
+          BRICKS.bricks[c][r].status = BRICKS.brickHp;
+        }
+      }
+    }
 
     //ライフの描画
     function drawLives() {
@@ -57,8 +77,7 @@
               BALL.changeBallColor()
               score++;
               if (score === BRICKS.brickRowCount * BRICKS.brickColumnCount) {
-                alert("YOU WIN, CONGRATULATIONS!");
-                document.location.reload();
+                gameState = STATE_CLEAR;
               }
             }
           }
@@ -73,29 +92,103 @@
       CTX.fillText(`Score: ${score}`, 8, 20);
     }
 
-    //全体の動きを管理する
+    //スタート画面の描画
+    function drawStartScreen() {
+      CTX.fillStyle = "#f0f0f0";
+      CTX.fillRect(0, 0, CANVAS.width, CANVAS.height);
+
+      CTX.font = "bold 24px Arial";
+      CTX.fillStyle = "#0095DD";
+      CTX.textAlign = "center";
+      CTX.fillText("ブロック崩しゲーム", CANVAS.width / 2, CANVAS.height / 2 - 20);
+
+      CTX.font = "16px Arial";
+      CTX.fillStyle = "#555";
+      CTX.fillText("クリックorタッチでスタート", CANVAS.width / 2, CANVAS.height / 2 + 30);
+    }
+
+    //ゲームオーバー画面の描画
+    function drawGameOverScreen() {
+      CTX.fillStyle = "rgba(0, 0, 0, 0.6)";
+      CTX.fillRect(0, 0, CANVAS.width, CANVAS.height);
+
+      CTX.font = "bold 32px Arial";
+      CTX.fillStyle = "#FF0000";
+      CTX.textAlign = "center";
+      CTX.fillText("GAME OVER", CANVAS.width / 2, CANVAS.height / 2 - 10);
+
+      CTX.font = "16px Arial";
+      CTX.fillStyle = "#FFF";
+      CTX.fillText("クリックorタッチでタイトルへ戻る", CANVAS.width / 2, CANVAS.height / 2 + 40);
+    }
+
+    //クリア画面の描画
+    function drawClearScreen() {
+      CTX.fillStyle = "rgba(0, 0, 0, 0.6)";
+      CTX.fillRect(0, 0, CANVAS.width, CANVAS.height);
+
+      CTX.font = "bold 32px Arial";
+      CTX.fillStyle = "#FFD700";
+      CTX.textAlign = "center";
+      CTX.fillText("GAME CREAR!", CANVAS.width / 2, CANVAS.height / 2 - 10);
+
+      CTX.font = "16px Arial";
+      CTX.fillStyle = "#FFF";
+      CTX.fillText("クリックorタッチでタイトルへ戻る", CANVAS.width / 2, CANVAS.height / 2 + 40);
+    }
+
+    //ゲームの状態に合わせた処理を実行する
     function draw() {
       CTX.clearRect(0, 0, CANVAS.width, CANVAS.height);
+      switch (gameState) {
+        case STATE_START:
+          drawStartScreen();
+          break;
+
+        case STATE_PLAYING:
+          runGame();
+          break;
+
+        case STATE_GAMEOVER:
+          drawGameObjects();
+          drawGameOverScreen();
+          break;
+
+        case STATE_CLEAR:
+          drawGameObjects();
+          drawClearScreen();
+          break;
+      }
+
+      // requestAnimationFrame()により繰り返される
+      requestAnimationFrame(draw);
+    }
+
+    // 各オブジェクトの描画
+    function drawGameObjects() {
       BRICKS.drawBricks(CTX);
       BALL.draw(CTX);
       PADDLE.drawPaddle(CTX);
       drawScore();
       drawLives();
+    }
+
+    // ゲームプレイ中の処理
+    function runGame() {
+      drawGameObjects();
+
       collisionDetection();
       BALL.x += BALL.dx;
       BALL.y += BALL.dy;
-
       BALL.reflectionForCanvasSide();
 
-      //縦方向のボールが当たった場合の処理
-      //後にボールクラスへ移動するかも？
-      /*パドルの高さの当たり判定*/
+      //最下部にボールが落ちた場合の処理
       const paddleY = CANVAS.height - BALL_RADIUS - PADDLE.Height;
       if (BALL.isCanvasTop()) {
-        BALL.dy = -BALL.dy; BALL.changeBallColor();
+        BALL.dy = -BALL.dy;
+        BALL.changeBallColor();
       }
       else if (BALL.y + BALL.dy > paddleY) {
-        // 横方向がパドルの幅の中に収まっているか
         if (BALL.x > PADDLE.paddleX && BALL.x < PADDLE.paddleX + PADDLE.Width) {
           BALL.y = paddleY;
           BALL.dy = -BALL.dy;
@@ -105,8 +198,7 @@
         else if (BALL.y + BALL.dy > CANVAS.height - BALL_RADIUS + 5) {
           lives--;
           if (!lives) {
-            alert("GAME OVER");
-            document.location.reload();
+            gameState = STATE_GAMEOVER;
           } else {
             BALL.drawRestartPosition(CANVAS);
             PADDLE.paddleX = (CANVAS.width - PADDLE.Width) / 2;
@@ -115,15 +207,42 @@
       }
 
       PADDLE.move();
-
-      //requestAnimationFrame()により繰り返される
-      //描画はブラウザで制御される
-      requestAnimationFrame(draw);
     }
 
-    document.addEventListener("keydown", (e) => PADDLE.keyDownHandler(e), false);
-    document.addEventListener("keyup", (e) => PADDLE.keyUpHandler(e), false);
-    document.addEventListener("mousemove", (e) => PADDLE.mouseMoveHandler(e), false);
+    /*
+    *以下の状態でクリックされた場合の処理
+    *・スタート画面
+    *・ゲームオーバー画面
+    *・クリア画面
+    */
+    CANVAS.addEventListener("click", () => {
+      if (gameState === STATE_START) {
+        resetGame();
+        gameState = STATE_PLAYING;
+      }
+      else if (gameState === STATE_GAMEOVER || gameState === STATE_CLEAR) {
+        gameState = STATE_START;
+      }
+    });
+
+
+    document.addEventListener("keydown", (e) => {
+      if (gameState === STATE_PLAYING) {
+        PADDLE.keyDownHandler(e);
+      }
+    }, false);
+
+    document.addEventListener("keyup", (e) => {
+      if (gameState === STATE_PLAYING) {
+        PADDLE.keyUpHandler(e);
+      }
+    }, false);
+
+    document.addEventListener("mousemove", (e) => {
+      if (gameState === STATE_PLAYING) {
+        PADDLE.mouseMoveHandler(e);
+      }
+    }, false);
 
     draw();
   </script>
