@@ -2,6 +2,10 @@
 const PADDLE_HEIGHT = 10;
 const PADDLE_WIDTH = 75;
 
+/**
+ * パドルクラス
+ * パドルの描画と、移動の処理を持つ
+ */
 export class Paddle {
   //コンストラクタ
   constructor(CANVAS) {
@@ -15,7 +19,7 @@ export class Paddle {
   drawPaddle(CTX) {
     CTX.beginPath();
     CTX.rect(this.paddleX, this.canvas.height - PADDLE_HEIGHT, PADDLE_WIDTH, PADDLE_HEIGHT);
-    CTX.fillStyle = "#0095DD";
+    CTX.fillStyle = "yellow";
     CTX.fill();
     CTX.closePath();
   }
@@ -58,8 +62,13 @@ export class Paddle {
   *マウス入力を検知する
   */
   mouseMoveHandler(e) {
-    const relativeX = e.clientX - this.canvas.offsetLeft;
-    if (relativeX > 0 && relativeX < CANVAS.width) {
+    // Canvasの画面上の実際の大きさや位置を取得する
+    const rect = this.canvas.getBoundingClientRect();
+
+    // CSSの拡大縮小を考慮して、内部の解像度（座標）に変換する
+    const scaleX = this.canvas.width / rect.width;
+    const relativeX = (e.clientX - rect.left) * scaleX;
+    if (relativeX > 0 && relativeX < this.canvas.width) {
       this.paddleX = relativeX - PADDLE_WIDTH / 2;
     }
   }

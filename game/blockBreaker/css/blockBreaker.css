@@ -9,7 +9,7 @@
 
     canvas {
       margin: 100px auto 0;
-      background: #eee;
+      background: red;
       display: block;
       width: 100vw;
       max-width: 780px;

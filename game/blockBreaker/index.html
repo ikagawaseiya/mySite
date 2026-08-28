@@ -11,17 +11,18 @@
 <body>
   <canvas id="myCanvas" width="480" height="320"></canvas>
   <script type="module">
-    import { Ball, BALL_RADIUS } from './object/ball.js';
     const CANVAS = document.getElementById("myCanvas");
     const CTX = CANVAS.getContext("2d");
+    import { Ball, BALL_RADIUS } from './object/ball.js';
     const BALL = new Ball(CANVAS);
+    import { Paddle } from './object/paddle.js';
+    const PADDLE = new Paddle(CANVAS);
+
     //パドルの描画設定
+    //TODO オブジェクトの切り分け完了後に消す
     const paddleHeight = 10;
     const paddleWidth = 75;
-    let paddleX = (CANVAS.width - paddleWidth) / 2;
-    //パドルの操作設定
-    let rightPressed = false;
-    let leftPressed = false;
+
     //ブロックの描画設定
     const brickRowCount = 4;
     const brickColumnCount = 5;
@@ -61,21 +62,12 @@
             bricks[c][r].y = brickY;
             CTX.beginPath();
             CTX.rect(brickX, brickY, brickWidth, brickHeight);
-            CTX.fillStyle = "#0095DD";
+            CTX.fillStyle = "yellow";
             CTX.fill();
             CTX.closePath();
           }
         }
       }
-    }
-
-    //パドルの描画
-    function drawPaddle() {
-      CTX.beginPath();
-      CTX.rect(paddleX, CANVAS.height - paddleHeight, paddleWidth, paddleHeight);
-      CTX.fillStyle = "#0095DD";
-      CTX.fill();
-      CTX.closePath();
     }
 
     //ライフの描画
@@ -103,7 +95,7 @@
             if (isCollision) {
               BALL.dy = -BALL.dy;
               b.status = brickDestroyHp;
-              BALL.changeBallColorRandom()
+              BALL.changeBallColor()
               score++;
               if (score === brickRowCount * brickColumnCount) {
                 alert("YOU WIN, CONGRATULATIONS!");
@@ -127,29 +119,29 @@
       CTX.clearRect(0, 0, CANVAS.width, CANVAS.height);
       drawBricks();
       BALL.draw(CTX);
-      drawPaddle();
+      PADDLE.drawPaddle(CTX);
       drawScore();
       drawLives();
       collisionDetection();
       BALL.x += BALL.dx;
       BALL.y += BALL.dy;
 
-      if (BALL.x + BALL.dx > CANVAS.width - BALL_RADIUS || BALL.x + BALL.dx < BALL_RADIUS) {
-        BALL.dx = -BALL.dx; BALL.changeBallColorRandom();
-      }
+      BALL.reflectionForCanvasSide();
 
+      //縦方向のボールが当たった場合の処理
+      //後にボールクラスへ移動するかも？
       /*パドルの高さの当たり判定*/
       const paddleY = CANVAS.height - BALL_RADIUS - paddleHeight;
       if (BALL.y + BALL.dy < BALL_RADIUS) {
-        BALL.dy = -BALL.dy; BALL.changeBallColorRandom();
+        BALL.dy = -BALL.dy; BALL.changeBallColor();
       }
       else if (BALL.y + BALL.dy > paddleY) {
         // 横方向がパドルの幅の中に収まっているか
-        if (BALL.x > paddleX && BALL.x < paddleX + paddleWidth) {
+        if (BALL.x > PADDLE.paddleX && BALL.x < PADDLE.paddleX + paddleWidth) {
           BALL.y = paddleY;
           BALL.dy = -BALL.dy;
           BALL.changeSpeedForPaddleReflection();
-          BALL.changeBallColorRandom();
+          BALL.changeBallColor();
         }
         else if (BALL.y + BALL.dy > CANVAS.height - BALL_RADIUS + 5) {
           lives--;
@@ -158,60 +150,21 @@
             document.location.reload();
           } else {
             BALL.drawRestartPosition(CANVAS);
-            paddleX = (CANVAS.width - paddleWidth) / 2;
+            PADDLE.paddleX = (CANVAS.width - paddleWidth) / 2;
           }
         }
       }
 
-      //パドルの移動設定
-      if (rightPressed) {
-        paddleX = Math.min(paddleX + 7, CANVAS.width - paddleWidth);
-      } else if (leftPressed) {
-        paddleX = Math.max(paddleX - 7, 0);
-      }
+      PADDLE.move();
 
       //requestAnimationFrame()により繰り返される
       //描画はブラウザで制御される
       requestAnimationFrame(draw);
     }
 
-    document.addEventListener("keydown", keyDownHandler, false);
-    document.addEventListener("keyup", keyUpHandler, false);
-    document.addEventListener("mousemove", mouseMoveHandler, false);
-
-    /*
-    *キーボード入力を検知する
-    *作動処理
-    */
-    function keyDownHandler(e) {
-      if (e.key === "Right" || e.key === "ArrowRight") {
-        rightPressed = true;
-      } else if (e.key === "Left" || e.key === "ArrowLeft") {
-        leftPressed = true;
-      }
-    }
-
-    /*
-    *キーボード入力を検知する
-    *停止処理
-    */
-    function keyUpHandler(e) {
-      if (e.key === "Right" || e.key === "ArrowRight") {
-        rightPressed = false;
-      } else if (e.key === "Left" || e.key === "ArrowLeft") {
-        leftPressed = false;
-      }
-    }
-
-    /*
-    *マウス入力を検知する
-    */
-    function mouseMoveHandler(e) {
-      const relativeX = e.clientX - CANVAS.offsetLeft;
-      if (relativeX > 0 && relativeX < CANVAS.width) {
-        paddleX = relativeX - paddleWidth / 2;
-      }
-    }
+    document.addEventListener("keydown", (e) => PADDLE.keyDownHandler(e), false);
+    document.addEventListener("keyup", (e) => PADDLE.keyUpHandler(e), false);
+    document.addEventListener("mousemove", (e) => PADDLE.mouseMoveHandler(e), false);
 
     draw();
   </script>

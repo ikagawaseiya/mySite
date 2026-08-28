@@ -1,7 +1,7 @@
 export const BALL_RADIUS = 10;
 const START_DX_SPEED = 1;
 const START_DY_SPEED = 1;
-const START_COLOR_NUMBER = 240;
+const START_COLOR = `skyblue`;;
 const BALL_MAX_SPEED_LIMIT = 4;
 
 /**
@@ -20,7 +20,7 @@ export class Ball {
     this.y = this.startY;
     this.dx = START_DX_SPEED;
     this.dy = START_DY_SPEED;
-    this.ballColorStyle = `hsl(${START_COLOR_NUMBER}, 70%, 60%)`;
+    this.ballColorStyle = START_COLOR;
   }
 
   /**
@@ -36,11 +36,15 @@ export class Ball {
   }
 
   /**
-   * ボールの色をランダムに変更する
+   * ボールの色を変更する
+   * 水色と白で交互とする
    */
-  changeBallColorRandom() {
-    let randomColor = Math.floor(Math.random() * 360);
-    this.ballColorStyle = `hsl(${randomColor}, 70%, 60%)`;
+  changeBallColor() {
+    if (this.ballColorStyle == "white") {
+      this.ballColorStyle = START_COLOR;
+    } else {
+      this.ballColorStyle = "white";
+    }
   }
 
   /**
@@ -68,5 +72,15 @@ export class Ball {
     this.y = this.startY;
     this.dx = START_DX_SPEED;
     this.dy = START_DY_SPEED;
+  }
+
+  /*
+  *キャンバス側面であるかを判定し、
+  *そうである場合、dxを反転させることで反射させる
+   */
+  reflectionForCanvasSide() {
+    if (this.x + this.dx > this.canvas.width - BALL_RADIUS || this.x + this.dx < BALL_RADIUS) {
+      this.dx = -this.dx; this.changeBallColor();
+    }
   }
 }
