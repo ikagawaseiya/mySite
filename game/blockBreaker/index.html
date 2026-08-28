@@ -17,58 +17,16 @@
     const BALL = new Ball(CANVAS);
     import { Paddle } from './object/paddle.js';
     const PADDLE = new Paddle(CANVAS);
+    import { Bricks } from './object/bricks.js';
+    const BRICKS = new Bricks(CANVAS);
 
-    //パドルの描画設定
-    //TODO オブジェクトの切り分け完了後に消す
-    const paddleHeight = 10;
-    const paddleWidth = 75;
 
-    //ブロックの描画設定
-    const brickRowCount = 4;
-    const brickColumnCount = 5;
-    const brickWidth = 75;
-    const brickHeight = 20;
-    const brickPadding = 10;
-    const brickOffsetTop = 30;
-    const brickOffsetLeft = 30;
     //スコアの描画設定
     let score = 0;
     //プレイヤーのライフ
     let lives = 3;
 
-    const brickHp = 1;
-    const brickDestroyHp = 0;
-    const bricks = [];
-    for (let c = 0; c < brickColumnCount; c++) {
-      bricks[c] = [];
-      for (let r = 0; r < brickRowCount; r++) {
-        //値x,y,破壊の判定statusのプロパティ
-        bricks[c][r] = { x: 0, y: 0, status: brickHp };
-      }
-    }
 
-
-    /*
-    *ブロックを並べて配置する
-    *statusが1ではない(破壊された)ものは表示しない
-    */
-    function drawBricks() {
-      for (var c = 0; c < brickColumnCount; c++) {
-        for (var r = 0; r < brickRowCount; r++) {
-          if (bricks[c][r].status == brickHp) {
-            var brickX = (c * (brickWidth + brickPadding)) + brickOffsetLeft;
-            var brickY = (r * (brickHeight + brickPadding)) + brickOffsetTop;
-            bricks[c][r].x = brickX;
-            bricks[c][r].y = brickY;
-            CTX.beginPath();
-            CTX.rect(brickX, brickY, brickWidth, brickHeight);
-            CTX.fillStyle = "yellow";
-            CTX.fill();
-            CTX.closePath();
-          }
-        }
-      }
-    }
 
     //ライフの描画
     function drawLives() {
@@ -81,23 +39,24 @@
     *ブロックの衝突判定
     *[c][r]それぞれののfor文によりブロックを特定
     *ボールの判定xyが重なった場合に衝突とする
+    *TODO BRICKSクラスへ移動するかも？ 
     */
     function collisionDetection() {
-      for (var c = 0; c < brickColumnCount; c++) {
-        for (var r = 0; r < brickRowCount; r++) {
-          var b = bricks[c][r];
+      for (var c = 0; c < BRICKS.brickColumnCount; c++) {
+        for (var r = 0; r < BRICKS.brickRowCount; r++) {
+          var b = BRICKS.bricks[c][r];
           //衝突した場合の処理
           let isCollision = BALL.x > b.x &&
-            BALL.x < b.x + brickWidth &&
+            BALL.x < b.x + BRICKS.brickWidth &&
             BALL.y > b.y &&
-            BALL.y < b.y + brickHeight;
-          if (b.status == brickHp) {
+            BALL.y < b.y + BRICKS.brickHeight;
+          if (b.status == BRICKS.brickHp) {
             if (isCollision) {
               BALL.dy = -BALL.dy;
-              b.status = brickDestroyHp;
+              b.status = BRICKS.brickDestroyHp;
               BALL.changeBallColor()
               score++;
-              if (score === brickRowCount * brickColumnCount) {
+              if (score === BRICKS.brickRowCount * BRICKS.brickColumnCount) {
                 alert("YOU WIN, CONGRATULATIONS!");
                 document.location.reload();
               }
@@ -117,7 +76,7 @@
     //全体の動きを管理する
     function draw() {
       CTX.clearRect(0, 0, CANVAS.width, CANVAS.height);
-      drawBricks();
+      BRICKS.drawBricks(CTX);
       BALL.draw(CTX);
       PADDLE.drawPaddle(CTX);
       drawScore();
@@ -131,13 +90,13 @@
       //縦方向のボールが当たった場合の処理
       //後にボールクラスへ移動するかも？
       /*パドルの高さの当たり判定*/
-      const paddleY = CANVAS.height - BALL_RADIUS - paddleHeight;
-      if (BALL.y + BALL.dy < BALL_RADIUS) {
+      const paddleY = CANVAS.height - BALL_RADIUS - PADDLE.Height;
+      if (BALL.isCanvasTop()) {
         BALL.dy = -BALL.dy; BALL.changeBallColor();
       }
       else if (BALL.y + BALL.dy > paddleY) {
         // 横方向がパドルの幅の中に収まっているか
-        if (BALL.x > PADDLE.paddleX && BALL.x < PADDLE.paddleX + paddleWidth) {
+        if (BALL.x > PADDLE.paddleX && BALL.x < PADDLE.paddleX + PADDLE.Width) {
           BALL.y = paddleY;
           BALL.dy = -BALL.dy;
           BALL.changeSpeedForPaddleReflection();
@@ -150,7 +109,7 @@
             document.location.reload();
           } else {
             BALL.drawRestartPosition(CANVAS);
-            PADDLE.paddleX = (CANVAS.width - paddleWidth) / 2;
+            PADDLE.paddleX = (CANVAS.width - PADDLE.Width) / 2;
           }
         }
       }

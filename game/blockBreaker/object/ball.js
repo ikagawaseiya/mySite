@@ -83,4 +83,9 @@ export class Ball {
       this.dx = -this.dx; this.changeBallColor();
     }
   }
+
+  //キャンバスの最上部に触れたかを返す
+  isCanvasTop() {
+    return this.y + this.dy < BALL_RADIUS;
+  }
 }

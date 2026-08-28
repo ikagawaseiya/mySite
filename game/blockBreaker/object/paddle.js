@@ -13,13 +13,15 @@ export class Paddle {
     this.paddleX = (CANVAS.width - PADDLE_WIDTH) / 2;
     this.rightPressed = false;
     this.leftPressed = false;
+    this.Height = 10;
+    this.Width = 75;
   }
 
   //パドルの描画
   drawPaddle(CTX) {
     CTX.beginPath();
     CTX.rect(this.paddleX, this.canvas.height - PADDLE_HEIGHT, PADDLE_WIDTH, PADDLE_HEIGHT);
-    CTX.fillStyle = "yellow";
+    CTX.fillStyle = "white";
     CTX.fill();
     CTX.closePath();
   }
@@ -62,11 +64,11 @@ export class Paddle {
   *マウス入力を検知する
   */
   mouseMoveHandler(e) {
-    // Canvasの画面上の実際の大きさや位置を取得する
+    // Canvasの画面上の実際の大きさ
     const rect = this.canvas.getBoundingClientRect();
-
-    // CSSの拡大縮小を考慮して、内部の解像度（座標）に変換する
+    // 表示に対する、CSSの拡大縮小の割合
     const scaleX = this.canvas.width / rect.width;
+
     const relativeX = (e.clientX - rect.left) * scaleX;
     if (relativeX > 0 && relativeX < this.canvas.width) {
       this.paddleX = relativeX - PADDLE_WIDTH / 2;
