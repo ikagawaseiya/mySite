@@ -13,6 +13,14 @@
   <script type="module">
     const CANVAS = document.getElementById("myCanvas");
     const CTX = CANVAS.getContext("2d");
+    import { TITLE_SCREEN } from './screen/title.js';
+    import { GAME_OVER_SCREEN } from './screen/gameOver.js';
+    import { GAME_CLEAR_SCREEN } from './screen/gameClear.js';
+    import { Sound } from './sound/sound.js';
+    const SOUND = new Sound();
+    import { GameState, STATE_TYPE } from './object/gameState.js';
+    const GAME_STATE = new GameState();
+
     import { Ball, BALL_RADIUS } from './object/ball.js';
     const BALL = new Ball(CANVAS);
     import { Paddle } from './object/paddle.js';
@@ -23,121 +31,9 @@
     const LIVES = new Lives(CANVAS);
     import { Score } from './object/score.js';
     const SCORE = new Score(CANVAS);
-    import { GameState, STATE_TYPE } from './object/gameState.js';
-    const GAME_STATE = new GameState();
+    import { Timer } from './object/timer.js';
+    const TIMER = new Timer(CANVAS);
 
-    /*
-    *オブジェクトの状態を初期状態に戻す
-    */
-    function resetObject() {
-      SCORE.reset();
-      LIVES.reset();
-      BALL.setRestartPosition(CANVAS);
-      PADDLE.reset();
-      BRICKS.resetHp();
-    }
-
-    /*
-    *ブロックの衝突判定
-    *[c][r]それぞれののfor文によりブロックを特定
-    *ボールの判定xyが重なった場合に衝突とする
-    */
-    function collisionDetection() {
-      for (var c = 0; c < BRICKS.brickColumnCount; c++) {
-        for (var r = 0; r < BRICKS.brickRowCount; r++) {
-          var b = BRICKS.bricks[c][r];
-          //衝突した場合の処理
-          let isCollision = BALL.x > b.x &&
-            BALL.x < b.x + BRICKS.brickWidth &&
-            BALL.y > b.y &&
-            BALL.y < b.y + BRICKS.brickHeight;
-          if (b.status == BRICKS.brickStartHp) {
-            if (isCollision) {
-              BALL.dy = -BALL.dy;
-              b.status = BRICKS.brickDestroyHp;
-              BALL.changeBallColor();
-              BALL.changeSpeedForReflection();
-              SCORE.increase();
-              if (SCORE.isGameClear(BRICKS)) {
-                GAME_STATE.setGameClear();
-              }
-            }
-          }
-        }
-      }
-    }
-
-    //タイトル画面の描画
-    function drawTitleScreen() {
-      CTX.fillStyle = "red";
-      CTX.fillRect(0, 0, CANVAS.width, CANVAS.height);
-
-      CTX.font = "bold 24px Arial";
-      CTX.fillStyle = "white";
-      CTX.textAlign = "center";
-      CTX.fillText("BLOCK BREAKER", CANVAS.width / 2, CANVAS.height / 2 - 20);
-
-      CTX.font = "16px Arial";
-      CTX.fillStyle = "white";
-      CTX.fillText("クリックorタッチでスタート", CANVAS.width / 2, CANVAS.height / 2 + 30);
-    }
-
-    //ゲームオーバー画面の描画
-    function drawGameOverScreen() {
-      CTX.fillStyle = "rgba(0, 0, 0, 0.6)";
-      CTX.fillRect(0, 0, CANVAS.width, CANVAS.height);
-
-      CTX.font = "bold 32px Arial";
-      CTX.fillStyle = "#FF0000";
-      CTX.textAlign = "center";
-      CTX.fillText("GAME OVER", CANVAS.width / 2, CANVAS.height / 2 - 10);
-
-      CTX.font = "16px Arial";
-      CTX.fillStyle = "#FFF";
-      CTX.fillText("クリックorタッチでタイトルへ戻る", CANVAS.width / 2, CANVAS.height / 2 + 40);
-    }
-
-    //クリア画面の描画
-    function drawClearScreen() {
-      CTX.fillStyle = "rgba(0, 0, 0, 0.6)";
-      CTX.fillRect(0, 0, CANVAS.width, CANVAS.height);
-
-      CTX.font = "bold 32px Arial";
-      CTX.fillStyle = "#FFD700";
-      CTX.textAlign = "center";
-      CTX.fillText("GAME CLEAR!", CANVAS.width / 2, CANVAS.height / 2 - 10);
-
-      CTX.font = "16px Arial";
-      CTX.fillStyle = "#FFF";
-      CTX.fillText("クリックorタッチでタイトルへ戻る", CANVAS.width / 2, CANVAS.height / 2 + 40);
-    }
-
-    //ゲームの状態に合わせた処理を実行する
-    function draw() {
-      CTX.clearRect(0, 0, CANVAS.width, CANVAS.height);
-      switch (GAME_STATE.state) {
-        case STATE_TYPE.TITLE:
-          drawTitleScreen();
-          break;
-
-        case STATE_TYPE.RUN:
-          runGame();
-          break;
-
-        case STATE_TYPE.GAME_OVER:
-          drawGameObjects();
-          drawGameOverScreen();
-          break;
-
-        case STATE_TYPE.GAME_CLEAR:
-          drawGameObjects();
-          drawClearScreen();
-          break;
-      }
-
-      // requestAnimationFrame()により繰り返される
-      requestAnimationFrame(draw);
-    }
 
     // 各オブジェクトを描画する
     function drawGameObjects() {
@@ -146,50 +42,82 @@
       PADDLE.drawPaddle(CTX);
       LIVES.drawLives(CTX);
       SCORE.drawScore(CTX);
+      TIMER.draw(CTX);
     }
 
-    // ゲームプレイ中の処理
+    /*
+    *各オブジェクトの状態を初期状態に戻す
+    */
+    function resetObject() {
+      SCORE.reset();
+      LIVES.reset();
+      BALL.reset();
+      PADDLE.reset();
+      BRICKS.reset();
+      TIMER.reset();
+    }
+
+    /**
+     *状態による画面を描画する
+     *
+     * 以下の画面が存在する
+     * ・タイトル画面
+     * ・ゲーム画面
+     * ・ゲームオーバー画面
+     * ・ゲームクリア画面
+     */
+    function draw() {
+      CTX.clearRect(0, 0, CANVAS.width, CANVAS.height);
+      switch (GAME_STATE.state) {
+        case STATE_TYPE.TITLE:
+          TITLE_SCREEN.draw(CTX, CANVAS);
+          break;
+
+        case STATE_TYPE.RUN:
+          runGame();
+          break;
+
+        case STATE_TYPE.GAME_OVER:
+          TIMER.stop();
+          drawGameObjects();
+          GAME_OVER_SCREEN.draw(CTX, CANVAS);
+          break;
+
+        case STATE_TYPE.GAME_CLEAR:
+          TIMER.stop();
+          drawGameObjects();
+          GAME_CLEAR_SCREEN.draw(CTX, CANVAS);
+          break;
+      }
+
+      // requestAnimationFrame()により繰り返される
+      requestAnimationFrame(draw);
+    }
+
+
+    // ゲーム実行
     function runGame() {
       drawGameObjects();
 
-      collisionDetection();
-      BALL.x += BALL.dx;
-      BALL.y += BALL.dy;
-      BALL.reflectionForCanvasSide();
+      TIMER.run();
+      BALL.move();
+      BALL.checkReflectionForCanvasSide();
+      BALL.checkReflectionForCanvasTop();
+      BALL.checkReflectionForCanvasBottom(PADDLE, LIVES, GAME_STATE);
 
-      //最下部にボールが落ちた場合の処理
-      const PADDLE_Y = CANVAS.height - BALL_RADIUS - PADDLE.Height;
-      const MARGIN_FOR_MISS = 5;
-      if (BALL.isCanvasTop()) {
-        BALL.dy = -BALL.dy;
-        BALL.changeBallColor();
-      }
-      else if (BALL.y + BALL.dy > PADDLE_Y) {
-        if (BALL.x > PADDLE.paddleX && BALL.x < PADDLE.paddleX + PADDLE.Width) {
-          BALL.y = PADDLE_Y;
-          BALL.dy = -BALL.dy;
-          BALL.changeSpeedForReflection();
-          BALL.changeBallColor();
-        }
-        else if (BALL.y + BALL.dy > CANVAS.height - BALL_RADIUS + MARGIN_FOR_MISS) {
-          LIVES.lose();
-          if (LIVES.isGameOver()) {
-            GAME_STATE.setGameOver();
-          } else {
-            BALL.setRestartPosition(CANVAS);
-            PADDLE.paddleX = (CANVAS.width - PADDLE.Width) / 2;
-          }
-        }
-      }
+      BALL.checkBricksCollision(BRICKS, SCORE, GAME_STATE, SOUND);
 
       PADDLE.move();
     }
 
     /*
-    *以下の状態でクリックされた場合の処理
-    *・スタート画面
-    *・ゲームオーバー画面
-    *・クリア画面
+    *以下の状態毎の、クリックされた場合の処理
+    *
+    *1.タイトル
+    *ゲームを起動する
+    *
+    *2.ゲームオーバーまたはクリア
+    *状態をタイトルとする
     */
     CANVAS.addEventListener("click", () => {
       if (GAME_STATE.isTitle()) {

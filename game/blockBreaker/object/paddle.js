@@ -1,6 +1,7 @@
 //パドルの描画設定
 const PADDLE_HEIGHT = 10;
 const PADDLE_WIDTH = 75;
+const PADDLE_SPEED = 8;
 
 /**
  * パドルクラス
@@ -9,8 +10,9 @@ const PADDLE_WIDTH = 75;
 export class Paddle {
   //コンストラクタ
   constructor(CANVAS) {
+    this.startX = (CANVAS.width - PADDLE_WIDTH) / 2;
     this.canvas = CANVAS;
-    this.paddleX = (CANVAS.width - PADDLE_WIDTH) / 2;
+    this.paddleX = this.startX;
     this.rightPressed = false;
     this.leftPressed = false;
     this.Height = 10;
@@ -29,9 +31,9 @@ export class Paddle {
   //パドルの移動設定
   move() {
     if (this.rightPressed) {
-      this.paddleX = Math.min(this.paddleX + 7, this.canvas.width - PADDLE_WIDTH);
+      this.paddleX = Math.min(this.paddleX + PADDLE_SPEED, this.canvas.width - PADDLE_WIDTH);
     } else if (this.leftPressed) {
-      this.paddleX = Math.max(this.paddleX - 7, 0);
+      this.paddleX = Math.max(this.paddleX - PADDLE_SPEED, 0);
     }
   }
 
@@ -76,9 +78,11 @@ export class Paddle {
   }
 
   /**
-   * 初期位置にリセットする
+   * 初期状態にリセットする
    */
   reset() {
-    this.paddleX = (this.canvas.width - PADDLE_WIDTH) / 2;
+    this.paddleX = this.startX;
+    this.rightPressed = false;
+    this.leftPressed = false;
   }
 }

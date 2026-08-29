@@ -16,7 +16,7 @@ export class Score {
     CTX.font = "16px Arial";
     CTX.fillStyle = "white";
     CTX.textAlign = "right";
-    CTX.fillText(` ${this.score}`, this.canvas.width - 20, 20);
+    CTX.fillText(`${this.score}`, this.canvas.width - 20, 20);
   }
 
   /**スコアをひとつ増やす */
@@ -29,7 +29,7 @@ export class Score {
    * @return ゲームクリア / ゲームクリアではない
    */
   isGameClear(BRICKS) {
-    return this.score === BRICKS.brickRowCount * BRICKS.brickColumnCount;
+    return this.score === BRICKS.getStartTotaleNumber();
   }
 
   /**

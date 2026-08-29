@@ -67,11 +67,19 @@ export class Bricks {
   *レンガのHPを初期状態に戻す
   *リセット処理に使用する
   */
-  resetHp() {
+  reset() {
     for (let c = 0; c < this.brickColumnCount; c++) {
       for (let r = 0; r < this.brickRowCount; r++) {
         this.bricks[c][r].status = this.brickStartHp;
       }
     }
+  }
+
+  /**
+   * 開始時の総数を返す
+   * @returns  開始時のレンガの総数
+   */
+  getStartTotaleNumber() {
+    return this.brickRowCount * this.brickColumnCount;
   }
 }
