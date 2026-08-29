@@ -23,20 +23,13 @@
     const LIVES = new Lives(CANVAS);
     import { Score } from './object/score.js';
     const SCORE = new Score(CANVAS);
-
-    //TODO 後々クラスで分ける
-    const STATE_START = 'start';
-    const STATE_PLAYING = 'playing';
-    const STATE_GAME_OVER = 'gameOver';
-    const STATE_CLEAR = 'clear';
-    let gameState = STATE_START;
-
+    import { GameState, STATE_TYPE } from './object/gameState.js';
+    const GAME_STATE = new GameState();
 
     /*
     *オブジェクトの状態を初期状態に戻す
-    *TODO　※後々各オブジェクト側のjsへ移す
     */
-    function resetGame() {
+    function resetObject() {
       SCORE.reset();
       LIVES.reset();
       BALL.setRestartPosition(CANVAS);
@@ -48,7 +41,6 @@
     *ブロックの衝突判定
     *[c][r]それぞれののfor文によりブロックを特定
     *ボールの判定xyが重なった場合に衝突とする
-    *TODO BRICKSクラスへ移動するかも？ 
     */
     function collisionDetection() {
       for (var c = 0; c < BRICKS.brickColumnCount; c++) {
@@ -67,7 +59,7 @@
               BALL.changeSpeedForReflection();
               SCORE.increase();
               if (SCORE.isGameClear(BRICKS)) {
-                gameState = STATE_CLEAR;
+                GAME_STATE.setGameClear();
               }
             }
           }
@@ -75,18 +67,18 @@
       }
     }
 
-    //スタート画面の描画
-    function drawStartScreen() {
-      CTX.fillStyle = "#f0f0f0";
+    //タイトル画面の描画
+    function drawTitleScreen() {
+      CTX.fillStyle = "red";
       CTX.fillRect(0, 0, CANVAS.width, CANVAS.height);
 
       CTX.font = "bold 24px Arial";
-      CTX.fillStyle = "#0095DD";
+      CTX.fillStyle = "white";
       CTX.textAlign = "center";
       CTX.fillText("BLOCK BREAKER", CANVAS.width / 2, CANVAS.height / 2 - 20);
 
       CTX.font = "16px Arial";
-      CTX.fillStyle = "#555";
+      CTX.fillStyle = "white";
       CTX.fillText("クリックorタッチでスタート", CANVAS.width / 2, CANVAS.height / 2 + 30);
     }
 
@@ -123,21 +115,21 @@
     //ゲームの状態に合わせた処理を実行する
     function draw() {
       CTX.clearRect(0, 0, CANVAS.width, CANVAS.height);
-      switch (gameState) {
-        case STATE_START:
-          drawStartScreen();
+      switch (GAME_STATE.state) {
+        case STATE_TYPE.TITLE:
+          drawTitleScreen();
           break;
 
-        case STATE_PLAYING:
+        case STATE_TYPE.RUN:
           runGame();
           break;
 
-        case STATE_GAME_OVER:
+        case STATE_TYPE.GAME_OVER:
           drawGameObjects();
           drawGameOverScreen();
           break;
 
-        case STATE_CLEAR:
+        case STATE_TYPE.GAME_CLEAR:
           drawGameObjects();
           drawClearScreen();
           break;
@@ -147,7 +139,7 @@
       requestAnimationFrame(draw);
     }
 
-    // 各オブジェクトの描画
+    // 各オブジェクトを描画する
     function drawGameObjects() {
       BRICKS.drawBricks(CTX);
       BALL.draw(CTX);
@@ -166,22 +158,23 @@
       BALL.reflectionForCanvasSide();
 
       //最下部にボールが落ちた場合の処理
-      const paddleY = CANVAS.height - BALL_RADIUS - PADDLE.Height;
+      const PADDLE_Y = CANVAS.height - BALL_RADIUS - PADDLE.Height;
+      const MARGIN_FOR_MISS = 5;
       if (BALL.isCanvasTop()) {
         BALL.dy = -BALL.dy;
         BALL.changeBallColor();
       }
-      else if (BALL.y + BALL.dy > paddleY) {
+      else if (BALL.y + BALL.dy > PADDLE_Y) {
         if (BALL.x > PADDLE.paddleX && BALL.x < PADDLE.paddleX + PADDLE.Width) {
-          BALL.y = paddleY;
+          BALL.y = PADDLE_Y;
           BALL.dy = -BALL.dy;
           BALL.changeSpeedForReflection();
           BALL.changeBallColor();
         }
-        else if (BALL.y + BALL.dy > CANVAS.height - BALL_RADIUS + 5) {
+        else if (BALL.y + BALL.dy > CANVAS.height - BALL_RADIUS + MARGIN_FOR_MISS) {
           LIVES.lose();
           if (LIVES.isGameOver()) {
-            gameState = STATE_GAME_OVER;
+            GAME_STATE.setGameOver();
           } else {
             BALL.setRestartPosition(CANVAS);
             PADDLE.paddleX = (CANVAS.width - PADDLE.Width) / 2;
@@ -199,30 +192,35 @@
     *・クリア画面
     */
     CANVAS.addEventListener("click", () => {
-      if (gameState === STATE_START) {
-        resetGame();
-        gameState = STATE_PLAYING;
+      if (GAME_STATE.isTitle()) {
+        resetObject();
+        GAME_STATE.setRun();
       }
-      else if (gameState === STATE_GAME_OVER || gameState === STATE_CLEAR) {
-        gameState = STATE_START;
+      else if (GAME_STATE.isGameOver() || GAME_STATE.isGameClear()) {
+        GAME_STATE.setTitle();
       }
     });
 
-
+    /*キーボード入力*/
     document.addEventListener("keydown", (e) => {
-      if (gameState === STATE_PLAYING) {
+      if (GAME_STATE.isRunning()) {
         PADDLE.keyDownHandler(e);
       }
     }, false);
 
+    /*キーボード未入力*/
     document.addEventListener("keyup", (e) => {
-      if (gameState === STATE_PLAYING) {
+      if (GAME_STATE.isRunning()) {
         PADDLE.keyUpHandler(e);
       }
     }, false);
 
+    /**
+     * マウス入力
+     * TODO　スマホ実装に伴って削除するかも？
+    */
     document.addEventListener("mousemove", (e) => {
-      if (gameState === STATE_PLAYING) {
+      if (GAME_STATE.isRunning()) {
         PADDLE.mouseMoveHandler(e);
       }
     }, false);

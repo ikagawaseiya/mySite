@@ -1,7 +1,7 @@
 export const BALL_RADIUS = 10;
 const START_DX_SPEED = 1;
 const START_DY_SPEED = 1;
-const START_COLOR = `skyblue`;;
+const START_COLOR = `skyblue`;
 const BALL_MAX_SPEED_LIMIT = 4;
 
 /**
