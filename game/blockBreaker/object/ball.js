@@ -53,7 +53,7 @@ export class Ball {
   *
   *最大速度を超えることは無い
   */
-  changeSpeedForPaddleReflection() {
+  changeSpeedForReflection() {
     if (this.dx < 0) {
       this.dx = Math.max(this.dx - 1, -BALL_MAX_SPEED_LIMIT);
     } else if (this.dx > 0) {
@@ -67,7 +67,7 @@ export class Ball {
   /**
    * リスタート位置に配置する
    */
-  drawRestartPosition() {
+  setRestartPosition() {
     this.x = this.startX;
     this.y = this.startY;
     this.dx = START_DX_SPEED;

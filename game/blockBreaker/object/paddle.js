@@ -74,4 +74,11 @@ export class Paddle {
       this.paddleX = relativeX - PADDLE_WIDTH / 2;
     }
   }
+
+  /**
+   * 初期位置にリセットする
+   */
+  reset() {
+    this.paddleX = (this.canvas.width - PADDLE_WIDTH) / 2;
+  }
 }

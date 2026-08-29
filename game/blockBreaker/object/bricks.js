@@ -14,14 +14,14 @@ export class Bricks {
     this.brickPadding = 10;
     this.brickOffsetTop = 30;
     this.brickOffsetLeft = 30;
-    this.brickHp = 1;
+    this.brickStartHp = 1;
     this.brickDestroyHp = 0;
     this.bricks = [];
     for (let c = 0; c < this.brickColumnCount; c++) {
       this.bricks[c] = [];
       for (let r = 0; r < this.brickRowCount; r++) {
         //値x,y,破壊の判定statusのプロパティ
-        this.bricks[c][r] = { x: 0, y: 0, status: this.brickHp };
+        this.bricks[c][r] = { x: 0, y: 0, status: this.brickStartHp };
       }
     }
   }
@@ -33,7 +33,7 @@ export class Bricks {
   drawBricks(CTX) {
     for (var c = 0; c < this.brickColumnCount; c++) {
       for (var r = 0; r < this.brickRowCount; r++) {
-        if (this.bricks[c][r].status == this.brickHp) {
+        if (this.bricks[c][r].status == this.brickStartHp) {
           var brickX = (c * (this.brickWidth + this.brickPadding)) + this.brickOffsetLeft;
           var brickY = (r * (this.brickHeight + this.brickPadding)) + this.brickOffsetTop;
           this.bricks[c][r].x = brickX;
@@ -60,6 +60,18 @@ export class Bricks {
       return "yellow";
     } else {
       return "white";
+    }
+  }
+
+  /**
+  *レンガのHPを初期状態に戻す
+  *リセット処理に使用する
+  */
+  resetHp() {
+    for (let c = 0; c < this.brickColumnCount; c++) {
+      for (let r = 0; r < this.brickRowCount; r++) {
+        this.bricks[c][r].status = this.brickStartHp;
+      }
     }
   }
 }

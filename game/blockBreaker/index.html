@@ -19,40 +19,29 @@
     const PADDLE = new Paddle(CANVAS);
     import { Bricks } from './object/bricks.js';
     const BRICKS = new Bricks(CANVAS);
+    import { Lives } from './object/lives.js';
+    const LIVES = new Lives(CANVAS);
+    import { Score } from './object/score.js';
+    const SCORE = new Score(CANVAS);
 
     //TODO 後々クラスで分ける
     const STATE_START = 'start';
     const STATE_PLAYING = 'playing';
-    const STATE_GAMEOVER = 'gameover';
+    const STATE_GAME_OVER = 'gameOver';
     const STATE_CLEAR = 'clear';
     let gameState = STATE_START;
 
-    //スコアの描画設定
-    let score = 0;
-    //プレイヤーのライフ
-    let lives = 3;
 
     /*
     *オブジェクトの状態を初期状態に戻す
     *TODO　※後々各オブジェクト側のjsへ移す
     */
     function resetGame() {
-      score = 0;
-      lives = 3;
-      BALL.drawRestartPosition(CANVAS);
-      PADDLE.paddleX = (CANVAS.width - PADDLE.Width) / 2;
-      for (let c = 0; c < BRICKS.brickColumnCount; c++) {
-        for (let r = 0; r < BRICKS.brickRowCount; r++) {
-          BRICKS.bricks[c][r].status = BRICKS.brickHp;
-        }
-      }
-    }
-
-    //ライフの描画
-    function drawLives() {
-      CTX.font = "16px Arial";
-      CTX.fillStyle = "#0095DD";
-      CTX.fillText(`Lives: ${lives}`, CANVAS.width - 65, 20);
+      SCORE.reset();
+      LIVES.reset();
+      BALL.setRestartPosition(CANVAS);
+      PADDLE.reset();
+      BRICKS.resetHp();
     }
 
     /*
@@ -70,26 +59,20 @@
             BALL.x < b.x + BRICKS.brickWidth &&
             BALL.y > b.y &&
             BALL.y < b.y + BRICKS.brickHeight;
-          if (b.status == BRICKS.brickHp) {
+          if (b.status == BRICKS.brickStartHp) {
             if (isCollision) {
               BALL.dy = -BALL.dy;
               b.status = BRICKS.brickDestroyHp;
-              BALL.changeBallColor()
-              score++;
-              if (score === BRICKS.brickRowCount * BRICKS.brickColumnCount) {
+              BALL.changeBallColor();
+              BALL.changeSpeedForReflection();
+              SCORE.increase();
+              if (SCORE.isGameClear(BRICKS)) {
                 gameState = STATE_CLEAR;
               }
             }
           }
         }
       }
-    }
-
-    //スコアの描画
-    function drawScore() {
-      CTX.font = "16px Arial";
-      CTX.fillStyle = "#0095DD";
-      CTX.fillText(`Score: ${score}`, 8, 20);
     }
 
     //スタート画面の描画
@@ -100,7 +83,7 @@
       CTX.font = "bold 24px Arial";
       CTX.fillStyle = "#0095DD";
       CTX.textAlign = "center";
-      CTX.fillText("ブロック崩しゲーム", CANVAS.width / 2, CANVAS.height / 2 - 20);
+      CTX.fillText("BLOCK BREAKER", CANVAS.width / 2, CANVAS.height / 2 - 20);
 
       CTX.font = "16px Arial";
       CTX.fillStyle = "#555";
@@ -130,7 +113,7 @@
       CTX.font = "bold 32px Arial";
       CTX.fillStyle = "#FFD700";
       CTX.textAlign = "center";
-      CTX.fillText("GAME CREAR!", CANVAS.width / 2, CANVAS.height / 2 - 10);
+      CTX.fillText("GAME CLEAR!", CANVAS.width / 2, CANVAS.height / 2 - 10);
 
       CTX.font = "16px Arial";
       CTX.fillStyle = "#FFF";
@@ -149,7 +132,7 @@
           runGame();
           break;
 
-        case STATE_GAMEOVER:
+        case STATE_GAME_OVER:
           drawGameObjects();
           drawGameOverScreen();
           break;
@@ -169,8 +152,8 @@
       BRICKS.drawBricks(CTX);
       BALL.draw(CTX);
       PADDLE.drawPaddle(CTX);
-      drawScore();
-      drawLives();
+      LIVES.drawLives(CTX);
+      SCORE.drawScore(CTX);
     }
 
     // ゲームプレイ中の処理
@@ -192,15 +175,15 @@
         if (BALL.x > PADDLE.paddleX && BALL.x < PADDLE.paddleX + PADDLE.Width) {
           BALL.y = paddleY;
           BALL.dy = -BALL.dy;
-          BALL.changeSpeedForPaddleReflection();
+          BALL.changeSpeedForReflection();
           BALL.changeBallColor();
         }
         else if (BALL.y + BALL.dy > CANVAS.height - BALL_RADIUS + 5) {
-          lives--;
-          if (!lives) {
-            gameState = STATE_GAMEOVER;
+          LIVES.lose();
+          if (LIVES.isGameOver()) {
+            gameState = STATE_GAME_OVER;
           } else {
-            BALL.drawRestartPosition(CANVAS);
+            BALL.setRestartPosition(CANVAS);
             PADDLE.paddleX = (CANVAS.width - PADDLE.Width) / 2;
           }
         }
@@ -220,7 +203,7 @@
         resetGame();
         gameState = STATE_PLAYING;
       }
-      else if (gameState === STATE_GAMEOVER || gameState === STATE_CLEAR) {
+      else if (gameState === STATE_GAME_OVER || gameState === STATE_CLEAR) {
         gameState = STATE_START;
       }
     });
