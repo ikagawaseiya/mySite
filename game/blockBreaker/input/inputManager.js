@@ -52,22 +52,24 @@ export const INPUT_MANAGER = {
     if (TOUCH_AREA) {
 
       TOUCH_AREA.addEventListener("touchend", (e) => {
-        if (!GAME_STATE.isRunning()) {
-          GAME_STATE.switchStateForDontMoveScreen(SOUND, resetObject);
-        }
+        GAME_STATE.runGame(SOUND, resetObject);
       }, { passive: false });
 
       // エリアに指が触れたとき
       TOUCH_AREA.addEventListener("touchstart", (e) => {
-        e.preventDefault();
-        TOUCH_AREA.classList.add("active");
-        PADDLE.touchMoveHandler(e);
+        if (GAME_STATE.isRunning()) {
+          e.preventDefault();
+          TOUCH_AREA.classList.add("active");
+          PADDLE.touchMoveHandler(e);
+        }
       }, { passive: false });
 
       // スライドの場合
       TOUCH_AREA.addEventListener("touchmove", (e) => {
-        e.preventDefault();
-        PADDLE.touchMoveHandler(e);
+        if (GAME_STATE.isRunning()) {
+          e.preventDefault();
+          PADDLE.touchMoveHandler(e);
+        }
       }, { passive: false });
 
       // 未入力の場合

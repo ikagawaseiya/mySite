@@ -16,7 +16,7 @@ export class Lives {
     CTX.font = "16px Arial";
     CTX.fillStyle = "white";
     CTX.textAlign = "left";
-    const heartText = "❤".repeat(this.lives);
+    const heartText = ("❤" + "\uFE0E").repeat(this.lives);
     CTX.fillText(heartText, 20, 20);
   }
 
