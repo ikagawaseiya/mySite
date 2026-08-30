@@ -41,6 +41,19 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 });
 
+/**ゲームのドロップダウン */
+document.addEventListener('DOMContentLoaded', () => {
+  const dropdownBtn = document.getElementById('js-game-dropdown-btn');
+  const dropdownMenu = document.getElementById('js-game-dropdown-menu');
+
+  if (dropdownBtn && dropdownMenu) {
+    dropdownBtn.addEventListener('click', () => {
+      dropdownBtn.classList.toggle('is-open');
+      dropdownMenu.classList.toggle('is-open');
+    });
+  }
+});
+
 /**ギャラリーのドロップダウン */
 document.addEventListener('DOMContentLoaded', () => {
   const dropdownBtn = document.getElementById('js-gallery-dropdown-btn');

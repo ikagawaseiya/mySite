@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8" />
   <title>ブロック崩しゲーム</title>
-  <link rel="stylesheet" href="./css/blockBreaker.css">
+  <link rel="stylesheet" href="/game/blockBreaker/css/blockBreaker.css">
 </head>
 
 <body>
@@ -15,27 +15,27 @@
   <script type="module">
     const CANVAS = document.getElementById("myCanvas");
     const CTX = CANVAS.getContext("2d");
-    import { TITLE_SCREEN } from './screen/title.js';
-    import { GAME_OVER_SCREEN } from './screen/gameOver.js';
-    import { GAME_CLEAR_SCREEN } from './screen/gameClear.js';
-    import { Sound } from './sound/sound.js';
+    import { TITLE_SCREEN } from '/game/blockBreaker/screen/title.js';
+    import { GAME_OVER_SCREEN } from '/game/blockBreaker/screen/gameOver.js';
+    import { GAME_CLEAR_SCREEN } from '/game/blockBreaker/screen/gameClear.js';
+    import { Sound } from '/game/blockBreaker/sound/sound.js';
     const SOUND = new Sound();
-    import { GameState, STATE_TYPE } from './object/gameState.js';
+    import { GameState, STATE_TYPE } from '/game/blockBreaker/object/gameState.js';
     const GAME_STATE = new GameState();
     const touchArea = document.getElementById("paddle-touch-area");
 
     //オブジェクトの読み込み、及び生成
-    import { Ball } from './object/ball.js';
+    import { Ball } from '/game/blockBreaker/object/ball.js';
     const BALL = new Ball(CANVAS);
-    import { Paddle } from './object/paddle.js';
+    import { Paddle } from '/game/blockBreaker/object/paddle.js';
     const PADDLE = new Paddle(CANVAS);
-    import { Blocks } from './object/blocks.js';
+    import { Blocks } from '/game/blockBreaker/object/blocks.js';
     const BLOCKS = new Blocks(CANVAS);
-    import { Lives } from './object/lives.js';
+    import { Lives } from '/game/blockBreaker/object/lives.js';
     const LIVES = new Lives(CANVAS);
-    import { Score } from './object/score.js';
+    import { Score } from '/game/blockBreaker/object/score.js';
     const SCORE = new Score(CANVAS);
-    import { Timer } from './object/timer.js';
+    import { Timer } from '/game/blockBreaker/object/timer.js';
     const TIMER = new Timer(CANVAS);
     const OBJECTS = [BALL, PADDLE, BLOCKS, LIVES, SCORE, TIMER];
 
@@ -107,7 +107,7 @@
     }
 
 
-    import { INPUT_MANAGER } from './input/inputManager.js';
+    import { INPUT_MANAGER } from '/game/blockBreaker/input/inputManager.js';
     INPUT_MANAGER.checkInput(CANVAS, GAME_STATE, PADDLE, resetObject, touchArea, SOUND);
 
     draw();

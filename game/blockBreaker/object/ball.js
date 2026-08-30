@@ -1,4 +1,4 @@
-const RADIUS = 10;
+const RADIUS = 6;
 const START_DX_SPEED = 1;
 const START_DY_SPEED = 1;
 const START_COLOR = `skyblue`;
@@ -202,9 +202,10 @@ export class Ball {
    * @returns レンガと 衝突した / 衝突していない
    */
   isBrickCollision(block) {
-    return this.x > block.x &&
-      this.x < block.x + block.width &&
-      this.y > block.y &&
-      this.y < block.y + block.height;
+    const SHRINK_ADJUSTMENT_NUM = 4;
+    return this.x + RADIUS - SHRINK_ADJUSTMENT_NUM > block.x &&
+      this.x - RADIUS + SHRINK_ADJUSTMENT_NUM < block.x + block.width &&
+      this.y + RADIUS - SHRINK_ADJUSTMENT_NUM > block.y &&
+      this.y - RADIUS + SHRINK_ADJUSTMENT_NUM < block.y + block.height;
   }
 }

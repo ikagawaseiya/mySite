@@ -24,4 +24,14 @@ class PathGetter
   {
     return __DIR__ . '/../../View/gallery';
   }
+
+  /**
+   * ゲームフォルダへのpathを返す
+   *
+   * @return String ギャラリーフォルダへのパス
+   */
+  public static function getGameFilePathFromController()
+  {
+    return __DIR__ . '/../../View/game';
+  }
 }

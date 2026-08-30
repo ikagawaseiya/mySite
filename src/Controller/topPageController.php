@@ -43,11 +43,7 @@ class topPageController
   {
     $blogFiles = FileGetter::getPhpFilesFromDir(PathGetter::getBlogFilePathFromController());
     $galleryFiles = FileGetter::getPhpFilesFromDir(PathGetter::getGalleryFilePathFromController());
-
-    //ゲーム記事は現在未実装
-    //$gameFilePath = __DIR__ . '/../View/game';
-    $gameFiles = [];
-    //$gameFiles = FileGetter::getPhpFilesFromDir($gameFilePath);
+    $gameFiles = FileGetter::getPhpFilesFromDir(PathGetter::getGameFilePathFromController());
 
     $targetFiles = array_merge($blogFiles, $gameFiles, $galleryFiles);
     return FileGetter::createArrayNewestPageFirst($targetFiles);

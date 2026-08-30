@@ -9,6 +9,7 @@
    * ・ギャラリー
    *
    * @var string $displayHeaderTitle 表示するタイトル
+   * @var array $gamePosts 新着順のゲーム配列 
    * @var array $blogPosts 新着順のブログ配列
    * @var array $galleryPosts 新着順のギャラリー配列
    */
@@ -34,6 +35,25 @@
     <div class="nav-overlay"></div>
     <ul class="nav-list">
       <li><a href="/">トップページ</a></li>
+
+      <!-- ゲーム一覧の親メニュー（クリックで開閉） -->
+      <li class="nav-item-dropdown">
+        <button type="button" class="dropdown-btn" id="js-game-dropdown-btn">
+          ゲーム
+          <span class="arrow"></span>
+        </button>
+
+        <!-- ゲームの子メニュー -->
+        <ul class="dropdown-menu" id="js-game-dropdown-menu">
+
+          <li>
+            <?php echo displayDropdownLinksHtml($gamePosts); ?>
+          </li>
+
+          <!--ゲーム一覧ページは現在未実装-->
+          <!--<li><a href="/gameList"><span class="arrow-icon">▶</span>ゲーム一覧</a></li> -->
+        </ul>
+      </li>
 
       <!-- ブログ一覧の親メニュー（クリックで開閉） -->
       <li class="nav-item-dropdown">

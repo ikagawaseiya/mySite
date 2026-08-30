@@ -11,6 +11,7 @@ function showHeader(string $pageName = ''): void
   $displayHeaderTitle = SITE_NAME . ":" . $pageName;
   $blogPosts =  FileGetter::getArrayNewestPageFirst(PathGetter::getBlogFilePathFromController());
   $galleryPosts = FileGetter::getArrayNewestPageFirst(PathGetter::getGalleryFilePathFromController());
+  $gamePosts = FileGetter::getArrayNewestPageFirst(PathGetter::getGameFilePathFromController());
   require_once __DIR__ . '/headerView.php';
 }
 

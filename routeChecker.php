@@ -10,10 +10,28 @@ class RouteChecker
   function routeCheck(string $page)
   {
     $this->checkIsTopPage($page);
+    $this->checkIsGameDirectory($page);
     $this->checkIsBlogDirectory($page);
     $this->checkIsGalleryDirectory($page);
     $this->checkIsAllBlogListPage($page);
     $this->checkIsAllGalleryListPage($page);
+  }
+
+  /**
+   * ゲームのページであるか確認する。
+   * その場合、gamePageControllerを呼び出す
+   * 
+   * @param string $page 現在のページ名
+   */
+  function checkIsGameDirectory(string $page)
+  {
+    if (strpos($page, 'game/') === 0) {
+      require_once __DIR__ . '/src/Controller/gamePageController.php';
+      $controller = new GamePageController();
+      $articleName = substr($page, 5);
+      $controller->show($articleName);
+      exit;
+    }
   }
 
   /**
