@@ -6,10 +6,17 @@
 
     body {
       background-color: black;
+      margin: 0;
+      padding: 0;
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
     }
 
     canvas {
-      margin: 10px auto 0;
       background: red;
       display: block;
       width: 100vw;
@@ -20,12 +27,11 @@
     /*タッチエリア*/
     .paddle-touch-area {
       width: 480px;
-      height: 160px;
+      height: 280px;
       width: 100vw;
       max-width: 1280px;
       margin: 10px auto;
       background-color: gray;
-      color: white;
       display: flex;
       justify-content: center;
       align-items: center;

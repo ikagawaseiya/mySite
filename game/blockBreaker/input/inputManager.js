@@ -18,14 +18,7 @@ export const INPUT_MANAGER = {
     *状態をタイトルとする
     */
     CANVAS.addEventListener("click", () => {
-      if (GAME_STATE.isTitle()) {
-        SOUND.gameStart();
-        resetObject();
-        GAME_STATE.setRun();
-      }
-      else if (GAME_STATE.isGameOver() || GAME_STATE.isGameClear()) {
-        GAME_STATE.setTitle();
-      }
+      GAME_STATE.switchStateForDontMoveScreen(SOUND, resetObject);
     });
 
     /*キーボード:入力*/
@@ -57,6 +50,13 @@ export const INPUT_MANAGER = {
      *タッチエリア入力 
      */
     if (TOUCH_AREA) {
+
+      TOUCH_AREA.addEventListener("touchend", (e) => {
+        if (!GAME_STATE.isRunning()) {
+          GAME_STATE.switchStateForDontMoveScreen(SOUND, resetObject);
+        }
+      }, { passive: false });
+
       // エリアに指が触れたとき
       TOUCH_AREA.addEventListener("touchstart", (e) => {
         e.preventDefault();

@@ -13,7 +13,7 @@ export class Blocks {
     this.blockHeight = 20;
     this.blockPadding = 10;
     this.blockOffsetTop = 30;
-    this.blockOffsetLeft = 30;
+    this.blockOffsetLeft = 35;
     this.blockStartHp = 1;
     this.blockDestroyHp = 0;
     this.blocks = [];
