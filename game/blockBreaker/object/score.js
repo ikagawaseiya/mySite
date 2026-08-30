@@ -12,7 +12,7 @@ export class Score {
   }
 
   //スコアの描画
-  drawScore(CTX) {
+  draw(CTX) {
     CTX.font = "16px Arial";
     CTX.fillStyle = "white";
     CTX.textAlign = "right";

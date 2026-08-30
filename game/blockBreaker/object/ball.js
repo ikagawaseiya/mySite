@@ -1,4 +1,4 @@
-export const BALL_RADIUS = 10;
+const RADIUS = 10;
 const START_DX_SPEED = 1;
 const START_DY_SPEED = 1;
 const START_COLOR = `skyblue`;
@@ -30,18 +30,25 @@ export class Ball {
    */
   draw(CTX) {
     CTX.beginPath();
-    CTX.arc(this.x, this.y, BALL_RADIUS, 0, Math.PI * 2);
+    CTX.arc(this.x, this.y, RADIUS, 0, Math.PI * 2);
     CTX.fillStyle = this.ballColorStyle;
     CTX.fill();
     CTX.closePath();
   }
 
   /**
-   * フレームごとに行われる移動
+   * ボールを移動する
+   * 
+   * 移動の後、移動によって起こるアクションをチェックする
    */
-  move() {
+  move(PADDLE, BRICKS, SCORE, LIVES, GAME_STATE, SOUND) {
     this.x += this.dx;
     this.y += this.dy;
+
+    this.checkReflectionForCanvasSide(SOUND);
+    this.checkReflectionForCanvasTop(SOUND);
+    this.checkReflectionForCanvasBottom(PADDLE, LIVES, GAME_STATE, SOUND);
+    this.checkBricksCollision(BRICKS, SCORE, GAME_STATE, SOUND);
   }
 
   /**
@@ -88,8 +95,9 @@ export class Ball {
   *そうである場合、dxを反転させることで反射する
   *その後、ボールの色を変更する
   */
-  checkReflectionForCanvasSide() {
-    if (this.x + this.dx > this.canvas.width - BALL_RADIUS || this.x + this.dx < BALL_RADIUS) {
+  checkReflectionForCanvasSide(SOUND) {
+    if (this.x + this.dx > this.canvas.width - RADIUS || this.x + this.dx < RADIUS) {
+      SOUND.ballRefrection();
       this.dx = -this.dx;
       this.changeBallColor()
     }
@@ -100,8 +108,9 @@ export class Ball {
   *そうである場合、dyを反転させることで反射する
   *その後、ボールの色を変更する
   */
-  checkReflectionForCanvasTop() {
+  checkReflectionForCanvasTop(SOUND) {
     if (this.isCanvasTop()) {
+      SOUND.ballRefrection();
       this.dy = -this.dy;
       this.changeBallColor();
     }
@@ -109,7 +118,7 @@ export class Ball {
 
   //キャンバスの最上部に触れたかを返す
   isCanvasTop() {
-    return this.y + this.dy < BALL_RADIUS;
+    return this.y + this.dy < RADIUS;
   }
 
   /**
@@ -123,19 +132,23 @@ export class Ball {
   * 命を一つ失う
   * 命がなくなった場合、ゲームオーバーとする
   */
-  checkReflectionForCanvasBottom(PADDLE, LIVES, GAME_STATE) {
-    const PADDLE_Y = this.canvas.height - BALL_RADIUS - PADDLE.Height;
-    const MARGIN_FOR_MISS = 5;
+  checkReflectionForCanvasBottom(PADDLE, LIVES, GAME_STATE, SOUND) {
+    const PADDLE_Y = this.canvas.height - RADIUS - PADDLE.Height;
     if (this.y + this.dy > PADDLE_Y) {
       if (this.x > PADDLE.paddleX && this.x < PADDLE.paddleX + PADDLE.Width) {
+        SOUND.ballRefrection();
         this.y = PADDLE_Y;
         this.dy = -this.dy;
         this.changeSpeedForReflection();
         this.changeBallColor();
       }
-      else if (this.y + this.dy > this.canvas.height - BALL_RADIUS + MARGIN_FOR_MISS) {
+      else if (this.y + this.dy > this.canvas.height - RADIUS + RADIUS) {
         LIVES.lose();
+        if (!LIVES.isGameOver()) {
+          SOUND.lifeLose();
+        }
         if (LIVES.isGameOver()) {
+          SOUND.gameOver();
           GAME_STATE.setGameOver();
         } else {
           this.reset();
@@ -156,23 +169,42 @@ export class Ball {
       for (var r = 0; r < BRICKS.brickRowCount; r++) {
         var brick = BRICKS.bricks[c][r];
         //衝突した場合の処理
-        let isCollision = this.x > brick.x &&
-          this.x < brick.x + BRICKS.brickWidth &&
-          this.y > brick.y &&
-          this.y < brick.y + BRICKS.brickHeight;
-        if (brick.status == BRICKS.brickStartHp) {
-          if (isCollision) {
-            SOUND.brickBreak();
+        if (brick.status === BRICKS.brickStartHp) {
+          if (this.isBrickCollision(brick)) {
+            if (!SCORE.isGameClear(BRICKS)) {
+              SOUND.brickBreak();
+            }
             this.dy = -this.dy;
             brick.status = BRICKS.brickDestroyHp;
             this.changeBallColor();
             SCORE.increase();
             if (SCORE.isGameClear(BRICKS)) {
+              SOUND.gameClear();
               GAME_STATE.setGameClear();
             }
           }
         }
       }
     }
+  }
+
+  /**
+   * レンガと衝突したかを判定する
+   * それを返す
+   * 
+   * 以下のすべてを満たした場合、レンガとの衝突とする
+   * ・レンガの左端より右側
+   * ・レンガの右端より左側
+   * ・レンガの底より上側
+   * ・レンガの頂点より下側
+   * 
+   * @param {BRIKS} brick レンガ
+   * @returns レンガと 衝突した / 衝突していない
+   */
+  isBrickCollision(brick) {
+    return this.x > brick.x &&
+      this.x < brick.x + brick.width &&
+      this.y > brick.y &&
+      this.y < brick.y + brick.height;
   }
 }

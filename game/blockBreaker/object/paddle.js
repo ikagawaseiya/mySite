@@ -1,7 +1,7 @@
 //パドルの描画設定
 const PADDLE_HEIGHT = 10;
 const PADDLE_WIDTH = 75;
-const PADDLE_SPEED = 8;
+const PADDLE_SPEED = 7;
 
 /**
  * パドルクラス
@@ -20,7 +20,7 @@ export class Paddle {
   }
 
   //パドルの描画
-  drawPaddle(CTX) {
+  draw(CTX) {
     CTX.beginPath();
     CTX.rect(this.paddleX, this.canvas.height - PADDLE_HEIGHT, PADDLE_WIDTH, PADDLE_HEIGHT);
     CTX.fillStyle = "white";

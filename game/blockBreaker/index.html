@@ -21,7 +21,7 @@
     import { GameState, STATE_TYPE } from './object/gameState.js';
     const GAME_STATE = new GameState();
 
-    import { Ball, BALL_RADIUS } from './object/ball.js';
+    import { Ball } from './object/ball.js';
     const BALL = new Ball(CANVAS);
     import { Paddle } from './object/paddle.js';
     const PADDLE = new Paddle(CANVAS);
@@ -33,39 +33,44 @@
     const SCORE = new Score(CANVAS);
     import { Timer } from './object/timer.js';
     const TIMER = new Timer(CANVAS);
+    const OBJECTS = [BALL, PADDLE, BRICKS, LIVES, SCORE, TIMER];
 
 
-    // 各オブジェクトを描画する
+    /*
+    * 各オブジェクトを描画する
+    */
     function drawGameObjects() {
-      BRICKS.drawBricks(CTX);
-      BALL.draw(CTX);
-      PADDLE.drawPaddle(CTX);
-      LIVES.drawLives(CTX);
-      SCORE.drawScore(CTX);
-      TIMER.draw(CTX);
+      OBJECTS.forEach(object => {
+        object.draw(CTX);
+      });
     }
 
     /*
     *各オブジェクトの状態を初期状態に戻す
     */
     function resetObject() {
-      SCORE.reset();
-      LIVES.reset();
-      BALL.reset();
-      PADDLE.reset();
-      BRICKS.reset();
-      TIMER.reset();
+      OBJECTS.forEach(object => {
+        object.reset();
+      });
+    }
+
+    // ゲーム実行
+    function runGame() {
+      drawGameObjects();
+      TIMER.run();
+      BALL.move(PADDLE,
+        BRICKS,
+        SCORE,
+        LIVES,
+        GAME_STATE,
+        SOUND);
+      PADDLE.move();
     }
 
     /**
-     *状態による画面を描画する
-     *
-     * 以下の画面が存在する
-     * ・タイトル画面
-     * ・ゲーム画面
-     * ・ゲームオーバー画面
-     * ・ゲームクリア画面
-     */
+    *ゲームの状態により、
+    *それを表す画面を描写する
+    */
     function draw() {
       CTX.clearRect(0, 0, CANVAS.width, CANVAS.height);
       switch (GAME_STATE.state) {
@@ -94,29 +99,14 @@
       requestAnimationFrame(draw);
     }
 
-
-    // ゲーム実行
-    function runGame() {
-      drawGameObjects();
-
-      TIMER.run();
-      BALL.move();
-      BALL.checkReflectionForCanvasSide();
-      BALL.checkReflectionForCanvasTop();
-      BALL.checkReflectionForCanvasBottom(PADDLE, LIVES, GAME_STATE);
-
-      BALL.checkBricksCollision(BRICKS, SCORE, GAME_STATE, SOUND);
-
-      PADDLE.move();
-    }
-
     /*
-    *以下の状態毎の、クリックされた場合の処理
+    *以下の状態におけるクリックされた場合の処理
+    *状態に応じて、処理が異なる
     *
-    *1.タイトル
+    *1.タイトル状態
     *ゲームを起動する
     *
-    *2.ゲームオーバーまたはクリア
+    *2.ゲームオーバーまたはクリア状態
     *状態をタイトルとする
     */
     CANVAS.addEventListener("click", () => {
@@ -129,14 +119,14 @@
       }
     });
 
-    /*キーボード入力*/
+    /*キーボード:入力*/
     document.addEventListener("keydown", (e) => {
       if (GAME_STATE.isRunning()) {
         PADDLE.keyDownHandler(e);
       }
     }, false);
 
-    /*キーボード未入力*/
+    /*キーボード:未入力*/
     document.addEventListener("keyup", (e) => {
       if (GAME_STATE.isRunning()) {
         PADDLE.keyUpHandler(e);

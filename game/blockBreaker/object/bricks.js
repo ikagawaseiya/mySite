@@ -20,8 +20,14 @@ export class Bricks {
     for (let c = 0; c < this.brickColumnCount; c++) {
       this.bricks[c] = [];
       for (let r = 0; r < this.brickRowCount; r++) {
-        //値x,y,破壊の判定statusのプロパティ
-        this.bricks[c][r] = { x: 0, y: 0, status: this.brickStartHp };
+        //ひとつひとつのレンガが持つ値
+        this.bricks[c][r] = {
+          x: 0,
+          y: 0,
+          status: this.brickStartHp,
+          width: this.brickWidth,
+          height: this.brickHeight
+        };
       }
     }
   }
@@ -30,7 +36,7 @@ export class Bricks {
   *ブロックを並べて配置する
   *statusが1ではない(破壊された)ものは表示しない
   */
-  drawBricks(CTX) {
+  draw(CTX) {
     for (var c = 0; c < this.brickColumnCount; c++) {
       for (var r = 0; r < this.brickRowCount; r++) {
         if (this.bricks[c][r].status == this.brickStartHp) {
