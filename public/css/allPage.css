@@ -45,6 +45,12 @@ body {
   margin-top: 2.5em;
 }
 
+/*上下の要素に対してスペースを空ける*/
+.top-and-bottom-space {
+  margin-top: 2.5em;
+  margin-bottom: 2.5;
+}
+
 /* リンクボタン */
 .link-button {
   display: inline-block;
