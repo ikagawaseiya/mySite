@@ -41,14 +41,14 @@ export class Ball {
    * 
    * 移動の後、移動によって起こるアクションをチェックする
    */
-  move(PADDLE, BRICKS, SCORE, LIVES, GAME_STATE, SOUND) {
+  move(PADDLE, BLOCKS, SCORE, LIVES, GAME_STATE, SOUND) {
     this.x += this.dx;
     this.y += this.dy;
 
     this.checkReflectionForCanvasSide(SOUND);
     this.checkReflectionForCanvasTop(SOUND);
     this.checkReflectionForCanvasBottom(PADDLE, LIVES, GAME_STATE, SOUND);
-    this.checkBricksCollision(BRICKS, SCORE, GAME_STATE, SOUND);
+    this.checkBlocksCollision(BLOCKS, SCORE, GAME_STATE, SOUND);
   }
 
   /**
@@ -164,21 +164,21 @@ export class Ball {
   *[c][r]それぞれののfor文によりブロックを特定
   *ボールの判定xyが重なった場合に衝突とする
   */
-  checkBricksCollision(BRICKS, SCORE, GAME_STATE, SOUND) {
-    for (var c = 0; c < BRICKS.brickColumnCount; c++) {
-      for (var r = 0; r < BRICKS.brickRowCount; r++) {
-        var brick = BRICKS.bricks[c][r];
+  checkBlocksCollision(BLOCKS, SCORE, GAME_STATE, SOUND) {
+    for (var c = 0; c < BLOCKS.blockColumnCount; c++) {
+      for (var r = 0; r < BLOCKS.blockRowCount; r++) {
+        var block = BLOCKS.blocks[c][r];
         //衝突した場合の処理
-        if (brick.status === BRICKS.brickStartHp) {
-          if (this.isBrickCollision(brick)) {
-            if (!SCORE.isGameClear(BRICKS)) {
-              SOUND.brickBreak();
+        if (block.status === BLOCKS.blockStartHp) {
+          if (this.isBrickCollision(block)) {
+            if (!SCORE.isGameClear(BLOCKS)) {
+              SOUND.blockBreak();
             }
             this.dy = -this.dy;
-            brick.status = BRICKS.brickDestroyHp;
+            block.status = BLOCKS.blockDestroyHp;
             this.changeBallColor();
             SCORE.increase();
-            if (SCORE.isGameClear(BRICKS)) {
+            if (SCORE.isGameClear(BLOCKS)) {
               SOUND.gameClear();
               GAME_STATE.setGameClear();
             }
@@ -198,13 +198,13 @@ export class Ball {
    * ・レンガの底より上側
    * ・レンガの頂点より下側
    * 
-   * @param {BRIKS} brick レンガ
+   * @param {BRIKS} block レンガ
    * @returns レンガと 衝突した / 衝突していない
    */
-  isBrickCollision(brick) {
-    return this.x > brick.x &&
-      this.x < brick.x + brick.width &&
-      this.y > brick.y &&
-      this.y < brick.y + brick.height;
+  isBrickCollision(block) {
+    return this.x > block.x &&
+      this.x < block.x + block.width &&
+      this.y > block.y &&
+      this.y < block.y + block.height;
   }
 }

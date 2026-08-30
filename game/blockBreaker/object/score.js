@@ -28,8 +28,8 @@ export class Score {
    * ゲームをクリアしたか判定する
    * @return ゲームクリア / ゲームクリアではない
    */
-  isGameClear(BRICKS) {
-    return this.score === BRICKS.getStartTotaleNumber();
+  isGameClear(BLOCKS) {
+    return this.score === BLOCKS.getStartTotaleNumber();
   }
 
   /**

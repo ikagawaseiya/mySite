@@ -5,7 +5,7 @@
  */
 export const INPUT_MANAGER = {
   /**入力のチェック及び、それに対する処理を行う */
-  checkInput(CANVAS, GAME_STATE, PADDLE) {
+  checkInput(CANVAS, GAME_STATE, PADDLE, resetObject, TOUCH_AREA, SOUND) {
 
     /*
     *以下の状態におけるクリックされた場合の処理
@@ -19,6 +19,7 @@ export const INPUT_MANAGER = {
     */
     CANVAS.addEventListener("click", () => {
       if (GAME_STATE.isTitle()) {
+        SOUND.gameStart();
         resetObject();
         GAME_STATE.setRun();
       }
@@ -42,14 +43,38 @@ export const INPUT_MANAGER = {
     }, false);
 
     /**
-     * マウス入力
-     * TODO　スマホ実装に伴って削除するかも？
+    * マウス入力
     */
-    document.addEventListener("mousemove", (e) => {
+    document.addEventListener("pointermove", (e) => {
       if (GAME_STATE.isRunning()) {
-        PADDLE.mouseMoveHandler(e);
+        if (e.pointerType === "mouse") {
+          PADDLE.mouseMoveHandler(e);
+        }
       }
     }, false);
-  }
 
+    /*
+     *タッチエリア入力 
+     */
+    if (TOUCH_AREA) {
+      // エリアに指が触れたとき
+      TOUCH_AREA.addEventListener("touchstart", (e) => {
+        e.preventDefault();
+        TOUCH_AREA.classList.add("active");
+        PADDLE.touchMoveHandler(e);
+      }, { passive: false });
+
+      // スライドの場合
+      TOUCH_AREA.addEventListener("touchmove", (e) => {
+        e.preventDefault();
+        PADDLE.touchMoveHandler(e);
+      }, { passive: false });
+
+      // 未入力の場合
+      TOUCH_AREA.addEventListener("touchend", (e) => {
+        e.preventDefault();
+        TOUCH_AREA.classList.remove("active");
+      }, { passive: false });
+    }
+  }
 }

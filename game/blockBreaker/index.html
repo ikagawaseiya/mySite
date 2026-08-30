@@ -10,6 +10,8 @@
 
 <body>
   <canvas id="myCanvas" width="480" height="320"></canvas>
+  <div id="paddle-touch-area" class="paddle-touch-area">
+  </div>
   <script type="module">
     const CANVAS = document.getElementById("myCanvas");
     const CTX = CANVAS.getContext("2d");
@@ -20,24 +22,26 @@
     const SOUND = new Sound();
     import { GameState, STATE_TYPE } from './object/gameState.js';
     const GAME_STATE = new GameState();
+    const touchArea = document.getElementById("paddle-touch-area");
 
+    //オブジェクトの読み込み、及び生成
     import { Ball } from './object/ball.js';
     const BALL = new Ball(CANVAS);
     import { Paddle } from './object/paddle.js';
     const PADDLE = new Paddle(CANVAS);
-    import { Bricks } from './object/bricks.js';
-    const BRICKS = new Bricks(CANVAS);
+    import { Blocks } from './object/blocks.js';
+    const BLOCKS = new Blocks(CANVAS);
     import { Lives } from './object/lives.js';
     const LIVES = new Lives(CANVAS);
     import { Score } from './object/score.js';
     const SCORE = new Score(CANVAS);
     import { Timer } from './object/timer.js';
     const TIMER = new Timer(CANVAS);
-    const OBJECTS = [BALL, PADDLE, BRICKS, LIVES, SCORE, TIMER];
+    const OBJECTS = [BALL, PADDLE, BLOCKS, LIVES, SCORE, TIMER];
 
 
     /*
-    * 各オブジェクトを描画する
+     *各オブジェクトを描画する
     */
     function drawGameObjects() {
       OBJECTS.forEach(object => {
@@ -46,7 +50,7 @@
     }
 
     /*
-    *各オブジェクトの状態を初期状態に戻す
+     *各オブジェクトの状態を初期状態に戻す
     */
     function resetObject() {
       OBJECTS.forEach(object => {
@@ -54,12 +58,14 @@
       });
     }
 
-    // ゲーム実行
+    /**
+     * ゲームの実行
+    */
     function runGame() {
       drawGameObjects();
       TIMER.run();
       BALL.move(PADDLE,
-        BRICKS,
+        BLOCKS,
         SCORE,
         LIVES,
         GAME_STATE,
@@ -68,8 +74,8 @@
     }
 
     /**
-    *ゲームの状態により、
-    *それを表す画面を描写する
+     *ゲームの状態により、
+     *それを表す画面を描写する
     */
     function draw() {
       CTX.clearRect(0, 0, CANVAS.width, CANVAS.height);
@@ -85,63 +91,24 @@
         case STATE_TYPE.GAME_OVER:
           TIMER.stop();
           drawGameObjects();
-          GAME_OVER_SCREEN.draw(CTX, CANVAS);
+          GAME_OVER_SCREEN.draw(CTX, CANVAS, SCORE.score, BLOCKS.getStartTotaleNumber());
           break;
 
         case STATE_TYPE.GAME_CLEAR:
           TIMER.stop();
           drawGameObjects();
-          GAME_CLEAR_SCREEN.draw(CTX, CANVAS);
+          let clearTime = [TIMER.minutes, TIMER.seconds]
+          GAME_CLEAR_SCREEN.draw(CTX, CANVAS, clearTime);
           break;
       }
 
-      // requestAnimationFrame()により繰り返される
+      // requestAnimationFrame()により、繰り返される
       requestAnimationFrame(draw);
     }
 
-    /*
-    *以下の状態におけるクリックされた場合の処理
-    *状態に応じて、処理が異なる
-    *
-    *1.タイトル状態
-    *ゲームを起動する
-    *
-    *2.ゲームオーバーまたはクリア状態
-    *状態をタイトルとする
-    */
-    CANVAS.addEventListener("click", () => {
-      if (GAME_STATE.isTitle()) {
-        resetObject();
-        GAME_STATE.setRun();
-      }
-      else if (GAME_STATE.isGameOver() || GAME_STATE.isGameClear()) {
-        GAME_STATE.setTitle();
-      }
-    });
 
-    /*キーボード:入力*/
-    document.addEventListener("keydown", (e) => {
-      if (GAME_STATE.isRunning()) {
-        PADDLE.keyDownHandler(e);
-      }
-    }, false);
-
-    /*キーボード:未入力*/
-    document.addEventListener("keyup", (e) => {
-      if (GAME_STATE.isRunning()) {
-        PADDLE.keyUpHandler(e);
-      }
-    }, false);
-
-    /**
-     * マウス入力
-     * TODO　スマホ実装に伴って削除するかも？
-    */
-    document.addEventListener("mousemove", (e) => {
-      if (GAME_STATE.isRunning()) {
-        PADDLE.mouseMoveHandler(e);
-      }
-    }, false);
+    import { INPUT_MANAGER } from './input/inputManager.js';
+    INPUT_MANAGER.checkInput(CANVAS, GAME_STATE, PADDLE, resetObject, touchArea, SOUND);
 
     draw();
   </script>

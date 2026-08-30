@@ -9,10 +9,36 @@
     }
 
     canvas {
-      margin: 100px auto 0;
+      margin: 10px auto 0;
       background: red;
       display: block;
       width: 100vw;
       max-width: 1280px;
       height: auto;
+    }
+
+    /*タッチエリア*/
+    .paddle-touch-area {
+      width: 480px;
+      height: 160px;
+      width: 100vw;
+      max-width: 1280px;
+      margin: 10px auto;
+      background-color: gray;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 16px;
+      font-weight: bold;
+
+      /* スマホでの誤動作や画面スクロールを防ぐ設定 */
+      touch-action: none;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
+    /* タッチエリアが動作中の場合 */
+    .paddle-touch-area.active {
+      background-color: #2D3748;
     }

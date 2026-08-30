@@ -4,17 +4,19 @@
  */
 export const GAME_CLEAR_SCREEN = {
   //クリア画面の描画
-  draw(CTX, CANVAS) {
+  draw(CTX, CANVAS, clearTime) {
     CTX.fillStyle = "rgba(0, 0, 0, 0.6)";
     CTX.fillRect(0, 0, CANVAS.width, CANVAS.height);
 
-    CTX.font = "bold 32px Arial";
-    CTX.fillStyle = "#FFD700";
+    CTX.font = "bold 48px Arial";
+    CTX.fillStyle = "yellow";
     CTX.textAlign = "center";
     CTX.fillText("GAME CLEAR!", CANVAS.width / 2, CANVAS.height / 2 - 10);
 
-    CTX.font = "16px Arial";
-    CTX.fillStyle = "#FFF";
-    CTX.fillText("クリックorタッチでタイトルへ戻る", CANVAS.width / 2, CANVAS.height / 2 + 40);
+    const minute = clearTime[0];
+    const second = clearTime[1];
+    CTX.font = "32px Impact";
+    CTX.fillStyle = "white";
+    CTX.fillText(`CLEAR TIME ${minute}:${second}`, CANVAS.width / 2, CANVAS.height / 2 + 40);
   }
 }

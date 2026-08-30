@@ -12,13 +12,13 @@ export class Timer {
 
   /** タイマーの描画 */
   draw(CTX) {
-    CTX.font = "16px Arial";
+    CTX.font = "16px Impact";
     CTX.fillStyle = "white";
     CTX.textAlign = "center";
 
-    const minutes = Math.floor(this.elapsedTime / 60).toString().padStart(2, '0');
-    const seconds = Math.floor(this.elapsedTime % 60).toString().padStart(2, '0');
-    CTX.fillText(`${minutes}:${seconds}`, this.canvas.width / 2, 20);
+    this.minutes = Math.floor(this.elapsedTime / 60).toString().padStart(2, '0');
+    this.seconds = Math.floor(this.elapsedTime % 60).toString().padStart(2, '0');
+    CTX.fillText(`${this.minutes}:${this.seconds}`, this.canvas.width / 2, 20);
   }
 
   /**
