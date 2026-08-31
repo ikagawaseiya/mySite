@@ -24,7 +24,7 @@ $this->displayBlogHead($title);
   </div>
   <div class="top-space">
     また、効果音は<a href="https://soundeffect-lab.info/">効果音ラボ</a>
-    様からお借りしました。<br>
+    様からお借りしました。
     心よりお礼申し上げます。
   </div>
   </p>
