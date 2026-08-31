@@ -1,7 +1,8 @@
 const RADIUS = 6;
 const START_DX_SPEED = 1;
 const START_DY_SPEED = 1;
-const START_COLOR = `skyblue`;
+const DEFAULT_COLOR = 'skyblue';
+const CHANGED_COLOR = 'white';
 const BALL_MAX_SPEED_LIMIT = 4;
 
 /**
@@ -21,7 +22,7 @@ export class Ball {
     //移動速度 dx dy
     this.dx = START_DX_SPEED;
     this.dy = START_DY_SPEED;
-    this.ballColorStyle = START_COLOR;
+    this.ballColorStyle = DEFAULT_COLOR;
   }
 
   /**
@@ -56,10 +57,10 @@ export class Ball {
    * 水色と白で交互とする
    */
   changeBallColor() {
-    if (this.ballColorStyle == "white") {
-      this.ballColorStyle = START_COLOR;
+    if (this.ballColorStyle == CHANGED_COLOR) {
+      this.ballColorStyle = DEFAULT_COLOR;
     } else {
-      this.ballColorStyle = "white";
+      this.ballColorStyle = CHANGED_COLOR;
     }
   }
 
@@ -97,7 +98,7 @@ export class Ball {
   */
   checkReflectionForCanvasSide(SOUND) {
     if (this.x + this.dx > this.canvas.width - RADIUS || this.x + this.dx < RADIUS) {
-      SOUND.ballRefrection();
+      SOUND.ballReflection();
       this.dx = -this.dx;
       this.changeBallColor()
     }
@@ -110,7 +111,7 @@ export class Ball {
   */
   checkReflectionForCanvasTop(SOUND) {
     if (this.isCanvasTop()) {
-      SOUND.ballRefrection();
+      SOUND.ballReflection();
       this.dy = -this.dy;
       this.changeBallColor();
     }
@@ -136,7 +137,7 @@ export class Ball {
     const PADDLE_Y = this.canvas.height - RADIUS - PADDLE.Height;
     if (this.y + this.dy > PADDLE_Y) {
       if (this.x > PADDLE.paddleX && this.x < PADDLE.paddleX + PADDLE.Width) {
-        SOUND.ballRefrection();
+        SOUND.ballReflection();
         this.y = PADDLE_Y;
         this.dy = -this.dy;
         this.changeSpeedForReflection();

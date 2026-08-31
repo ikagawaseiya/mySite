@@ -1,16 +1,19 @@
-const BALL_REFRECTION = new Audio('/game/blockBreaker/sound/ballRefrection.mp3');
-const BRICK_BREAK = new Audio('/game/blockBreaker/sound/blockBreak.mp3');
-const LIFE_LOSE = new Audio('/game/blockBreaker/sound/lifeLose.mp3');
-const GAME_CLEAR = new Audio('/game/blockBreaker/sound/gameClear.mp3');
-const GAME_OVER = new Audio('/game/blockBreaker/sound/gameOver.mp3');
-const GAME_START = new Audio('/game/blockBreaker/sound/gameStart.mp3');
+const BALL_REFLECTION = new Audio('/game/blockBreaker/sound/se/ballReflection.mp3');
+const BRICK_BREAK = new Audio('/game/blockBreaker/sound/se/blockBreak.mp3');
+const LIFE_LOSE = new Audio('/game/blockBreaker/sound/se/lifeLose.mp3');
+const GAME_CLEAR = new Audio('/game/blockBreaker/sound/se/gameClear.mp3');
+const GAME_OVER = new Audio('/game/blockBreaker/sound/se/gameOver.mp3');
+const GAME_START = new Audio('/game/blockBreaker/sound/se/gameStart.mp3');
 
-
+/**
+ * サウンドクラス
+ * 音に関する処理を持つ  
+ */
 export class Sound {
   /**ボールの反射音 */
-  ballRefrection() {
-    BALL_REFRECTION.currentTime = 0;
-    BALL_REFRECTION.play();
+  ballReflection() {
+    BALL_REFLECTION.currentTime = 0;
+    BALL_REFLECTION.play();
   }
 
   /**レンガの破壊音 */
