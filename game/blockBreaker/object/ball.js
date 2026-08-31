@@ -203,10 +203,10 @@ export class Ball {
    * @returns レンガと 衝突した / 衝突していない
    */
   isBrickCollision(block) {
-    const SHRINK_ADJUSTMENT_NUM = 4;
-    return this.x + RADIUS - SHRINK_ADJUSTMENT_NUM > block.x &&
-      this.x - RADIUS + SHRINK_ADJUSTMENT_NUM < block.x + block.width &&
-      this.y + RADIUS - SHRINK_ADJUSTMENT_NUM > block.y &&
-      this.y - RADIUS + SHRINK_ADJUSTMENT_NUM < block.y + block.height;
+    const HITBOX_SHRINK_ADJUSTMENT_NUM = 2;
+    return this.x + RADIUS - HITBOX_SHRINK_ADJUSTMENT_NUM > block.x &&
+      this.x - RADIUS + HITBOX_SHRINK_ADJUSTMENT_NUM < block.x + block.width &&
+      this.y + RADIUS - HITBOX_SHRINK_ADJUSTMENT_NUM > block.y &&
+      this.y - RADIUS + HITBOX_SHRINK_ADJUSTMENT_NUM < block.y + block.height;
   }
 }
