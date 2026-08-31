@@ -3,7 +3,7 @@ const START_DX_SPEED = 1;
 const START_DY_SPEED = 1;
 const DEFAULT_COLOR = 'skyblue';
 const CHANGED_COLOR = 'white';
-const BALL_MAX_SPEED_LIMIT = 4;
+const BALL_MAX_SPEED_LIMIT = 3;
 
 /**
  * ボールクラス
