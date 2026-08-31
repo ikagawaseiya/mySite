@@ -55,25 +55,18 @@ export class GameState {
     return this.state === STATE_TYPE.GAME_CLEAR;
   }
 
-  /*
-  *以下の状態における場合の処理
-  *状態に応じて、処理が異なる
-  *
-  *1.タイトル状態
-  *ゲームを起動する
-  *
-  *2.ゲームオーバーまたはクリア状態
+  /**
+  *ゲームオーバーまたはクリア状態である場合、
   *状態をタイトルとする
   */
-  switchStateForDontMoveScreen(SOUND, resetObject) {
-    this.runGame(SOUND, resetObject);
+  switchStateForGameEndScreen(SOUND, resetObject) {
     if (this.isGameOver() || this.isGameClear()) {
       this.setTitle();
     }
   }
 
   /**タイトル画面である場合、ゲームを作動する */
-  runGame(SOUND, resetObject) {
+  runGameForTitle(SOUND, resetObject) {
     if (this.isTitle()) {
       SOUND.gameStart();
       resetObject();

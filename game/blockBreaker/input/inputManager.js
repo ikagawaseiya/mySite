@@ -18,7 +18,8 @@ export const INPUT_MANAGER = {
     *状態をタイトルとする
     */
     CANVAS.addEventListener("click", () => {
-      GAME_STATE.switchStateForDontMoveScreen(SOUND, resetObject);
+      GAME_STATE.runGameForTitle(SOUND, resetObject);
+      GAME_STATE.switchStateForGameEndScreen(SOUND, resetObject);
     });
 
     /*キーボード:入力*/
@@ -51,8 +52,13 @@ export const INPUT_MANAGER = {
      */
     if (TOUCH_AREA) {
 
+      /**
+       * タイトル画面で指が離れた場合 
+       * ※以下のスマホの仕様に合わせたもの
+       * ※スマホでは、最初のタッチでは音声が鳴らない
+       * */
       TOUCH_AREA.addEventListener("touchend", (e) => {
-        GAME_STATE.runGame(SOUND, resetObject);
+        GAME_STATE.runGameForTitle(SOUND, resetObject);
       }, { passive: false });
 
       // エリアに指が触れたとき
