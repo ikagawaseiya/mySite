@@ -18,7 +18,8 @@
     import { TITLE_SCREEN } from '/game/blockBreaker/screen/title.js';
     import { GAME_OVER_SCREEN } from '/game/blockBreaker/screen/gameOver.js';
     import { GAME_CLEAR_SCREEN } from '/game/blockBreaker/screen/gameClear.js';
-    import { Sound } from '/game/blockBreaker/sound/sound.js';
+    import { setupSound, Sound } from '/game/blockBreaker/sound/sound.js';
+    await setupSound();
     const SOUND = new Sound();
     import { GameState, STATE_TYPE } from '/game/blockBreaker/object/gameState.js';
     const GAME_STATE = new GameState();

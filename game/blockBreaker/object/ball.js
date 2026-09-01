@@ -199,7 +199,7 @@ export class Ball {
    * ・レンガの底より上側
    * ・レンガの頂点より下側
    * 
-   * @param {BRIKS} block レンガ
+   * @param {BLOCKS} block レンガ
    * @returns レンガと 衝突した / 衝突していない
    */
   isBrickCollision(block) {
