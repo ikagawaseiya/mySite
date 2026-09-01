@@ -95,7 +95,7 @@ class FileGetter
   }
 
   /**
-   * フォルダのパスを受け取り、そのファイル及び、一つ下の階層のPHPファイルを全て配列に格納する
+   * フォルダのパスを受け取り、そのファイル及び、二つ下までの階層のPHPファイルを全て配列に格納する
    * それを返す
    *
    * @param string $dirPath 対象のフォルダパス
@@ -116,12 +116,18 @@ class FileGetter
     }
 
     /**一つ下 */
-    $subFiles = glob($basePath . '/*/*.php');
-    if ($subFiles === false) {
-      $subFiles = [];
+    $oneDownFiles = glob($basePath . '/*/*.php');
+    if ($oneDownFiles === false) {
+      $oneDownFiles = [];
     }
 
-    return array_merge($directFiles, $subFiles);
+    /**二つ下 */
+    $twoDownFiles = glob($basePath . '/*/*/*.php');
+    if ($twoDownFiles === false) {
+      $twoDownFiles = [];
+    }
+
+    return array_merge($directFiles, $oneDownFiles, $twoDownFiles);
   }
 
   /**
