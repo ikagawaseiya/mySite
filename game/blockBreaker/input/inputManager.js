@@ -18,8 +18,12 @@ export const INPUT_MANAGER = {
     *状態をタイトルとする
     */
     CANVAS.addEventListener("click", () => {
-      GAME_STATE.runGameForTitle(SOUND, resetObject);
-      GAME_STATE.switchStateForGameEndScreen(SOUND, resetObject);
+      if (GAME_STATE.isTitle()) {
+        GAME_STATE.runGameForTitle(SOUND, resetObject);
+      }
+      if (GAME_STATE.isGameOver() || GAME_STATE.isGameClear()) {
+        GAME_STATE.switchStateForGameEndScreen(SOUND, resetObject);
+      }
     });
 
     /*キーボード:入力*/
