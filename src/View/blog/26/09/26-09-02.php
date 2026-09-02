@@ -1,5 +1,5 @@
 <?php
-$title = 'ギャラリーその2 を投稿しました。';
+$title = 'ギャラリーその2 を投稿しました';
 $date = '2026-09-02';
 $this->displayBlogHead($title);
 ?>
