@@ -14,7 +14,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title><?php echo Common::h($titleInHtml); ?></title>
   <link rel="stylesheet" href="/public/css/topPage.css">
-  <script src="/public/js/header.js" defer></script>
 </head>
 
 <body>

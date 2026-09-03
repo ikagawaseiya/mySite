@@ -54,10 +54,15 @@ class GalleryPageController
     return $title;
   }
 
+  /**
+   * 指定したディレクトリ内にある、画像を全て表示する
+   *
+   * @param string $galleryDirName 画像ディレクトリの名前
+   * @return void
+   */
   public static function showAllGalleryFromDir(string $galleryDirName)
   {
 ?>
-
     <?php
     $galleryFilePath = "images/gallery/" . $galleryDirName;
     $images = FileGetter::getImageFilePathsFromDir($galleryFilePath);
@@ -67,6 +72,32 @@ class GalleryPageController
         <img class="gallery-image" src="/<?php echo Common::h($imagePath); ?>" alt="<?php echo $key; ?>" loading="lazy">
       </div>
     <?php endforeach; ?>
-<?php
+  <?php
+  }
+
+  /**
+   * ギャラリーのheadを表示する
+   *
+   * @param string $title ページのタイトル
+   * @return void
+   */
+  public function displayGalleryHead(string $title)
+  {
+    $displayTitle = Common::getTitleInHtml($title);
+  ?>
+    <!DOCTYPE html>
+    <html lang="ja">
+
+    <div class="footerFixed">
+
+      <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title><?php echo Common::h($displayTitle); ?></title>
+        <link rel="stylesheet" href="/public/css/gallery.css">
+      </head>
+
+      <body>
+    <?php
   }
 }

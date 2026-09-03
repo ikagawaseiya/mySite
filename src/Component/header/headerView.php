@@ -15,6 +15,7 @@
    */
   ?>
   <link rel="stylesheet" href="/public/css/header.css">
+  <script src="/public/js/header.js" defer></script>
   <header class="site-header">
     <div class="header-text">
       <?php echo Common::h($displayHeaderTitle); ?>
