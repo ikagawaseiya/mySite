@@ -17,7 +17,7 @@ $displayFileName = "gallery_1";
 
 <body>
   <div>
-    <main class="main-content center-element">
+    <main class="main-content center-element display-after-loading">
       <div>
         <?php echo Common::h($date); ?>
       </div>

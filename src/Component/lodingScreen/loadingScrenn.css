@@ -1,0 +1,32 @@
+/**TODO　後に実装する
+
+/*ロード画面*/
+.loading-screen {
+  position: fixed;
+  inset: 0; 
+  background: #fff;
+  display: grid; place-items: center; 
+  z-index: 100;
+  transition: 0.5s; 
+}
+
+/*ロード完了*/
+.loading-screen.loaded {
+  opacity: 0;
+  visibility: hidden; 
+}
+
+/*ロード画面のスピナー*/
+.spinner {
+  width: 50px;
+  aspect-ratio: 1;
+  border: 5px solid #f3f3f3;
+  border-top-color: #3498db;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+/*回転のアニメーション*/
+@keyframes spin {
+  to { transform: rotate(360deg); } 
+}

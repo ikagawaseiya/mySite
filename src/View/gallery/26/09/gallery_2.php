@@ -28,4 +28,5 @@ $displayFileName = "gallery_2";
         <?php $this->showAllGalleryFromDir($displayFileName); ?>
       </div>
     </main>
-    <?php showFooter(); ?>
+  </div>
+  <?php showFooter(); ?>
