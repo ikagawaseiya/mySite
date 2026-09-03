@@ -1,0 +1,17 @@
+/**TODO　後に使う予定
+各スクリーン画面における、テキストの表記及びボタンの装飾を行う*/
+
+/* オーバーレイスクリーン共通の仕様 */
+.overlay-screen {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: red;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+}

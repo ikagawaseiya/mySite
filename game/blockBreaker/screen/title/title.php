@@ -1,0 +1,12 @@
+<!--タイトルスクリーンのHTML
+後にjsからHTMLを重ねがける仕様に変更する予定-->
+<div id="titleScreen" class="overlay-screen">
+  <h1 class="title-text">BLOCK BREAKER</h1>
+
+  <div class="menu-buttons">
+    <button id="startBtn" class="menu-btn">ゲーム開始</button>
+    <button id="difficultyBtn" class="menu-btn">難易度: 普通</button>
+    <button id="explanationBtn" class="menu-btn">遊び方</button>
+    <button onclick="location.href='/'">タイトルに戻る</button>
+  </div>
+</div>
