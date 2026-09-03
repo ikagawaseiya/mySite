@@ -9,9 +9,9 @@
 function showHeader(string $pageName = ''): void
 {
   $displayHeaderTitle = SITE_NAME . ":" . $pageName;
-  $blogPosts =  FileGetter::getArrayNewestPageFirst(PathGetter::getBlogFilePathFromController());
-  $galleryPosts = FileGetter::getArrayNewestPageFirst(PathGetter::getGalleryFilePathFromController());
-  $gamePosts = FileGetter::getArrayNewestPageFirst(PathGetter::getGameFilePathFromController());
+  $blogPosts =  FileGetter::getArrayNewestPageFirst(PathGetter::getBlogFilePath());
+  $galleryPosts = FileGetter::getArrayNewestPageFirst(PathGetter::getGalleryFilePath());
+  $gamePosts = FileGetter::getArrayNewestPageFirst(PathGetter::getGameFilePath());
   require_once __DIR__ . '/headerView.php';
 }
 

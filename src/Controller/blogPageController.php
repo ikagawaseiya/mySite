@@ -15,7 +15,7 @@ class BlogPageController
       $this->show404();
     }
 
-    $viewFile = PathGetter::getBlogFilePathFromController() . '/' . $blogPageName . '.php';
+    $viewFile = PathGetter::getBlogFilePath() . '/' . $blogPageName . '.php';
     if (file_exists($viewFile)) {
       $this->showHeaderGetTitleFromThePage($viewFile);
       require_once $viewFile;

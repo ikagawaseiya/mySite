@@ -16,7 +16,7 @@ class GamePageController
       Common::show404();
     }
 
-    $viewFile = PathGetter::getBlogFilePathFromController() . '/' . $gamePageName . '.php';
+    $viewFile = PathGetter::getBlogFilePath() . '/' . $gamePageName . '.php';
     if (file_exists($viewFile)) {
       $this->showHeaderGetTitleFromThePage($viewFile);
       require_once $viewFile;

@@ -10,7 +10,7 @@ class PathGetter
    *
    * @return String ブログフォルダへのパス
    */
-  public static function getBlogFilePathFromController()
+  public static function getBlogFilePath()
   {
     return __DIR__ . '/../../View/blog';
   }
@@ -20,7 +20,7 @@ class PathGetter
    *
    * @return String ギャラリーフォルダへのパス
    */
-  public static function getGalleryFilePathFromController()
+  public static function getGalleryFilePath()
   {
     return __DIR__ . '/../../View/gallery';
   }
@@ -30,7 +30,7 @@ class PathGetter
    *
    * @return String ギャラリーフォルダへのパス
    */
-  public static function getGameFilePathFromController()
+  public static function getGameFilePath()
   {
     return __DIR__ . '/../../View/game';
   }

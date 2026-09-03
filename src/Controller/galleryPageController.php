@@ -15,7 +15,7 @@ class GalleryPageController
       $this->show404();
     }
 
-    $viewFile = PathGetter::getGalleryFilePathFromController() . '/' . $galleryPageName . '.php';
+    $viewFile = PathGetter::getGalleryFilePath() . '/' . $galleryPageName . '.php';
     if (file_exists($viewFile)) {
       $pageTitle = $this->getGalleryPageTitle($viewFile);
       if (function_exists('showHeader')) {

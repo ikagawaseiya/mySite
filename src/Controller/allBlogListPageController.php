@@ -16,7 +16,7 @@ class AllBlogListPageController
     $pageTitle = "ブログ一覧";
     showHeader($pageTitle);
     $titleInHtml = Common::getTitleInHtml($pageTitle);
-    $blogPosts = FileGetter::getArrayNewestPageFirst(PathGetter::getBlogFilePathFromController());
+    $blogPosts = FileGetter::getArrayNewestPageFirst(PathGetter::getBlogFilePath());
     require_once __DIR__ . '/../View/allBlogList/allBlogListPage.php';
   }
 }

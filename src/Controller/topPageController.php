@@ -41,9 +41,9 @@ class topPageController
    */
   public function getContentsArrayNewestPageFirst(): array
   {
-    $blogFiles = FileGetter::getPhpFilesFromDir(PathGetter::getBlogFilePathFromController());
-    $galleryFiles = FileGetter::getPhpFilesFromDir(PathGetter::getGalleryFilePathFromController());
-    $gameFiles = FileGetter::getPhpFilesFromDir(PathGetter::getGameFilePathFromController());
+    $blogFiles = FileGetter::getPhpFilesFromDir(PathGetter::getBlogFilePath());
+    $galleryFiles = FileGetter::getPhpFilesFromDir(PathGetter::getGalleryFilePath());
+    $gameFiles = FileGetter::getPhpFilesFromDir(PathGetter::getGameFilePath());
 
     $targetFiles = array_merge($blogFiles, $gameFiles, $galleryFiles);
     return FileGetter::createArrayNewestPageFirst($targetFiles);

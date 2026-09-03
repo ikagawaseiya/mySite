@@ -16,7 +16,7 @@ class AllBlogListPageController
     $pageTitle = "ギャラリー一覧";
     showHeader($pageTitle);
     $titleInHtml = Common::getTitleInHtml($pageTitle);
-    $galleryPosts = FileGetter::getArrayNewestPageFirst(PathGetter::getGalleryFilePathFromController());
+    $galleryPosts = FileGetter::getArrayNewestPageFirst(PathGetter::getGalleryFilePath());
     require_once __DIR__ . '/../View/allGalleryList/allGalleryListPage.php';
   }
 }
