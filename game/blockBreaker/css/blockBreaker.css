@@ -16,6 +16,15 @@
       align-items: center;
     }
 
+    /*TODO 後に値を調整*/
+    #game-container {
+      position: relative;
+      width: 480px;
+      max-width: 1280px;
+      height: 320px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    }
+
     canvas {
       background: red;
       display: block;
