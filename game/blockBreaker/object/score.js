@@ -29,7 +29,7 @@ export class Score {
    * @return ゲームクリア / ゲームクリアではない
    */
   isGameClear(BLOCKS) {
-    return this.score === BLOCKS.getStartTotaleNumber();
+    return this.score === BLOCKS.getStartTotalNumber();
   }
 
   /**

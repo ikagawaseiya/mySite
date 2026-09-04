@@ -85,7 +85,7 @@ export class Blocks {
    * 開始時の総数を返す
    * @returns  開始時のブロックの総数
    */
-  getStartTotaleNumber() {
+  getStartTotalNumber() {
     return this.blockRowCount * this.blockColumnCount;
   }
 }

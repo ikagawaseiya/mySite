@@ -1,4 +1,4 @@
-import { TITLE_SCREEN } from '/game/blockBreaker/screen/title.js';
+import { TITLE_SCREEN } from '/game/blockBreaker/screen/title/titleScreen.js';
 import { GAME_OVER_SCREEN } from '/game/blockBreaker/screen/gameOver.js';
 import { GAME_CLEAR_SCREEN } from '/game/blockBreaker/screen/gameClear.js';
 import { setupSound, Sound } from '/game/blockBreaker/sound/sound.js';
@@ -72,7 +72,7 @@ function draw() {
   CTX.clearRect(0, 0, CANVAS.width, CANVAS.height);
   switch (GAME_STATE.state) {
     case STATE_TYPE.TITLE:
-      TITLE_SCREEN.draw(CTX, CANVAS);
+      TITLE_SCREEN.show();
       break;
 
     case STATE_TYPE.RUN:
@@ -82,7 +82,7 @@ function draw() {
     case STATE_TYPE.GAME_OVER:
       TIMER.stop();
       drawGameObjects();
-      GAME_OVER_SCREEN.draw(CTX, CANVAS, SCORE.score, BLOCKS.getStartTotaleNumber());
+      GAME_OVER_SCREEN.draw(CTX, CANVAS, SCORE.score, BLOCKS.getStartTotalNumber());
       break;
 
     case STATE_TYPE.GAME_CLEAR:

@@ -1,5 +1,8 @@
+<?php
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
+?>
 <!doctype html>
-<!--mdn ブロック崩し STEP2 各フレームの前にキャンバスを消去まで-->
 <html lang="ja">
 
 <head>
@@ -9,12 +12,14 @@
 </head>
 
 <body>
-  <canvas id="myCanvas" width="480" height="320"></canvas>
+  <div id="game-display">
+    <canvas id="myCanvas" width="480" height="320"></canvas>
+    <?php include __DIR__ . '/screen/title/titleScreen.html'; ?>
+  </div>
   <div id="paddle-touch-area" class="paddle-touch-area">
     Touch Area☝&#xFE0E;
   </div>
-  <script type="module" src="./blockBreaker/gameManager.js">
-  </script>
+  <script type="module" src="./blockBreaker/gameManager.js"></script>
 </body>
 
 </html>
