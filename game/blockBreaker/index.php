@@ -19,7 +19,7 @@ error_reporting(E_ALL);
   <div id="paddle-touch-area" class="paddle-touch-area">
     Touch Area☝&#xFE0E;
   </div>
-  <script type="module" src="./blockBreaker/gameManager.js"></script>
+  <script type="module" src="/game/blockBreaker/gameManager.js"></script>
 </body>
 
 </html>
