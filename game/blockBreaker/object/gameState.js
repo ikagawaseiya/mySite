@@ -65,7 +65,7 @@ export class GameState {
     }
   }
 
-  /**タイトル画面である場合、ゲームを作動する */
+  /**タイトル画面である場合、ゲームを起動する */
   runGameForTitle(SOUND, resetObject) {
     if (this.isTitle()) {
       SOUND.gameStart();

@@ -22,6 +22,13 @@ const GAME_STATE = new GameState();
 /**タッチエリア */
 const touchArea = document.getElementById("paddle-touch-area");
 
+TITLE_SCREEN.init({
+  gameState: GAME_STATE,
+  sound: SOUND,
+  resetObject: resetObject,
+  touchArea: touchArea
+});
+
 //各オブジェクトの生成
 const BALL = new Ball(CANVAS);
 const PADDLE = new Paddle(CANVAS);

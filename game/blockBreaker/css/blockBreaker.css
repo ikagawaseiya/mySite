@@ -16,15 +16,13 @@
       align-items: center;
     }
 
-    /*TODO 後に値を調整*/
-    #game-container {
+    /*ゲーム画面全体*/
+    #game-display {
       position: relative;
-      width: 480px;
-      max-width: 1280px;
-      height: 320px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+      margin: 0 auto;
     }
 
+    /*キャンバス*/
     canvas {
       background: red;
       display: block;
@@ -55,8 +53,8 @@
     }
 
     /*
-    *マウスによるホバーができる場合のタッチエリア
-    *非表示とする 
+    *マウスによるホバーが可能なデバイスの場合における、タッチエリア
+    *タッチエリアを非表示とする 
     */
     @media (hover: hover) and (pointer: fine) {
       .paddle-touch-area {

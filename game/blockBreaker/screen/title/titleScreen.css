@@ -11,6 +11,25 @@
   align-items: center;
   background-color: red;
   color: white;
-  z-index: 20;
+  z-index: 10;
   text-align: center;
+}
+
+/*タイトル画面の文字*/
+.title-text {
+  font-size: 80px;
+}
+
+.top-page-back-button {
+  position: absolute;
+  margin-top: 50px;
+  bottom: 70px;
+  background-color: transparent;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  color: white;
+  font-size: 20px;
+  padding: 5px 10px;
+  border: 1px solid white;
 }

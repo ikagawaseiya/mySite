@@ -2,25 +2,22 @@
 /**
  * インプットマネージャー
  * 入力に対する処理を管理する
+ * 
+ * TODO 各スクリーンなどに処理を移動させる予定
  */
 export const INPUT_MANAGER = {
   /**入力のチェック及び、それに対する処理を行う */
   checkInput(CANVAS, GAME_STATE, PADDLE, resetObject, TOUCH_AREA, SOUND) {
 
     /*
+    *TODO 後にそれぞれの画面へ処理を移動する
     *以下の状態におけるクリックされた場合の処理
     *状態に応じて、処理が異なる
-    *
-    *1.タイトル状態
-    *ゲームを起動する
     *
     *2.ゲームオーバーまたはクリア状態
     *状態をタイトルとする
     */
     CANVAS.addEventListener("click", () => {
-      if (GAME_STATE.isTitle()) {
-        GAME_STATE.runGameForTitle(SOUND, resetObject);
-      }
       if (GAME_STATE.isGameOver() || GAME_STATE.isGameClear()) {
         GAME_STATE.switchStateForGameEndScreen(SOUND, resetObject);
       }
@@ -55,21 +52,11 @@ export const INPUT_MANAGER = {
      *タッチエリア入力 
      */
     if (TOUCH_AREA) {
-
-      /**
-       * タイトル画面で指が離れた場合 
-       * ※以下のスマホの仕様に合わせたもの
-       * ※スマホでは、最初のタッチでは音声が鳴らない
-       * */
-      TOUCH_AREA.addEventListener("touchend", (e) => {
-        GAME_STATE.runGameForTitle(SOUND, resetObject);
-      }, { passive: false });
-
       // エリアに指が触れたとき
       TOUCH_AREA.addEventListener("touchstart", (e) => {
+        TOUCH_AREA.classList.add("active");
         if (GAME_STATE.isRunning()) {
           e.preventDefault();
-          TOUCH_AREA.classList.add("active");
           PADDLE.touchMoveHandler(e);
         }
       }, { passive: false });
