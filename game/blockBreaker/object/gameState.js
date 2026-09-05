@@ -59,7 +59,7 @@ export class GameState {
   *ゲームオーバーまたはクリア状態である場合、
   *状態をタイトルとする
   */
-  switchStateForGameEndScreen(SOUND, resetObject) {
+  transitionTitleScreenForResultScreen(SOUND, resetObject) {
     if (this.isGameOver() || this.isGameClear()) {
       this.setTitle();
     }

@@ -1,6 +1,6 @@
 import { TITLE_SCREEN } from '/game/blockBreaker/screen/title/titleScreen.js';
-import { GAME_OVER_SCREEN } from '/game/blockBreaker/screen/gameOver.js';
-import { GAME_CLEAR_SCREEN } from '/game/blockBreaker/screen/gameClear.js';
+import { GAME_OVER_SCREEN } from '/game/blockBreaker/screen/gameOver/gameOverScreen.js';
+import { GAME_CLEAR_SCREEN } from '/game/blockBreaker/screen/gameClear/gameClearScreen.js';
 import { setupSound, Sound } from '/game/blockBreaker/sound/sound.js';
 import { GameState, STATE_TYPE } from '/game/blockBreaker/object/gameState.js';
 import { Ball } from '/game/blockBreaker/object/ball.js';
@@ -23,6 +23,20 @@ const GAME_STATE = new GameState();
 const touchArea = document.getElementById("paddle-touch-area");
 
 TITLE_SCREEN.init({
+  gameState: GAME_STATE,
+  sound: SOUND,
+  resetObject: resetObject,
+  touchArea: touchArea
+});
+
+GAME_OVER_SCREEN.init({
+  gameState: GAME_STATE,
+  sound: SOUND,
+  resetObject: resetObject,
+  touchArea: touchArea
+});
+
+GAME_CLEAR_SCREEN.init({
   gameState: GAME_STATE,
   sound: SOUND,
   resetObject: resetObject,
@@ -89,14 +103,13 @@ function draw() {
     case STATE_TYPE.GAME_OVER:
       TIMER.stop();
       drawGameObjects();
-      GAME_OVER_SCREEN.draw(CTX, CANVAS, SCORE.score, BLOCKS.getStartTotalNumber());
+      GAME_OVER_SCREEN.show(SCORE.score, BLOCKS.getStartTotalNumber());
       break;
 
     case STATE_TYPE.GAME_CLEAR:
       TIMER.stop();
       drawGameObjects();
-      let clearTime = [TIMER.minutes, TIMER.seconds]
-      GAME_CLEAR_SCREEN.draw(CTX, CANVAS, clearTime);
+      GAME_CLEAR_SCREEN.show(TIMER.minutes, TIMER.seconds);
       break;
   }
 

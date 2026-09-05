@@ -6,6 +6,7 @@ let touchArea = null;
 
 /**タイトル画面 */
 export const TITLE_SCREEN = {
+  /**初期化 */
   init(dependencies) {
     gameState = dependencies.gameState;
     sound = dependencies.sound;
@@ -37,7 +38,7 @@ export const TITLE_SCREEN = {
   setupEvents() {
     /**ゲーム起動 */
     TITLE?.addEventListener("click", () => {
-      if (gameState && gameState.isTitle()) {
+      if (gameState.isTitle()) {
         this.gameStart();
       }
     });

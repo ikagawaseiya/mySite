@@ -17,19 +17,22 @@
 
 /*タイトル画面の文字*/
 .title-text {
-  font-size: 80px;
+  font-size: 8vw;
+}
+
+/*開始方法を案内する文字*/
+.how-to-start-text {
+  font-size: 3vw;
 }
 
 .top-page-back-button {
   position: absolute;
-  margin-top: 50px;
-  bottom: 70px;
+  bottom: 3vw;
   background-color: transparent;
-  border: none;
   outline: none;
   cursor: pointer;
   color: white;
-  font-size: 20px;
-  padding: 5px 10px;
+  font-size: 2vw;
+  padding: 1vw 1vw;
   border: 1px solid white;
 }

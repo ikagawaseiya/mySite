@@ -1,0 +1,27 @@
+/*ゲームオーバー画面*/
+#game-over-screen {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.6);
+  z-index: 10;
+  text-align: center;
+  display: none;
+}
+
+/*GAME OVER*/
+.game-over-text {
+  color: yellow;
+  font-size: 9vw;
+}
+
+/*表示されるスコア*/
+.score-text-box {
+  color: white;
+  font-size: 6vw;
+}

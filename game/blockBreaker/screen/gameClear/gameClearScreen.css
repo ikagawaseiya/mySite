@@ -1,0 +1,27 @@
+/*ゲームクリア画面*/
+#game-clear-screen {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.6);
+  z-index: 10;
+  text-align: center;
+  display: none;
+}
+
+/*GAME CLEAR*/
+.game-clear-text {
+  color: yellow;
+  font-size: 9vw;
+}
+
+/*クリア時間*/
+.clear-time-text-box {
+  color: white;
+  font-size: 6vw;
+}
