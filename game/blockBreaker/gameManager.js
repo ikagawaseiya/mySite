@@ -14,7 +14,7 @@ import { Timer } from '/game/blockBreaker/object/timer.js';
 const CANVAS = document.getElementById("myCanvas");
 /**描画コンテキスト */
 const CTX = CANVAS.getContext("2d");
-/**音声 */
+/**音声とその初期化 */
 await setupSound();
 const SOUND = new Sound();
 /**ゲームの状態 */
@@ -22,25 +22,15 @@ const GAME_STATE = new GameState();
 /**タッチエリア */
 const touchArea = document.getElementById("paddle-touch-area");
 
-TITLE_SCREEN.init({
-  gameState: GAME_STATE,
-  sound: SOUND,
-  resetObject: resetObject,
-  touchArea: touchArea
-});
-
-GAME_OVER_SCREEN.init({
-  gameState: GAME_STATE,
-  sound: SOUND,
-  resetObject: resetObject,
-  touchArea: touchArea
-});
-
-GAME_CLEAR_SCREEN.init({
-  gameState: GAME_STATE,
-  sound: SOUND,
-  resetObject: resetObject,
-  touchArea: touchArea
+/**スクリーンの初期化 */
+const SCREENS = [TITLE_SCREEN, GAME_OVER_SCREEN, GAME_CLEAR_SCREEN];
+SCREENS.forEach(screen => {
+  screen.init({
+    gameState: GAME_STATE,
+    sound: SOUND,
+    resetObject: resetObject,
+    touchArea: touchArea
+  });
 });
 
 //各オブジェクトの生成

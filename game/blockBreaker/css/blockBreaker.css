@@ -14,21 +14,13 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
+      user-select: none;
     }
 
     /*ゲーム画面全体*/
     #game-display {
       position: relative;
       margin: 0 auto;
-    }
-
-    /*ゲーム画面に重ねるスクリーン*/
-    .overlay-screen {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
     }
 
     /*キャンバス*/
@@ -42,17 +34,16 @@
 
     /*タッチエリア*/
     .paddle-touch-area {
-      width: 480px;
-      height: 280px;
+      height: 180px;
       width: 100vw;
       max-width: 1280px;
-      margin: 10px auto;
+      margin: 0.5vh auto;
       background-color: gray;
       color: white;
       display: flex;
       justify-content: center;
       align-items: center;
-      font-size: 32px;
+      font-size: 3vw;
       font-weight: bold;
 
       /* スマホでの誤動作や画面スクロールを防ぐ設定 */

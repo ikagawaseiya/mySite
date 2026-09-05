@@ -15,12 +15,19 @@ export const GAME_CLEAR_SCREEN = {
     this.setupEvents();
   },
 
-  /**表示 */
+  /**表示 
+   *表示から300ミリ秒は、タッチエリアを無効とする
+  */
   show(clearMinute, clearSecond) {
     if (GAME_CLEAR) {
       document.querySelector('.clear-minute').textContent = clearMinute;
       document.querySelector('.clear-second').textContent = clearSecond;
       GAME_CLEAR.style.display = "flex";
+      this.canTouchend = false;
+      // 300ミリ秒（0.3秒）後に、入力を許可する
+      setTimeout(() => {
+        this.canTouchend = true;
+      }, 300);
     }
   },
 
@@ -49,15 +56,14 @@ export const GAME_CLEAR_SCREEN = {
      * 
      * 離したタイミングを入力とし、
      * タイトル画面に戻る
-     * TODO 誤作動するので仕様を変える予定
      * */
-    /*
     touchArea.addEventListener("touchend", (e) => {
+      if (!this.canTouchend) return;
       if (gameState.isGameClear()) {
         this.hide();
         gameState.transitionTitleScreenForResultScreen(sound, resetObject)
       }
     }, { passive: false });
-    */
+
   }
 }

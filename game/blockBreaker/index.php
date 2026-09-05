@@ -7,6 +7,7 @@ error_reporting(E_ALL);
 
 <head>
   <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>ブロック崩しゲーム</title>
   <link rel="stylesheet" href="/game/blockBreaker/css/blockBreaker.css">
   <link rel="stylesheet" href="/game/blockBreaker/screen/title/titleScreen.css">
