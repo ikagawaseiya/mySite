@@ -16,23 +16,24 @@
 }
 
 /*タイトル画面の文字*/
-.title-text {
-  font-size: 8vw;
+.game-title-text {
+  font-size: 70px;
 }
 
 /*開始方法を案内する文字*/
 .how-to-start-text {
-  font-size: 3vw;
+  font-size: 30px;
 }
 
+/*トップページへ戻るボタン*/
 .top-page-back-button {
   position: absolute;
-  bottom: 3vw;
+  bottom: 30px;
   background-color: transparent;
   outline: none;
   cursor: pointer;
   color: white;
-  font-size: 2vw;
-  padding: 1vw 1vw;
+  font-size: 20px;
+  padding: 10px 5px;
   border: 1px solid white;
 }

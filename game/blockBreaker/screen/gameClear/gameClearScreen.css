@@ -17,11 +17,11 @@
 /*GAME CLEAR*/
 .game-clear-text {
   color: yellow;
-  font-size: 9vw;
+  font-size: 80px;
 }
 
 /*クリア時間*/
 .clear-time-text-box {
   color: white;
-  font-size: 6vw;
+  font-size: 60px;
 }

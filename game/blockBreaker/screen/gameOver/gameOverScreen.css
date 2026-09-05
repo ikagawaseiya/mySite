@@ -17,11 +17,11 @@
 /*GAME OVER*/
 .game-over-text {
   color: yellow;
-  font-size: 9vw;
+  font-size: 80px;
 }
 
 /*表示されるスコア*/
 .score-text-box {
   color: white;
-  font-size: 6vw;
+  font-size: 60px;
 }
