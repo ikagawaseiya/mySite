@@ -23,7 +23,7 @@ error_reporting(E_ALL);
     <?php include_once __DIR__ . '/screen/gameClear/gameClearScreen.html' ?>
   </div>
   <div id="paddle-touch-area" class="paddle-touch-area">
-    Touch Area☝&#xFE0E;
+    スライドで操作 ← ☝&#xFE0E; →
   </div>
   <script type="module" src="/game/blockBreaker/gameManager.js"></script>
 </body>
