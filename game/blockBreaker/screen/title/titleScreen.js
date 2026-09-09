@@ -1,8 +1,10 @@
 const TITLE = document.getElementById("title-screen");
+const DEFFICUTY = document.querySelector(".difficuty");
 let gameState = null;
 let sound = null;
 let resetObject = null;
 let touchArea = null;
+let difficulty = null;
 
 /**タイトル画面 */
 export const TITLE_SCREEN = {
@@ -12,11 +14,13 @@ export const TITLE_SCREEN = {
     sound = dependencies.sound;
     resetObject = dependencies.resetObject;
     touchArea = dependencies.touchArea;
+    difficulty = dependencies.difficulty;
     this.setupEvents();
   },
 
   /**表示 */
   show() {
+    DEFFICUTY.textContent = difficulty.type;
     if (TITLE) TITLE.style.display = "flex";
   },
 
@@ -41,6 +45,18 @@ export const TITLE_SCREEN = {
       if (gameState.isTitle()) {
         this.gameStart();
       }
+    });
+
+    /**難易度変更ボタン：ひとつ下げる */
+    TITLE?.querySelector('.low-defficuty-button')?.addEventListener("click", (event) => {
+      event.stopPropagation();
+      difficulty.setLowOneLevel();
+    });
+
+    /**難易度変更ボタン：ひとつ上げる */
+    TITLE?.querySelector('.high-defficuty-button')?.addEventListener("click", (event) => {
+      event.stopPropagation();
+      difficulty.setHighOneLevel();
     });
 
     /**トップページに戻る */

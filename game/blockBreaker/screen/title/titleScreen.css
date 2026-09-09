@@ -18,23 +18,42 @@
 
 /*タイトル画面の文字*/
 .game-title-text {
-  font-size: 7vw;
+  font-size: clamp(10px, 7vw, 89.6px);
 }
 
 /*開始方法を案内する文字*/
 .how-to-start-text {
-  font-size: 3vw;
+  font-size: clamp(5px, 3vw, 38.4px);
+}
+
+/*難易度選択全体*/
+.defficuty-selector {
+  position: absolute;
+  bottom: clamp(2px, 12vw, 153.6px);
+  font-size: clamp(5px, 3vw, 38.4px);
+  display: flex;
+}
+
+/*難易度選択ボタン*/
+.defficuty-button {
+  cursor: pointer;
+  width: clamp(20px, 8vw, 80px);
+}
+
+/*難易度表示*/
+.display-difficulty {
+  width: clamp(100px, 40vw, 400px);
 }
 
 /*トップページへ戻るボタン*/
 .top-page-back-button {
   position: absolute;
-  bottom: 2vw;
+  bottom: clamp(1px, 1vw, 25.6px);
   background-color: transparent;
   outline: none;
   cursor: pointer;
   color: white;
-  font-size: 2vw;
-  padding: 1vw 1vh;
+  font-size: clamp(3px, 2vw, 25.6px);
+  padding: clamp(1px, 1vw, 12.8px) clamp(1px, 1vh, 12.8px);
   border: 1px solid white;
 }

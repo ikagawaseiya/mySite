@@ -2,7 +2,8 @@ import { TITLE_SCREEN } from '/game/blockBreaker/screen/title/titleScreen.js';
 import { GAME_OVER_SCREEN } from '/game/blockBreaker/screen/gameOver/gameOverScreen.js';
 import { GAME_CLEAR_SCREEN } from '/game/blockBreaker/screen/gameClear/gameClearScreen.js';
 import { setupSound, Sound } from '/game/blockBreaker/sound/sound.js';
-import { GameState, STATE_TYPE } from '/game/blockBreaker/object/gameState.js';
+import { GameState, STATE_TYPE } from '/game/blockBreaker/state/gameState.js';
+import { Difficulty } from '/game/blockBreaker/state/difficulty.js';
 import { Ball } from '/game/blockBreaker/object/ball.js';
 import { Paddle } from '/game/blockBreaker/object/paddle.js';
 import { Blocks } from '/game/blockBreaker/object/blocks.js';
@@ -19,19 +20,29 @@ await setupSound();
 const SOUND = new Sound();
 /**ゲームの状態 */
 const GAME_STATE = new GameState();
+/**難易度 */
+const DIFFICULTY = new Difficulty();
 /**タッチエリア */
-const touchArea = document.getElementById("paddle-touch-area");
+const TOUCH_AREA = document.getElementById("paddle-touch-area");
 
 /**スクリーンの初期化 */
-const SCREENS = [TITLE_SCREEN, GAME_OVER_SCREEN, GAME_CLEAR_SCREEN];
-SCREENS.forEach(screen => {
+const FIXED_SCREENS = [GAME_OVER_SCREEN, GAME_CLEAR_SCREEN];
+FIXED_SCREENS.forEach(screen => {
   screen.init({
     gameState: GAME_STATE,
     sound: SOUND,
     resetObject: resetObject,
-    touchArea: touchArea
+    touchArea: TOUCH_AREA
   });
 });
+
+TITLE_SCREEN.init({
+  gameState: GAME_STATE,
+  sound: SOUND,
+  resetObject: resetObject,
+  touchArea: TOUCH_AREA,
+  difficulty: DIFFICULTY
+})
 
 //各オブジェクトの生成
 const BALL = new Ball(CANVAS);
@@ -83,7 +94,7 @@ function draw() {
   CTX.clearRect(0, 0, CANVAS.width, CANVAS.height);
   switch (GAME_STATE.state) {
     case STATE_TYPE.TITLE:
-      TITLE_SCREEN.show();
+      TITLE_SCREEN.show(DIFFICULTY.type);
       break;
 
     case STATE_TYPE.RUN:
@@ -109,6 +120,6 @@ function draw() {
 
 
 import { INPUT_MANAGER } from '/game/blockBreaker/input/inputManager.js';
-INPUT_MANAGER.checkInput(CANVAS, GAME_STATE, PADDLE, resetObject, touchArea, SOUND);
+INPUT_MANAGER.checkInput(GAME_STATE, PADDLE, TOUCH_AREA);
 
 draw();

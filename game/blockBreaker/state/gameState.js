@@ -11,21 +11,26 @@ export const STATE_TYPE = Object.freeze({
  * ゲームのステータスを管理する 
  * */
 export class GameState {
+  /**
+   * コンストラクタ
+   * 初期状態はタイトルとする
+   */
   constructor() {
-    this.state = STATE_TYPE.TITLE;
+    const INITIAL_STATE = STATE_TYPE.TITLE;
+    this.state = INITIAL_STATE;
   }
 
-  /**タイトル */
+  /**タイトル状態とする */
   setTitle() {
     this.state = STATE_TYPE.TITLE;
   }
 
-  /**実行中 */
+  /**実行中状態とする */
   setRun() {
     this.state = STATE_TYPE.RUN;
   }
 
-  /**ゲームオーバー */
+  /**ゲームオーバー状態とする */
   setGameOver() {
     this.state = STATE_TYPE.GAME_OVER;
   }
@@ -59,13 +64,13 @@ export class GameState {
   *ゲームオーバーまたはクリア状態である場合、
   *状態をタイトルとする
   */
-  transitionTitleScreenForResultScreen(SOUND, resetObject) {
+  transitionTitleScreenForResultScreen() {
     if (this.isGameOver() || this.isGameClear()) {
       this.setTitle();
     }
   }
 
-  /**タイトル画面である場合、ゲームを起動する */
+  /**タイトル画面である場合、実行中状態とする */
   runGameForTitle(SOUND, resetObject) {
     if (this.isTitle()) {
       SOUND.gameStart();

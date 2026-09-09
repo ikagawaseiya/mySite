@@ -3,11 +3,10 @@
  * インプットマネージャー
  * 入力に対する処理を管理する
  * 
- * TODO 各スクリーンなどに処理を移動させる予定
  */
 export const INPUT_MANAGER = {
   /**入力のチェック及び、それに対する処理を行う */
-  checkInput(CANVAS, GAME_STATE, PADDLE, resetObject, TOUCH_AREA, SOUND) {
+  checkInput(GAME_STATE, PADDLE, TOUCH_AREA) {
 
     /*キーボード:入力*/
     document.addEventListener("keydown", (e) => {
