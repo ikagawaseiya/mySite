@@ -41,7 +41,7 @@ export class Timer {
   /**
    * タイムを初期値にリセットする
    */
-  reset() {
+  restart() {
     this.startTime = performance.now();
     this.elapsedTime = 0;
     this.isStop = false;

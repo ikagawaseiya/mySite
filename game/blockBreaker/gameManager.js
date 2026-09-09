@@ -31,7 +31,7 @@ FIXED_SCREENS.forEach(screen => {
   screen.init({
     gameState: GAME_STATE,
     sound: SOUND,
-    resetObject: resetObject,
+    restartObject: restartObject,
     touchArea: TOUCH_AREA
   });
 });
@@ -39,15 +39,15 @@ FIXED_SCREENS.forEach(screen => {
 TITLE_SCREEN.init({
   gameState: GAME_STATE,
   sound: SOUND,
-  resetObject: resetObject,
+  restartObject: restartObject,
   touchArea: TOUCH_AREA,
   difficulty: DIFFICULTY
 })
 
 //各オブジェクトの生成
-const BALL = new Ball(CANVAS);
+const BALL = new Ball(CANVAS, DIFFICULTY);
+const BLOCKS = new Blocks(CANVAS, DIFFICULTY);
 const PADDLE = new Paddle(CANVAS);
-const BLOCKS = new Blocks(CANVAS);
 const LIVES = new Lives(CANVAS);
 const SCORE = new Score(CANVAS);
 const TIMER = new Timer(CANVAS);
@@ -63,11 +63,11 @@ function drawGameObjects() {
 }
 
 /*
- *各オブジェクトの状態を初期状態に戻す
+ *各オブジェクトの状態を最初からやりなおす
 */
-function resetObject() {
+function restartObject() {
   OBJECTS.forEach(object => {
-    object.reset();
+    object.restart();
   });
 }
 

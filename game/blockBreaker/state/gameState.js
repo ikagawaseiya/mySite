@@ -71,10 +71,10 @@ export class GameState {
   }
 
   /**タイトル画面である場合、実行中状態とする */
-  runGameForTitle(SOUND, resetObject) {
+  runGameForTitle(SOUND, restartObject) {
     if (this.isTitle()) {
       SOUND.gameStart();
-      resetObject();
+      restartObject();
       this.setRun();
     }
   }

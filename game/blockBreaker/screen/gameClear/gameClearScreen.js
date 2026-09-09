@@ -1,7 +1,7 @@
 const GAME_CLEAR = document.getElementById("game-clear-screen");
 let gameState = null;
 let sound = null;
-let resetObject = null;
+let restartObject = null;
 let touchArea = null;
 
 /**ゲームクリア画面 */
@@ -10,7 +10,7 @@ export const GAME_CLEAR_SCREEN = {
   init(dependencies) {
     gameState = dependencies.gameState;
     sound = dependencies.sound;
-    resetObject = dependencies.resetObject;
+    restartObject = dependencies.restartObject;
     touchArea = dependencies.touchArea;
     this.setupEvents();
   },
@@ -47,7 +47,7 @@ export const GAME_CLEAR_SCREEN = {
     GAME_CLEAR?.addEventListener("click", () => {
       if (gameState.isGameClear()) {
         this.hide();
-        gameState.transitionTitleScreenForResultScreen(sound, resetObject)
+        gameState.transitionTitleScreenForResultScreen(sound, restartObject)
       }
     });
 
@@ -61,7 +61,7 @@ export const GAME_CLEAR_SCREEN = {
       if (!this.canTouchend) return;
       if (gameState.isGameClear()) {
         this.hide();
-        gameState.transitionTitleScreenForResultScreen(sound, resetObject)
+        gameState.transitionTitleScreenForResultScreen(sound, restartObject)
       }
     }, { passive: false });
 

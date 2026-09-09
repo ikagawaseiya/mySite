@@ -2,7 +2,7 @@ const TITLE = document.getElementById("title-screen");
 const DEFFICUTY = document.querySelector(".difficuty");
 let gameState = null;
 let sound = null;
-let resetObject = null;
+let restartObject = null;
 let touchArea = null;
 let difficulty = null;
 
@@ -12,7 +12,7 @@ export const TITLE_SCREEN = {
   init(dependencies) {
     gameState = dependencies.gameState;
     sound = dependencies.sound;
-    resetObject = dependencies.resetObject;
+    restartObject = dependencies.restartObject;
     touchArea = dependencies.touchArea;
     difficulty = dependencies.difficulty;
     this.setupEvents();
@@ -31,7 +31,7 @@ export const TITLE_SCREEN = {
 
   /**ゲーム開始 */
   gameStart() {
-    gameState.runGameForTitle(sound, resetObject);
+    gameState.runGameForTitle(sound, restartObject);
     this.hide();
   },
 
@@ -47,17 +47,24 @@ export const TITLE_SCREEN = {
       }
     });
 
+    /**
+     * 難易度選択エリアのクリック
+     * ゲームが起動しないように、親要素へのイベント伝搬を停止する
+     * */
+    TITLE?.querySelector('.defficuty-selector')?.addEventListener("click", (event) => {
+      event.stopPropagation();
+    });
+
     /**難易度変更ボタン：ひとつ下げる */
     TITLE?.querySelector('.low-defficuty-button')?.addEventListener("click", (event) => {
-      event.stopPropagation();
       difficulty.setLowOneLevel();
     });
 
     /**難易度変更ボタン：ひとつ上げる */
     TITLE?.querySelector('.high-defficuty-button')?.addEventListener("click", (event) => {
-      event.stopPropagation();
       difficulty.setHighOneLevel();
     });
+
 
     /**トップページに戻る */
     TITLE?.querySelector('.top-page-back-button')?.addEventListener("click", (event) => {

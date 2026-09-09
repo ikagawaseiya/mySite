@@ -3,7 +3,10 @@ const START_DX_SPEED = 1;
 const START_DY_SPEED = 1;
 const DEFAULT_COLOR = 'skyblue';
 const CHANGED_COLOR = 'white';
-const BALL_MAX_SPEED_LIMIT = 3;
+/**難易度：NORMALの速度 */
+const NORMAL_MAX_SPEED_LIMIT = 3;
+/**難易度:HARDの速度 */
+const HARD_MAX_SPEED_LIMIT = 5;
 
 /**
  * ボールクラス
@@ -12,7 +15,7 @@ export class Ball {
   /**
    * ボールのコンストラクタ
    */
-  constructor(CANVAS) {
+  constructor(CANVAS, DIFFICULTY) {
     this.canvas = CANVAS;
     this.startX = this.canvas.width / 2;
     this.startY = this.canvas.height / 2;
@@ -23,6 +26,8 @@ export class Ball {
     this.dx = START_DX_SPEED;
     this.dy = START_DY_SPEED;
     this.ballColorStyle = DEFAULT_COLOR;
+    this.ballMaxSpeedLimit = NORMAL_MAX_SPEED_LIMIT;
+    this.difficulty = DIFFICULTY;
   }
 
   /**
@@ -72,19 +77,26 @@ export class Ball {
   changeSpeedForReflection() {
     const CHANGE_SPEED_NUM = 3;
     if (this.dx < 0) {
-      this.dx = Math.max(this.dx - CHANGE_SPEED_NUM, -BALL_MAX_SPEED_LIMIT);
+      this.dx = Math.max(this.dx - CHANGE_SPEED_NUM, -this.ballMaxSpeedLimit);
     } else if (this.dx > 0) {
-      this.dx = Math.min(this.dx + CHANGE_SPEED_NUM, BALL_MAX_SPEED_LIMIT);
+      this.dx = Math.min(this.dx + CHANGE_SPEED_NUM, this.ballMaxSpeedLimit);
     }
     if (this.dy < 0) {
-      this.dy = Math.max(this.dy - CHANGE_SPEED_NUM, -BALL_MAX_SPEED_LIMIT);
+      this.dy = Math.max(this.dy - CHANGE_SPEED_NUM, -this.ballMaxSpeedLimit);
     }
   }
 
   /**
-   * リスタート位置に配置する
+   * 難易度を反映させる
+   * その後、リスタート位置に配置する
    */
-  reset() {
+  restart() {
+    if (this.difficulty.isNormal()) {
+      this.ballMaxSpeedLimit = NORMAL_MAX_SPEED_LIMIT;
+    }
+    else if (this.difficulty.isHard()) {
+      this.ballMaxSpeedLimit = HARD_MAX_SPEED_LIMIT;
+    }
     this.x = this.startX;
     this.y = this.startY;
     this.dx = START_DX_SPEED;
@@ -152,8 +164,8 @@ export class Ball {
           SOUND.gameOver();
           GAME_STATE.setGameOver();
         } else {
-          this.reset();
-          PADDLE.reset();
+          this.restart();
+          PADDLE.restart();
         }
       }
     }
@@ -166,9 +178,9 @@ export class Ball {
   *ボールの判定xyが重なった場合に衝突とする
   */
   checkBlocksCollision(BLOCKS, SCORE, GAME_STATE, SOUND) {
-    for (var c = 0; c < BLOCKS.blockColumnCount; c++) {
-      for (var r = 0; r < BLOCKS.blockRowCount; r++) {
-        var block = BLOCKS.blocks[c][r];
+    for (let c = 0; c < BLOCKS.blockColumnCount; c++) {
+      for (let r = 0; r < BLOCKS.blockRowCount; r++) {
+        let block = BLOCKS.blocks[c][r];
         //衝突した場合の処理
         if (block.status === BLOCKS.blockStartHp) {
           if (this.isBrickCollision(block)) {

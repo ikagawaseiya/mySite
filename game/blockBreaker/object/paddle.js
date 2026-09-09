@@ -90,7 +90,7 @@ export class Paddle {
   /**
    * 初期状態にリセットする
    */
-  reset() {
+  restart() {
     this.paddleX = this.startX;
     this.rightPressed = false;
     this.leftPressed = false;

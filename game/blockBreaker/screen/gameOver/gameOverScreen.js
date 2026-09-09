@@ -1,7 +1,7 @@
 const GAME_OVER = document.getElementById("game-over-screen");
 let gameState = null;
 let sound = null;
-let resetObject = null;
+let restartObject = null;
 let touchArea = null;
 
 /**ゲームオーバー画面 */
@@ -10,7 +10,7 @@ export const GAME_OVER_SCREEN = {
   init(dependencies) {
     gameState = dependencies.gameState;
     sound = dependencies.sound;
-    resetObject = dependencies.resetObject;
+    restartObject = dependencies.restartObject;
     touchArea = dependencies.touchArea;
     this.setupEvents();
   },
@@ -47,7 +47,7 @@ export const GAME_OVER_SCREEN = {
     GAME_OVER?.addEventListener("click", () => {
       if (gameState.isGameOver()) {
         this.hide();
-        gameState.transitionTitleScreenForResultScreen(sound, resetObject)
+        gameState.transitionTitleScreenForResultScreen(sound, restartObject)
       }
     });
 
@@ -61,7 +61,7 @@ export const GAME_OVER_SCREEN = {
       if (!this.canTouchend) return;
       if (gameState.isGameOver()) {
         this.hide();
-        gameState.transitionTitleScreenForResultScreen(sound, resetObject)
+        gameState.transitionTitleScreenForResultScreen(sound, restartObject)
       }
     }, { passive: false });
   }

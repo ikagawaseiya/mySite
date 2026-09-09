@@ -1,3 +1,20 @@
+/**難易度：NORMALの配置 */
+const NORMAL_ROW_COUNT = 4;
+const NORMAL_COLUMUN_COUNT = 10;
+const NORMAL_WIDTH = 32;
+const NORMAL_HEIGHT = 20;
+const NORMAL_PADDING = 10;
+const NORMAL_OFFSET_TOP = 30;
+const NORMAL_OFSET_LEFT = 35;
+/**難易度：HARDの配置 */
+const HARD_ROW_COUNT = 5;
+const HARD_COLUMUN_COUNT = 20;
+const HARD_WIDTH = 16;
+const HARD_HEIGHT = 16;
+const HARD_PADDING = 5;
+const HARD_OFFSET_TOP = 30;
+const HARD_OFSET_LEFT = 32;
+
 
 /**
  * ブロッククラス
@@ -5,15 +22,15 @@
  */
 export class Blocks {
   //コンストラクタ
-  constructor(CANVAS) {
+  constructor(CANVAS, DIFFICULTY) {
     this.canvas = CANVAS;
-    this.blockRowCount = 4;
-    this.blockColumnCount = 10;
-    this.blockWidth = 32;
-    this.blockHeight = 20;
-    this.blockPadding = 10;
-    this.blockOffsetTop = 30;
-    this.blockOffsetLeft = 35;
+    this.blockRowCount = NORMAL_ROW_COUNT;
+    this.blockColumnCount = NORMAL_COLUMUN_COUNT;
+    this.blockWidth = NORMAL_WIDTH;
+    this.blockHeight = NORMAL_HEIGHT;
+    this.blockPadding = NORMAL_PADDING;
+    this.blockOffsetTop = NORMAL_OFFSET_TOP;
+    this.blockOffsetLeft = NORMAL_OFSET_LEFT;
     this.blockStartHp = 1;
     this.blockDestroyHp = 0;
     this.blocks = [];
@@ -30,6 +47,7 @@ export class Blocks {
         };
       }
     }
+    this.difficulty = DIFFICULTY;
   }
 
   /*
@@ -37,11 +55,11 @@ export class Blocks {
   *statusが1ではない(破壊された)ものは表示しない
   */
   draw(CTX) {
-    for (var c = 0; c < this.blockColumnCount; c++) {
-      for (var r = 0; r < this.blockRowCount; r++) {
+    for (let c = 0; c < this.blockColumnCount; c++) {
+      for (let r = 0; r < this.blockRowCount; r++) {
         if (this.blocks[c][r].status == this.blockStartHp) {
-          var blockX = (c * (this.blockWidth + this.blockPadding)) + this.blockOffsetLeft;
-          var blockY = (r * (this.blockHeight + this.blockPadding)) + this.blockOffsetTop;
+          let blockX = (c * (this.blockWidth + this.blockPadding)) + this.blockOffsetLeft;
+          let blockY = (r * (this.blockHeight + this.blockPadding)) + this.blockOffsetTop;
           this.blocks[c][r].x = blockX;
           this.blocks[c][r].y = blockY;
           CTX.beginPath();
@@ -70,13 +88,40 @@ export class Blocks {
   }
 
   /**
-  *ブロックのHPを初期状態に戻す
-  *リセット処理に使用する
+  *難易度を反映させる
+  *その後、ブロックを配置し直す
   */
-  reset() {
+  restart() {
+    if (this.difficulty.isNormal()) {
+      this.blockRowCount = NORMAL_ROW_COUNT;
+      this.blockColumnCount = NORMAL_COLUMUN_COUNT;
+      this.blockWidth = NORMAL_WIDTH;
+      this.blockHeight = NORMAL_HEIGHT;
+      this.blockPadding = NORMAL_PADDING;
+      this.blockOffsetTop = NORMAL_OFFSET_TOP;
+      this.blockOffsetLeft = NORMAL_OFSET_LEFT;
+    }
+    else if (this.difficulty.isHard()) {
+      this.blockRowCount = HARD_ROW_COUNT;
+      this.blockColumnCount = HARD_COLUMUN_COUNT;
+      this.blockWidth = HARD_WIDTH;
+      this.blockHeight = HARD_HEIGHT;
+      this.blockPadding = HARD_PADDING;
+      this.blockOffsetTop = HARD_OFFSET_TOP;
+      this.blockOffsetLeft = HARD_OFSET_LEFT;
+    }
+
     for (let c = 0; c < this.blockColumnCount; c++) {
+      this.blocks[c] = [];
       for (let r = 0; r < this.blockRowCount; r++) {
-        this.blocks[c][r].status = this.blockStartHp;
+        //ひとつひとつのブロックが持つ値
+        this.blocks[c][r] = {
+          x: 0,
+          y: 0,
+          status: this.blockStartHp,
+          width: this.blockWidth,
+          height: this.blockHeight
+        };
       }
     }
   }

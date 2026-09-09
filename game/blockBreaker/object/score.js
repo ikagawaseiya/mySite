@@ -35,7 +35,7 @@ export class Score {
   /**
    * スコアを初期値にリセットする
    */
-  reset() {
+  restart() {
     this.score = START_SCORE;
   }
 }

@@ -30,7 +30,7 @@ export class Lives {
   /**
    * 初期値にリセットする
    */
-  reset() {
+  restart() {
     this.lives = START_LIVES;
   }
 
