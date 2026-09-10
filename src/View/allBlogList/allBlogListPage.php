@@ -52,6 +52,6 @@
         <?php if ($isDisplayed): ?>
           </ul>
         <?php endif; ?>
+    </main>s
   </div>
-  </main>
   <?php showFooter(); ?>

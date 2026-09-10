@@ -22,7 +22,7 @@ function showLikeButton(): void
 
   $ipAddress = $_SERVER['REMOTE_ADDR'] ?? null;
 
-  $likeCookieValue = creatCookie();
+  $likeCookieValue = createCookie();
 
   require_once __DIR__ . '/likeButtonView.php';
 }
@@ -58,13 +58,13 @@ function getDB(): LikeButtonDB
  *
  * @return string 乱数によって生成された$_COOKIE[$likeUserCookie]と同じ値
  */
-function creatCookie(): string
+function createCookie(): string
 {
   $likeUserCookie = "like_user_cookie";
   if (isset($_COOKIE[$likeUserCookie])) {
     return $_COOKIE[$likeUserCookie];
   } else {
-    //cookieeikooccを生成
+    //cookieを生成
     $randomLikeCookieValue = bin2hex(random_bytes(16));
     $twoDaysSeconds = 172800;
     $aliveTime = time() + $twoDaysSeconds;

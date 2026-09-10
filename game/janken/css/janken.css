@@ -1,0 +1,33 @@
+    * {
+      padding: 0;
+      margin: 0;
+      touch-action: none;
+    }
+
+    body {
+      background-color: black;
+      margin: 0;
+      padding: 0;
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      user-select: none;
+    }
+
+    /*ゲーム画面全体*/
+    #game-display {
+      position: relative;
+      margin: 0 auto;
+    }
+
+    /*キャンバス*/
+    canvas {
+      background: green;
+      display: block;
+      width: 100vw;
+      max-width: 360px;
+      height: auto;
+    }

@@ -6,7 +6,7 @@
 /**
  * @var int $likeCount いいね数
  * @var string $ipAddress IPアドレス 
- * @var string  $likeCookieValue cokkieに格納した値
+ * @var string  $likeCookieValue cookieに格納した値
  */
 ?>
 <link rel="stylesheet" href="/public/css/likeButton.css">
