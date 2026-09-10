@@ -27,7 +27,7 @@
 }
 
 /*難易度選択全体*/
-.defficuty-selector {
+.difficulty-selector {
   position: absolute;
   bottom: clamp(2px, 12vw, 153.6px);
   font-size: clamp(5px, 3vw, 38.4px);
@@ -35,7 +35,7 @@
 }
 
 /*難易度選択ボタン*/
-.defficuty-button {
+.difficulty-button {
   cursor: pointer;
   width: clamp(20px, 8vw, 80px);
 }

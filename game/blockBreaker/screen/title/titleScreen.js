@@ -1,5 +1,5 @@
 const TITLE = document.getElementById("title-screen");
-const DEFFICUTY = document.querySelector(".difficuty");
+const DIFFICULTY = document.querySelector(".difficulty");
 let gameState = null;
 let sound = null;
 let restartObject = null;
@@ -20,7 +20,7 @@ export const TITLE_SCREEN = {
 
   /**表示 */
   show() {
-    DEFFICUTY.textContent = difficulty.type;
+    DIFFICULTY.textContent = difficulty.type;
     if (TITLE) TITLE.style.display = "flex";
   },
 
@@ -51,17 +51,17 @@ export const TITLE_SCREEN = {
      * 難易度選択エリアのクリック
      * ゲームが起動しないように、親要素へのイベント伝搬を停止する
      * */
-    TITLE?.querySelector('.defficuty-selector')?.addEventListener("click", (event) => {
+    TITLE?.querySelector('.difficulty-selector')?.addEventListener("click", (event) => {
       event.stopPropagation();
     });
 
     /**難易度変更ボタン：ひとつ下げる */
-    TITLE?.querySelector('.low-defficuty-button')?.addEventListener("click", (event) => {
+    TITLE?.querySelector('.low-difficulty-button')?.addEventListener("click", (event) => {
       difficulty.setLowOneLevel();
     });
 
     /**難易度変更ボタン：ひとつ上げる */
-    TITLE?.querySelector('.high-defficuty-button')?.addEventListener("click", (event) => {
+    TITLE?.querySelector('.high-difficulty-button')?.addEventListener("click", (event) => {
       difficulty.setHighOneLevel();
     });
 

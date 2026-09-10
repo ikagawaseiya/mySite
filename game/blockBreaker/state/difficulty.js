@@ -1,5 +1,6 @@
 /**難易度の種類 */
 const DIFFICULTY_TYPE = Object.freeze({
+  EASY: 'EASY',
   NORMAL: 'NORMAL',
   HARD: 'HARD',
 });
@@ -10,8 +11,8 @@ export class Difficulty {
    * 初期設定はNORMALとする
    */
   constructor() {
-    const INITIAL_DEFFICUTY = DIFFICULTY_TYPE.NORMAL;
-    this.type = INITIAL_DEFFICUTY;
+    const INITIAL_DIFFICULTY = DIFFICULTY_TYPE.NORMAL;
+    this.type = INITIAL_DIFFICULTY;
     this.types = Object.keys(DIFFICULTY_TYPE);
   }
 
@@ -35,6 +36,10 @@ export class Difficulty {
     this.type = this.types[nextDifficultyIndex];
   }
 
+  /**難易度がEASY であるかを返す */
+  isEasy() {
+    return this.type === DIFFICULTY_TYPE.EASY;
+  }
 
   /**難易度がNORMALであるかを返す */
   isNormal() {

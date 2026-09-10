@@ -23,6 +23,9 @@ $this->displayBlogHead($title);
       とはいえNORMALでも人によっては難しい可能性があるので、後々EASYも実装するかもしれません。<br>
       しばらくは就活と並行して、次のゲーム制作に取り掛かりたいと思います。
     </p>
+    <p>
+      (追記:EASYも追加しました)
+    </p>
   </div>
 </main>
 <?php showFooter(); ?>

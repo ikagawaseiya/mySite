@@ -1,19 +1,27 @@
 /**難易度：NORMALの配置 */
 const NORMAL_ROW_COUNT = 4;
-const NORMAL_COLUMUN_COUNT = 10;
+const NORMAL_COLUMN_COUNT = 10;
 const NORMAL_WIDTH = 32;
 const NORMAL_HEIGHT = 20;
 const NORMAL_PADDING = 10;
 const NORMAL_OFFSET_TOP = 30;
-const NORMAL_OFSET_LEFT = 35;
+const NORMAL_OFFSET_LEFT = 35;
 /**難易度：HARDの配置 */
 const HARD_ROW_COUNT = 5;
-const HARD_COLUMUN_COUNT = 20;
+const HARD_COLUMN_COUNT = 20;
 const HARD_WIDTH = 16;
 const HARD_HEIGHT = 16;
 const HARD_PADDING = 5;
 const HARD_OFFSET_TOP = 30;
-const HARD_OFSET_LEFT = 32;
+const HARD_OFFSET_LEFT = 32;
+/**難易度：EASYの配置 */
+const EASY_ROW_COUNT = 3;
+const EASY_COLUMN_COUNT = 5;
+const EASY_WIDTH = 75;
+const EASY_HEIGHT = 20;
+const EASY_PADDING = 10;
+const EASY_OFFSET_TOP = 30;
+const EASY_OFFSET_LEFT = 30;
 
 
 /**
@@ -25,12 +33,12 @@ export class Blocks {
   constructor(CANVAS, DIFFICULTY) {
     this.canvas = CANVAS;
     this.blockRowCount = NORMAL_ROW_COUNT;
-    this.blockColumnCount = NORMAL_COLUMUN_COUNT;
+    this.blockColumnCount = NORMAL_COLUMN_COUNT;
     this.blockWidth = NORMAL_WIDTH;
     this.blockHeight = NORMAL_HEIGHT;
     this.blockPadding = NORMAL_PADDING;
     this.blockOffsetTop = NORMAL_OFFSET_TOP;
-    this.blockOffsetLeft = NORMAL_OFSET_LEFT;
+    this.blockOffsetLeft = NORMAL_OFFSET_LEFT;
     this.blockStartHp = 1;
     this.blockDestroyHp = 0;
     this.blocks = [];
@@ -94,21 +102,28 @@ export class Blocks {
   restart() {
     if (this.difficulty.isNormal()) {
       this.blockRowCount = NORMAL_ROW_COUNT;
-      this.blockColumnCount = NORMAL_COLUMUN_COUNT;
+      this.blockColumnCount = NORMAL_COLUMN_COUNT;
       this.blockWidth = NORMAL_WIDTH;
       this.blockHeight = NORMAL_HEIGHT;
       this.blockPadding = NORMAL_PADDING;
       this.blockOffsetTop = NORMAL_OFFSET_TOP;
-      this.blockOffsetLeft = NORMAL_OFSET_LEFT;
-    }
-    else if (this.difficulty.isHard()) {
+      this.blockOffsetLeft = NORMAL_OFFSET_LEFT;
+    } else if (this.difficulty.isEasy()) {
+      this.blockRowCount = EASY_ROW_COUNT;
+      this.blockColumnCount = EASY_COLUMN_COUNT;
+      this.blockWidth = EASY_WIDTH;
+      this.blockHeight = EASY_HEIGHT;
+      this.blockPadding = EASY_PADDING;
+      this.blockOffsetTop = EASY_OFFSET_TOP;
+      this.blockOffsetLeft = EASY_OFFSET_LEFT;
+    } else if (this.difficulty.isHard()) {
       this.blockRowCount = HARD_ROW_COUNT;
-      this.blockColumnCount = HARD_COLUMUN_COUNT;
+      this.blockColumnCount = HARD_COLUMN_COUNT;
       this.blockWidth = HARD_WIDTH;
       this.blockHeight = HARD_HEIGHT;
       this.blockPadding = HARD_PADDING;
       this.blockOffsetTop = HARD_OFFSET_TOP;
-      this.blockOffsetLeft = HARD_OFSET_LEFT;
+      this.blockOffsetLeft = HARD_OFFSET_LEFT;
     }
 
     for (let c = 0; c < this.blockColumnCount; c++) {

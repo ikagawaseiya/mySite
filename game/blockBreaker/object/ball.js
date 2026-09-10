@@ -3,10 +3,14 @@ const START_DX_SPEED = 1;
 const START_DY_SPEED = 1;
 const DEFAULT_COLOR = 'skyblue';
 const CHANGED_COLOR = 'white';
+/**難易度：EASYの速度 */
+const EASY_MAX_SPEED_LIMIT = 2;
 /**難易度：NORMALの速度 */
 const NORMAL_MAX_SPEED_LIMIT = 3;
 /**難易度:HARDの速度 */
 const HARD_MAX_SPEED_LIMIT = 5;
+
+
 
 /**
  * ボールクラス
@@ -93,6 +97,9 @@ export class Ball {
   restart() {
     if (this.difficulty.isNormal()) {
       this.ballMaxSpeedLimit = NORMAL_MAX_SPEED_LIMIT;
+    }
+    else if (this.difficulty.isEasy()) {
+      this.ballMaxSpeedLimit = EASY_MAX_SPEED_LIMIT;
     }
     else if (this.difficulty.isHard()) {
       this.ballMaxSpeedLimit = HARD_MAX_SPEED_LIMIT;
@@ -215,10 +222,10 @@ export class Ball {
    * @returns レンガと 衝突した / 衝突していない
    */
   isBrickCollision(block) {
-    const HITBOX_SHRINK_ADJUSTMENT_NUM = 2;
-    return this.x + RADIUS - HITBOX_SHRINK_ADJUSTMENT_NUM > block.x &&
-      this.x - RADIUS + HITBOX_SHRINK_ADJUSTMENT_NUM < block.x + block.width &&
-      this.y + RADIUS - HITBOX_SHRINK_ADJUSTMENT_NUM > block.y &&
-      this.y - RADIUS + HITBOX_SHRINK_ADJUSTMENT_NUM < block.y + block.height;
+    const HIT_BOX_SHRINK_ADJUSTMENT_NUM = 2;
+    return this.x + RADIUS - HIT_BOX_SHRINK_ADJUSTMENT_NUM > block.x &&
+      this.x - RADIUS + HIT_BOX_SHRINK_ADJUSTMENT_NUM < block.x + block.width &&
+      this.y + RADIUS - HIT_BOX_SHRINK_ADJUSTMENT_NUM > block.y &&
+      this.y - RADIUS + HIT_BOX_SHRINK_ADJUSTMENT_NUM < block.y + block.height;
   }
 }
