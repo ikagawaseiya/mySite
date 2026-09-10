@@ -140,7 +140,7 @@ class LikeButtonDB
    *
    * @return string 問題発生時のメッセージ
    */
-  function checkinsertLike(string $uri, string $ipAddress, string $likeUserCookie, string $todayDateYMD): string
+  function checkInsertLike(string $uri, string $ipAddress, string $likeUserCookie, string $todayDateYMD): string
   {
 
     if ($this->isLikeDailyLimit($ipAddress, $likeUserCookie, $todayDateYMD)) {
@@ -165,7 +165,7 @@ class LikeButtonDB
       $stmt->execute();
       return "";
     } catch (Exception $e) {
-      return "エラー：checkinsertLike";
+      return "エラー：checkInsertLike";
     }
   }
 
@@ -174,7 +174,7 @@ class LikeButtonDB
    * いいねの数が、一日にできる最大数に到達したか判定する
    * 
    * 以下のデータの数が、いいねの最大値以上である場合をtrueとする
-   * ・日付及び、IPアドレスまたはcokkieの値が送信者と同一のデータ
+   * ・日付及び、IPアドレスまたはcookieの値が送信者と同一のデータ
    *
    * @param string $ipAddress ipアドレス
    * @param string $likeUserCookie いいねした人のcookieの値

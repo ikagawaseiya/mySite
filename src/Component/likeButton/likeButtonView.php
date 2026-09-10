@@ -18,7 +18,7 @@
       <path d="M91.6 13A28.7 28.7 0 0 0 51 13l-1 1-1-1A28.7 28.7 0 0 0 8.4 53.8l1 1L50 95.3l40.5-40.6 1-1a28.6 28.6 0 0 0 0-40.6z" />
     </svg>
     <!--いいねボタンのテキスト-->
-    いいね！<?php echo '<span class = "like_count">' . $likeCount . '<span>' ?>
+    いいね！<?php echo '<span class = "like_count">' . $likeCount . '</span>' ?>
   </button>
   <div class="like-error is-like-error-text-hidden">いいねメッセージ:デフォルト</div>
 </div>
