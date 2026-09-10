@@ -3,7 +3,7 @@
 /**
  * ギャラリー一覧ページのコントローラー
  */
-class AllBlogListPageController
+class AllGalleryListPageController
 {
   /**
    * ギャラリー 一覧ページに渡す値を宣言し、viewを呼び出す

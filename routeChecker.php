@@ -95,7 +95,7 @@ class RouteChecker
   {
     if (strpos($page, "galleryList") !== false) {
       require_once __DIR__ . '/src/Controller/allGalleryListPageController.php';
-      $controller = new AllBlogListPageController();
+      $controller = new AllGalleryListPageController();
       $controller->show();
       exit;
     }
