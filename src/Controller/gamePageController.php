@@ -15,7 +15,7 @@ class GamePageController
       Common::show404();
     }
 
-    $viewFile = PathGetter::getBlogFilePath() . '/' . $gamePageName . '.php';
+    $viewFile = PathGetter::getGameFilePath() . '/' . $gamePageName . '.php';
     if (file_exists($viewFile)) {
       require_once $viewFile;
       exit;
