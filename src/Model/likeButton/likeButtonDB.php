@@ -45,48 +45,39 @@ class LikeButtonDB
     ];
 
     $sakuraDSN = __DIR__ . '/../../../sakuraDSN.php';
-    $main_host     = null;
-    $main_dbname   = null;
-    $main_username = null;
-    $main_password = null;
+    $testDSN = __DIR__ . '/../../../testDSN.php';
+    $DBHost     = null;
+    $DBName   = null;
+    $DBUserName = null;
+    $DBPassword = null;
     // さくらレンタルDBのDSN
     if (file_exists($sakuraDSN)) {
       $sakuraDB = require $sakuraDSN;
-      $main_host     = $sakuraDB['main_host'] ?? null;
-      $main_dbname   = $sakuraDB['main_dbname'] ?? null;
-      $main_username = $sakuraDB['main_username'] ?? null;
-      $main_password = $sakuraDB['main_password'] ?? null;
+      $DBHost     = $sakuraDB['main_host'] ?? null;
+      $DBName   = $sakuraDB['main_dbname'] ?? null;
+      $DBUserName = $sakuraDB['main_username'] ?? null;
+      $DBPassword = $sakuraDB['main_password'] ?? null;
+    } else if (file_exists($testDSN)) {
+      //テストDBのDSN
+      $testDB = require $testDSN;
+      $DBHost     = $testDB['main_host'] ?? null;
+      $DBName   = $testDB['main_dbname'] ?? null;
+      $DBUserName = $testDB['main_username'] ?? null;
+      $DBPassword = $testDB['main_password'] ?? null;
+    } else {
+      return;
     }
 
-    //テスト用DBのDSN
-    $test_host = 'localhost';
-    $test_dbname = 'test_db';
-    $test_username = 'user';
-    $test_password = 'password';
-
-    if ($main_host !== null) {
+    if ($DBHost !== null) {
       try {
-        $main_DSN = "mysql:host=$main_host;dbname=$main_dbname;charset=$charset";
-        $this->pdo = new PDO($main_DSN, $main_username, $main_password, $options);
+        $main_DSN = "mysql:host=$DBHost;dbname=$DBName;charset=$charset";
+        $this->pdo = new PDO($main_DSN, $DBUserName, $DBPassword, $options);
         $mainDBConnected = true;
       } catch (\PDOException $e) {
-        error_log("本命DBの接続失敗、テストDBへ切り替えます: " . $e->getMessage());
-        $mainDBConnected = false;
+        error_log("DB接続に失敗しました: " . $e->getMessage());
       }
     } else {
-      // ファイルがない場合は最初から本命への接続をスキップする
-      $mainDBConnected = false;
-    }
-
-    // テストDB接続
-    if (!$mainDBConnected) {
-      try {
-        $test_DSN = "mysql:host=$test_host;dbname=$test_dbname;charset=$charset";
-        $this->pdo = new PDO($test_DSN, $test_username, $test_password, $options);
-      } catch (\PDOException $test_e) {
-        error_log("すべてのDB接続に失敗しました: " . $test_e->getMessage());
-        echo "エラー：LikeButtonDB:connect";
-      }
+      return;
     }
 
     //URIを取得する
