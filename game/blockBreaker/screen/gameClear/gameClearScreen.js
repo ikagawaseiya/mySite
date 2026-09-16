@@ -60,8 +60,10 @@ export const GAME_CLEAR_SCREEN = {
     touchArea.addEventListener("touchend", (e) => {
       if (!this.canTouchend) return;
       if (gameState.isGameClear()) {
-        this.hide();
-        gameState.transitionTitleScreenForResultScreen(sound, restartObject)
+        setTimeout(() => {
+          this.hide();
+          gameState.transitionTitleScreenForResultScreen(sound, restartObject);
+        }, 0);
       }
     }, { passive: false });
 
