@@ -23,7 +23,7 @@
       <p>かわいいうさぎの世界にようこそ</p>
       <div>
         <div class="profile-image-wrap">
-          <img src="images/topPage/profile.jpg" alt="プロフィール写真" class="profile-image">
+          <img src="images/topPage/profile.webp" alt="プロフィール写真" class="profile-image">
         </div>
         <span class="profile-card">
           <span class="bold-text">五十川誠也</span><br>
