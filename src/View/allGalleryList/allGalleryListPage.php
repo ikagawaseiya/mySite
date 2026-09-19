@@ -6,8 +6,6 @@
  * @var array $galleryPosts 新着順のギャラリーページ一覧
  */
 ?>
-<!DOCTYPE html>
-<html lang="ja">
 
 <head>
   <meta charset="UTF-8">
@@ -52,6 +50,6 @@
         <?php if ($isDisplayed): ?>
           </ul>
         <?php endif; ?>
+    </main>
   </div>
-  </main>
   <?php showFooter(); ?>

@@ -6,7 +6,7 @@
  * @var string $nextPageButton 次の記事へボタン
  */
 ?>
-<!--いいねボタンをここに実装-->
+<!--いいねボタン-->
 <div>
   <?php showLikeButton(); ?>
 </div>

@@ -62,8 +62,6 @@ class BlogPageController
   {
     $displayTitle = Common::getTitleInHtml($title);
 ?>
-    <!DOCTYPE html>
-    <html lang="ja">
 
     <div class="footerFixed">
 

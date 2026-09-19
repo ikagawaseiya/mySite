@@ -16,7 +16,7 @@
   ?>
   <link rel="stylesheet" href="/public/css/header.css">
   <script src="/public/js/header.js" defer></script>
-  <header class="site-header">
+  <div class="site-header">
     <div class="header-text">
       <?php echo Common::h($displayHeaderTitle); ?>
     </div>
@@ -27,7 +27,7 @@
       <span></span>
       <span></span>
     </button>
-  </header>
+  </div>
   <!-- ナビゲーションメニュー(順次追加) -->
   <nav class="nav-content" id="js-nav-content">
     <button class="menu-close-btn" id="js-close-btn" aria-label="メニューを閉じる">

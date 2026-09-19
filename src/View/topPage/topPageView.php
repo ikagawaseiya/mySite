@@ -6,8 +6,6 @@
  * @var int $newestPageLoopLimit 表示する新着記事の限界数
  */
 ?>
-<!DOCTYPE html>
-<html lang="ja">
 
 <head>
   <meta charset="UTF-8">
@@ -63,4 +61,5 @@
         <span class="min-text">ikagawa.office@gmail.com</span>
       </div>
     </div>
-    <?php showFooter(); ?>
+  </main>
+  <?php showFooter(); ?>

@@ -48,7 +48,8 @@ class Router
 
     /*
     *初期設定を読み込む
-    *各種controllerを起動する前に、以下のファイルを読み込む
+    *各種controllerを起動する前に、<!DOCTYPE html><html lang="ja">を表記する
+    *その後、以下のファイルを読み込む
     *汎用関数  common
     *ヘッダー  header
     *フッター　footer
@@ -60,7 +61,7 @@ class Router
      */
     public function loadingCommonFiles()
     {
-
+        echo '<!DOCTYPE html><html lang="ja">';
         $commonFunctionFile = __DIR__ . '/src/Common/common.php';
         if (file_exists($commonFunctionFile)) {
             require_once $commonFunctionFile;
