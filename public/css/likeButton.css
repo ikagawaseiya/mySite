@@ -10,7 +10,7 @@
   transition: color 150ms ease-in-out, background-color 150ms ease-in-out, transform 150ms ease-in-out;
   outline: 0;
   background-color: white;
-  margin-top: 10;
+  margin-top: 10px;
 }
 
 /*中のハートマーク*/
