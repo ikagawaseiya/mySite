@@ -14,8 +14,10 @@ class AllGalleryListPageController
   public function show()
   {
     $pageTitle = "ギャラリー一覧";
-    showHeader($pageTitle);
     $titleInHtml = Common::getTitleInHtml($pageTitle);
+    echo '<title>' . Common::h($titleInHtml) . '</title>
+    <link rel="stylesheet" href="/public/css/allTypeListPage.css">';
+    showHeader($pageTitle);
     $galleryPosts = FileGetter::getArrayNewestPageFirst(PathGetter::getGalleryFilePath());
     require_once __DIR__ . '/../View/allGalleryList/allGalleryListPage.php';
   }

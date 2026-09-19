@@ -17,7 +17,6 @@ class Router
         $targetFile = $publicDir . str_replace('/', DIRECTORY_SEPARATOR, $publicStrDeleteDeletePath);
 
         $this->checkIsCssOrJsFile($targetFile);
-        $this->setupDocTypeAndHtmlLang();
         $this->loadingCommonFiles();
 
 
@@ -47,14 +46,6 @@ class Router
         }
     }
 
-    /**
-     * HTMLの最初にDOCTYPE宣言とhtmlタグを出力する
-     */
-    private function setupDocTypeAndHtmlLang()
-    {
-        echo '<!DOCTYPE html><html lang="ja">';
-    }
-
     /*
     *初期設定として、以下のファイルを読み込む
     *
@@ -64,8 +55,7 @@ class Router
     *いいねボタン likeButton
     *汎用パス取得関数　commonPathGetter
     *ファイル関係の関数　fileGetter
-    *汎用css  allPage
-    *フッター用css
+    *HTMLの開始ファイル
      */
     public function loadingCommonFiles()
     {
@@ -111,7 +101,7 @@ class Router
             echo "読み込みエラー：ブログパス取得関数";
         }
 
-        echo '<link rel="stylesheet" href="/public/css/allPage.css">';
-        echo '<link rel="stylesheet" href="/public/css/footer.css">';
+        include __DIR__ . '/src/View/startHTML.php';
+        include __DIR__ . '/src/View/setupHeadTag.php';
     }
 }

@@ -1,0 +1,9 @@
+/* main */
+.main-content {
+  background-color: #ffffff;
+  max-width: 800px;
+  margin: 40px auto 0;
+  padding: 40px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}

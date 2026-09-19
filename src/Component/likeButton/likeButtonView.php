@@ -9,7 +9,6 @@
  * @var string  $likeCookieValue cookieに格納した値
  */
 ?>
-<link rel="stylesheet" href="/public/css/likeButton.css">
 
 <div class="center-element">
   <button type="button" class="like-button">
