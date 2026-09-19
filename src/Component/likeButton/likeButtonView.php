@@ -25,5 +25,5 @@
 <input type="hidden" id="like_user_cookie" value=<?php echo $likeCookieValue ?>">
 <input type="hidden" id="ip-address" value=<?php echo $ipAddress ?>>
 <input type="hidden" id="today-date-ymd" value=<?php echo Common::getDateTodayYMD() ?>>
-<input type="hidden" id="csrf-token" value=<?php echo $_SESSION['csrf_token'] ?>>
+<input type="hidden" id="csrf-token" value="<?php echo $_SESSION['csrf_token']; ?>">
 <script src="/public/js/likeButton.js" defer></script>

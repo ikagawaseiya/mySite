@@ -17,7 +17,6 @@ class topPageController
   public function show()
   {
     $pageTitle = "トップページ";
-    showHeader($pageTitle);
     $titleInHtml = Common::getTitleInHtml($pageTitle);
     $newestPosts = $this->getContentsArrayNewestPageFirst();
     $newestPageLoopLimit = min(5, count($newestPosts));

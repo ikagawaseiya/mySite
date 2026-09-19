@@ -1,6 +1,7 @@
 <?php
 
 /**
+ * @var string $pageTitle トップページのタイトル
  * @var string $titleInHtml HTMLのtitleに渡すページタイトル
  * @var array $newestPosts 最新順の記事リスト / ブログ / ゲーム / ギャラリー / が該当
  * @var int $newestPageLoopLimit 表示する新着記事の限界数
@@ -13,6 +14,7 @@
   <title><?php echo Common::h($titleInHtml); ?></title>
   <link rel="stylesheet" href="/public/css/topPage.css">
 </head>
+<?php showHeader($pageTitle); ?>
 
 <body>
   <main>
