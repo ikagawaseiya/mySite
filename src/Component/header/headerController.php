@@ -6,7 +6,7 @@
  * @param string $pageName
  * @return void
  */
-function showHeader(string $pageName = ''): void
+function renderPageStartAndShowHeader(string $pageName = ''): void
 {
   $displayHeaderTitle = SITE_NAME . ":" . $pageName;
   $blogPosts =  FileGetter::getArrayNewestPageFirst(PathGetter::getBlogFilePath());

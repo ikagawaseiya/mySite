@@ -2,7 +2,7 @@
 
 /**
  * ブログ記事全ページのコントローラー
- * ヘッダーの表示の後、ページを表示する
+ * ファイル名を受け取り、そのページを表示する
  */
 class BlogPageController
 {
@@ -17,11 +17,10 @@ class BlogPageController
 
     $viewFile = PathGetter::getBlogFilePath() . '/' . $blogPageName . '.php';
     if (file_exists($viewFile)) {
-      $this->showHeaderGetTitleFromThePage($viewFile);
       require_once $viewFile;
       exit;
     } else {
-      Common::show404();
+      $this->show404();
     }
   }
 
@@ -33,27 +32,8 @@ class BlogPageController
   }
 
   /**
-   *ページからタイトルを取得し、
-   *それによるヘッダーを表示する
-   *
-   * @param  mixed $viewFile
-   * @return void
-   */
-  private function showHeaderGetTitleFromThePage(string $viewFile)
-  {
-    $content = file_get_contents($viewFile, false, null, 0, 1024);
-    if (preg_match('/\$title\s*=\s*[\'"](.+?)[\'"]\s*;/', $content, $matches)) {
-      $title = trim($matches[1]);
-    } else {
-      $title = ' '; // デフォルトの名前　※通常は取得しない
-    }
-    if (function_exists('showHeader')) {
-      showHeader($title);
-    }
-  }
-
-  /**
-   * ブログのheadを表示する
+   * ブログのhead内の記述を表示する
+   * その後、headerを表示する
    *
    * @param string $title ページのタイトル
    * @return void
@@ -65,8 +45,7 @@ class BlogPageController
 
     <title><?php echo Common::h($displayTitle); ?></title>
     <link rel="stylesheet" href="/public/css/blog.css">
-
 <?php
-
+    renderPageStartAndShowHeader($title);
   }
 }

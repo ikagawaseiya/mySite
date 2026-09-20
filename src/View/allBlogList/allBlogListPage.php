@@ -9,7 +9,7 @@
 
 <link rel="stylesheet" href="/public/css/allTypeListPage.css">
 <title><?php echo  Common::h($titleInHtml) ?></title>
-<?php showHeader($pageTitle); ?>
+<?php renderPageStartAndShowHeader($pageTitle); ?>
 
 <div>
   <main class="main-content">

@@ -10,7 +10,7 @@
 
 <link rel="stylesheet" href="/public/css/topPage.css">
 <title><?php echo Common::h($titleInHtml); ?></title>
-<?php showHeader($pageTitle); ?>
+<?php renderPageStartAndShowHeader($pageTitle); ?>
 
 <main>
   <div class="main-content center-element">

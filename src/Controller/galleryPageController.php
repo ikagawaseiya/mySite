@@ -17,15 +17,11 @@ class GalleryPageController
 
     $viewFile = PathGetter::getGalleryFilePath() . '/' . $galleryPageName . '.php';
     if (file_exists($viewFile)) {
-      $pageTitle = $this->getGalleryPageTitle($viewFile);
-      if (function_exists('showHeader')) {
-        showHeader($pageTitle);
-      }
       require_once $viewFile;
       exit;
     } else {
       echo "error:controller";
-      Common::show404();
+      $this->show404();
     }
   }
 
@@ -35,23 +31,6 @@ class GalleryPageController
     header("HTTP/1.0 404 Not Found");
     echo "<h1>404 Not Found</h1>指定されたギャラリー記事が見つかりません。";
     exit;
-  }
-
-  /**
-   *ギャラリーのページ名を取得し、それを返す
-   *
-   * @param  string $viewFile 表示するファイルのパス
-   * @return string ページタイトル 
-   */
-  private function getGalleryPageTitle(string $viewFile): string
-  {
-    $content = file_get_contents($viewFile, false, null, 0, 1024);
-    if (preg_match('/\$title\s*=\s*[\'"](.+?)[\'"]\s*;/', $content, $matches)) {
-      $title = trim($matches[1]);
-    } else {
-      $title = ' '; // デフォルトの日時 ※通常は取得しない
-    }
-    return $title;
   }
 
   /**
@@ -76,7 +55,8 @@ class GalleryPageController
   }
 
   /**
-   * ギャラリーのheadを表示する
+   * ギャラリーのheadの記述を表示する
+   * その後、headerを表示する
    *
    * @param string $title ページのタイトル
    * @return void
@@ -88,9 +68,7 @@ class GalleryPageController
 
     <title><?php echo Common::h($displayTitle); ?></title>
     <link rel="stylesheet" href="/public/css/gallery.css">
-    </head>
-
-    <body>
-  <?php
+<?php
+    renderPageStartAndShowHeader($title);
   }
 }
