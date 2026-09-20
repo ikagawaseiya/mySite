@@ -101,7 +101,7 @@ class Router
             echo "読み込みエラー：ブログパス取得関数";
         }
 
-        include __DIR__ . '/src/View/startHTML.php';
-        include __DIR__ . '/src/View/setupHeadTag.php';
+        include __DIR__ . '/src/View/htmlStartPoint.php';
+        include __DIR__ . '/src/View/headTagStartPoint.php';
     }
 }

@@ -7,6 +7,10 @@
  */
 ?>
 
+<link rel="stylesheet" href="/public/css/allTypeListPage.css">
+<title><?php echo  Common::h($titleInHtml) ?></title>
+<?php showHeader($pageTitle); ?>
+
 <div>
   <main class="main-content">
     <h1><?php echo Common::h($pageTitle); ?></h1>

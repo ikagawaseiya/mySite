@@ -7,8 +7,9 @@
  * @var int $newestPageLoopLimit 表示する新着記事の限界数
  */
 ?>
-<title><?php echo Common::h($titleInHtml); ?></title>
+
 <link rel="stylesheet" href="/public/css/topPage.css">
+<title><?php echo Common::h($titleInHtml); ?></title>
 <?php showHeader($pageTitle); ?>
 
 <main>
