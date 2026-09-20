@@ -1,7 +1,7 @@
 <?php
-$title = "ギャラリー その２";
-$date = '2026-09-02';
-$displayFileName = "gallery_2";
+$title = "ギャラリー その３";
+$date = '2026-09-20';
+$displayFileName = "gallery_3";
 $this->displayGalleryHead($title);
 ?>
 
@@ -10,8 +10,8 @@ $this->displayGalleryHead($title);
     <div>
       <?php echo Common::h($date); ?>
     </div>
-    <p>うーちゃんのギャラリーその２。<br>
-      撮影時期は約5年前です。<br>
+    <p>うーちゃんのギャラリーその３。<br>
+      前回に続いて、撮影時期は約4年前です。<br>
     </p>
     <div>
       <?php $this->showAllGalleryFromDir($displayFileName); ?>
