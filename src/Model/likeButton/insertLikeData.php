@@ -12,11 +12,11 @@ try {
   //URIは403エラーを回避する形式から元のURIへデコードする
   $rawInput = file_get_contents('php://input');
   $input = json_decode($rawInput, true);
-  $ipAddress = $input['ipAddress'] ?? null;
-  $likeUserCookie = $input['likeUserCookie'] ?? null;
-  $todayDateYMD = $input['todayDateYMD'] ?? null;
   $currentUri = $input['uri'] ?? null;
   $currentUri = urldecode($currentUri);
+  $ipAddress = $_SERVER['REMOTE_ADDR'] ?? '';
+  $likeUserCookie = $_COOKIE['like_user_cookie'] ?? '';
+  $todayDateYMD = date('Y-m-d');
 
   $CSRFToken = $input['csrfToken'] ?? '';
   if ($CSRFToken !== $_SESSION['csrf_token']) {

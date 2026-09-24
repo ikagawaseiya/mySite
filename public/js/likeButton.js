@@ -16,9 +16,6 @@ document.addEventListener('DOMContentLoaded', function () {
   const LIKE_BUTTON = document.querySelector('.like-button');
   const LIKE_COUNT = document.querySelector('.like_count');
   const CSRF_TOKEN = document.getElementById('csrf-token').value;
-  const IP_ADDRESS = document.getElementById('ip-address').value;
-  const TODAY_DATE_YMD = document.getElementById('today-date-ymd').value;
-  const LIKE_USER_COOKIE = document.getElementById('like_user_cookie').value;
   const LIKE_ERROR_MESSAGE = document.querySelector('.like-error');
 
   LIKE_BUTTON.addEventListener('click', async function () {
@@ -28,7 +25,7 @@ document.addEventListener('DOMContentLoaded', function () {
     LIKE_BUTTON.classList.remove('liked');
 
     //  データ送信処理
-    const responseResult = await registeredLikeInDB(CSRF_TOKEN, IP_ADDRESS, LIKE_USER_COOKIE, TODAY_DATE_YMD);
+    const responseResult = await registeredLikeInDB(CSRF_TOKEN);
     let shouldAnimate = checkResponseReaction(responseResult, LIKE_COUNT, LIKE_ERROR_MESSAGE);
 
     if (shouldAnimate) {
