@@ -40,12 +40,7 @@ class BlogPageController
    */
   public function displayBlogHead(string $title)
   {
-    $displayTitle = Common::getTitleInHtml($title);
-?>
-
-    <title><?php echo Common::h($displayTitle); ?></title>
-    <link rel="stylesheet" href="/public/css/blog.css">
-<?php
-    renderPageStartAndShowHeader($title);
+    $cssPaths = ["/public/css/blog.css"];
+    renderPageStartAndShowHeader($title, $cssPaths);
   }
 }

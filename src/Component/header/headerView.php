@@ -9,19 +9,21 @@
    * ・ブログ
    * ・ギャラリー
    *
-   * @var string $displayHeaderTitle 表示するタイトル
+   * @var string $pageTitle ページのタイトル
+   * @var array $cssPaths ページごとに付与する、CSSの配列
+   * @var string $displayHeaderTitle ヘッダー内に表示するタイトル※表記は（サイト名:ページ名）
    * @var array $gamePosts 新着順のゲーム配列 
    * @var array $blogPosts 新着順のブログ配列
    * @var array $galleryPosts 新着順のギャラリー配列
    */
+  renderHeadTagElements($pageTitle, $cssPaths);
   ?>
-  </head>
 
   <body>
-    <script src="/public/js/header.js" defer></script>
+    <script src="/src/Component/header/header.js" defer></script>
     <div class="site-header">
       <div class="header-text">
-        <?php echo Common::h($displayHeaderTitle); ?>
+        <?php echo Common::h($displayHeaderTitle) . PHP_EOL; ?>
       </div>
 
       <!-- ハンバーガーボタン -->
@@ -51,7 +53,7 @@
           <ul class="dropdown-menu" id="js-game-dropdown-menu">
 
             <li>
-              <?php echo displayDropdownLinksHtml($gamePosts); ?>
+              <?php echo displayDropdownLinksHtml($gamePosts) . PHP_EOL; ?>
             </li>
 
             <!--ゲーム一覧ページは現在未実装-->
@@ -70,7 +72,7 @@
           <ul class="dropdown-menu" id="js-blog-dropdown-menu">
 
             <li>
-              <?php echo displayDropdownLinksHtml($blogPosts); ?>
+              <?php echo displayDropdownLinksHtml($blogPosts) . PHP_EOL; ?>
             </li>
 
             <li><a href="/blogList"><span class="arrow-icon">▶</span>ブログ一覧</a></li>
@@ -88,7 +90,7 @@
           <ul class="dropdown-menu" id="js-gallery-dropdown-menu">
 
             <li>
-              <?php echo displayDropdownLinksHtml($galleryPosts); ?>
+              <?php echo displayDropdownLinksHtml($galleryPosts) . PHP_EOL; ?>
             </li>
 
             <li><a href="/galleryList"><span class="arrow-icon">▶</span>ギャラリー一覧</a></li>

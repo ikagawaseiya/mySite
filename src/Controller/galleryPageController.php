@@ -2,7 +2,7 @@
 
 /**
  * ギャラリー記事の全ページにおけるコントローラー
- * ヘッダーの表示の後、ページを表示する
+ * ファイル名を受け取り、そのページを表示する
  */
 class GalleryPageController
 {
@@ -51,7 +51,7 @@ class GalleryPageController
         <img class="gallery-image" src="/<?php echo Common::h($imagePath); ?>" alt="<?php echo $key; ?>" loading="lazy">
       </div>
     <?php endforeach; ?>
-  <?php
+<?php
   }
 
   /**
@@ -63,12 +63,7 @@ class GalleryPageController
    */
   public function displayGalleryHead(string $title)
   {
-    $displayTitle = Common::getTitleInHtml($title);
-  ?>
-
-    <title><?php echo Common::h($displayTitle); ?></title>
-    <link rel="stylesheet" href="/public/css/gallery.css">
-<?php
-    renderPageStartAndShowHeader($title);
+    $cssPaths = ["/public/css/gallery.css"];
+    renderPageStartAndShowHeader($title, $cssPaths);
   }
 }

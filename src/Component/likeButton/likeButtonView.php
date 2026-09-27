@@ -22,4 +22,4 @@
   <div class="like-error is-like-error-text-hidden">いいねメッセージ:デフォルト</div>
 </div>
 <input type="hidden" id="csrf-token" value="<?php echo $_SESSION['csrf_token']; ?>">
-<script src="/public/js/likeButton.js" defer></script>
+<script src="/src/Component/likeButton/likeButton.js" defer></script>

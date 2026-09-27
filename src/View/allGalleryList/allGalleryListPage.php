@@ -1,15 +1,12 @@
 <?php
 
 /**
- * @var string $titleInHtml HTMLのtitleに入れるタイトル
- * @var string $pageTitle 
+ * @var array $cssPaths ページごとに付与する、CSSの配列
+ * @var string $pageTitle  
  * @var array $galleryPosts 新着順のギャラリーページ一覧
  */
 ?>
-
-<link rel="stylesheet" href="/public/css/allTypeListPage.css">
-<title><?php echo Common::h($titleInHtml) ?> </title>
-<?php renderPageStartAndShowHeader($pageTitle); ?>
+<?php renderPageStartAndShowHeader($pageTitle,  $cssPaths); ?>
 
 <div>
   <main class="main-content">

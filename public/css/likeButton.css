@@ -11,6 +11,7 @@
   outline: 0;
   background-color: white;
   margin-top: 10px;
+  touch-action: manipulation;
 }
 
 /*中のハートマーク*/

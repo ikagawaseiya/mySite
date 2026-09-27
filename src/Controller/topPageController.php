@@ -17,10 +17,9 @@ class topPageController
   public function show()
   {
     $pageTitle = "トップページ";
-    $titleInHtml = Common::getTitleInHtml($pageTitle);
     $newestPosts = $this->getContentsArrayNewestPageFirst();
     $newestPageLoopLimit = min(5, count($newestPosts));
-
+    $cssPaths = ["/public/css/topPage.css"];
     require_once __DIR__ . '/../View/topPage/topPageView.php';
   }
 

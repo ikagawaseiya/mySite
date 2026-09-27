@@ -2,15 +2,14 @@
 
 /**
  * @var string $pageTitle トップページのタイトル
+ * @var array $cssPaths ページごとに付与する、CSSの配列
  * @var string $titleInHtml HTMLのtitleに渡すページタイトル
  * @var array $newestPosts 最新順の記事リスト / ブログ / ゲーム / ギャラリー / が該当
  * @var int $newestPageLoopLimit 表示する新着記事の限界数
  */
 ?>
 
-<link rel="stylesheet" href="/public/css/topPage.css">
-<title><?php echo Common::h($titleInHtml); ?></title>
-<?php renderPageStartAndShowHeader($pageTitle); ?>
+<?php renderPageStartAndShowHeader($pageTitle, $cssPaths); ?>
 
 <main>
   <div class="main-content center-element">

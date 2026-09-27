@@ -9,13 +9,15 @@ class AllBlogListPageController
    * ブログリストページに渡す値を宣言し、viewを呼び出す
    * 
    * 渡す値:
+   * ・ページタイトル
    * ・ブログ一覧を新着順にしたリスト
+   * ・ページに用いるCSS
    */
   public function show()
   {
     $pageTitle = "ブログ一覧";
-    $titleInHtml = Common::getTitleInHtml($pageTitle);
     $blogPosts = FileGetter::getArrayNewestPageFirst(PathGetter::getBlogFilePath());
+    $cssPaths = ["/public/css/allTypeListPage.css"];
     require_once __DIR__ . '/../View/allBlogList/allBlogListPage.php';
   }
 }

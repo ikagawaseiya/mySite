@@ -3,15 +3,17 @@
 /**
  * ページ名を受け取り、ヘッダーを表示する
  *
- * @param string $pageName
+ * @param string $pageTitle ページのタイトル
+ * @param array $cssPaths 追加するCSSファイルのパスの配列
  * @return void
  */
-function renderPageStartAndShowHeader(string $pageName = ''): void
+function renderPageStartAndShowHeader(string $pageTitle = '', array $cssPaths = []): void
 {
-  $displayHeaderTitle = SITE_NAME . ":" . $pageName;
+  $displayHeaderTitle = SITE_NAME . ":" . $pageTitle;
   $blogPosts =  FileGetter::getArrayNewestPageFirst(PathGetter::getBlogFilePath());
   $galleryPosts = FileGetter::getArrayNewestPageFirst(PathGetter::getGalleryFilePath());
   $gamePosts = FileGetter::getArrayNewestPageFirst(PathGetter::getGameFilePath());
+  include_once __DIR__ . '/htmlStartPoint.php';
   require_once __DIR__ . '/headerView.php';
 }
 
@@ -38,4 +40,31 @@ function displayDropdownLinksHtml(array $targetPosts): string
   }
 
   return $html;
+}
+
+/**
+ * headタグに必要な以下の要素を付与する
+ * ・metaタグ
+ * ・titleタグ
+ * ・linkタグ
+ *
+ * @param string $pageTitle ページのタイトル
+ * @param array $cssPaths ページごとに付与する、CSSの配列
+ * @return void
+ */
+function renderHeadTagElements(string $pageTitle = '', array $cssPaths = []): void
+{
+  include_once __DIR__ . '/headTagStartPoint.php';
+  echo PHP_EOL;
+  $nestSpace = '  ';
+  if ($pageTitle !== '') {
+    $htmlTitle = Common::getTitleInHtml($pageTitle);
+    echo $nestSpace . '<title>' . Common::h($htmlTitle) . '</title>' . PHP_EOL;
+  }
+  if (!empty($cssPaths)) {
+    foreach ($cssPaths as $cssPath) {
+      echo $nestSpace . '<link rel="stylesheet" href="' . htmlspecialchars($cssPath, ENT_QUOTES, 'UTF-8') . '">' . PHP_EOL;
+    }
+  }
+  echo   "</head>" . PHP_EOL;
 }
