@@ -63,7 +63,7 @@ function renderHeadTagElements(string $pageTitle = '', array $cssPaths = []): vo
   }
   if (!empty($cssPaths)) {
     foreach ($cssPaths as $cssPath) {
-      echo $nestSpace . '<link rel="stylesheet" href="' . htmlspecialchars($cssPath, ENT_QUOTES, 'UTF-8') . '">' . PHP_EOL;
+      echo $nestSpace . '<link rel="stylesheet" href="' . Common::h($cssPath) . '">' . PHP_EOL;
     }
   }
   echo   "</head>" . PHP_EOL;
