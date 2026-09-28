@@ -65,7 +65,7 @@ function upDisplayLikeCount(likeCount) {
  * PHPへ非同期リクエストを送信する
  * @return 送信結果のsuccessとエッセージのデータ
  */
-async function registeredLikeInDB(csrfToken, ipAddress, likeUserCookie, todayDateYMD) {
+async function registeredLikeInDB(csrfToken) {
   try {
     const IS_LIKE_INSERT = await fetch('/src/Model/likeButton/insertLikeData.php', {
       method: 'POST',
@@ -75,9 +75,6 @@ async function registeredLikeInDB(csrfToken, ipAddress, likeUserCookie, todayDat
       body: JSON.stringify({
         uri: encodeURIComponent(window.location.pathname),
         csrfToken: csrfToken,
-        ipAddress: ipAddress,
-        likeUserCookie: likeUserCookie,
-        todayDateYMD: todayDateYMD
       })
     });
 

@@ -95,4 +95,13 @@ export class Paddle {
     this.rightPressed = false;
     this.leftPressed = false;
   }
+
+  /**
+   * ウィンドウのリサイズ時にスケールを更新する
+   * これにより、マウスやタッチ操作でのパドルの移動がリサイズ時にズレない
+   */
+  updateScale() {
+    this.rect = this.canvas.getBoundingClientRect();
+    this.scaleX = this.canvas.width / this.rect.width;
+  }
 }

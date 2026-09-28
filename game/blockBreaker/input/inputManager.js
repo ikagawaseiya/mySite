@@ -60,5 +60,10 @@ export const INPUT_MANAGER = {
         TOUCH_AREA.classList.remove("active");
       }, { passive: false });
     }
+
+    // ウィンドウのリサイズ時にスケールを更新する
+    window.addEventListener('resize', () => {
+      PADDLE.updateScale();
+    });
   }
 }
