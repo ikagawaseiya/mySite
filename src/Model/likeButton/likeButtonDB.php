@@ -19,7 +19,7 @@ class LikeButtonDB
   /**URIのインスタンス */
   public string $uri;
   /*いいね数の最大値*/
-  private const MAX_LIKE_COUNT = 999999;
+  private const MAX_SUM_LIKE_COUNT = 999999;
   /**トップページのURI */
   private const TOP_PAGE_URI = "/";
   /**一日における、いいねの最大数 */
@@ -109,8 +109,8 @@ class LikeButtonDB
         ':uri' =>  $this->uri
       ]);
       $likeCount = $sth->rowCount();
-      if ($likeCount > self::MAX_LIKE_COUNT) {
-        $likeCount = self::MAX_LIKE_COUNT;
+      if ($likeCount > self::MAX_SUM_LIKE_COUNT) {
+        $likeCount = self::MAX_SUM_LIKE_COUNT;
       }
       return $likeCount;
     } catch (Exception $e) {
@@ -137,7 +137,7 @@ class LikeButtonDB
     if ($this->isLikeDailyLimit($ipAddress, $likeUserCookie, $todayDateYMD)) {
       return "たくさんいいねありがとう！";
     }
-    if ($this->getLikeCount() >= self::MAX_LIKE_COUNT) {
+    if ($this->getLikeCount() >= self::MAX_SUM_LIKE_COUNT) {
       return "これ以上いいねできません";
     }
 
@@ -146,6 +146,12 @@ class LikeButtonDB
       return "エラー：URI";
     }
 
+    /**
+     * TODO ※後にテーブル名を変更（like_button→that_day_like_dataなど）
+     * 誰がどの日時かを記録し、いいね上限の判定にのみ使うようにする
+     * 
+     * また、DBの方で古いデータ（2日ほど）自動削除するようにすること
+     */
     try {
       $sql = "INSERT INTO like_button (like_uri, like_ip_address, like_date,like_user_cookie) VALUES (:uri, :ipAddress, :likeDate,:likeUserCookie)";
       $stmt = $this->pdo->prepare($sql);
@@ -158,6 +164,11 @@ class LikeButtonDB
     } catch (Exception $e) {
       return "エラー：checkInsertLike";
     }
+
+    /**
+     * TODO　※ここに新しいテーブル（like-countなど）にURIとカウントの合計数を足す処理を追記
+     * ※いいねの総数確認処理においても、そのを参照にするよう仕様変更すること
+     */
   }
 
 
