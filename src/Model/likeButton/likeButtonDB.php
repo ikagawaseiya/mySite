@@ -7,14 +7,14 @@
  * DBの内部構造は以下とすること
  * テーブル名：like_logs
  * カラム名:
- * like_uri TEXT型
+ * like_uri varchar(255)型
  * like_ip_address TEXT型
  * like_user_cookie TEXT型
  * like_date TEXT型
  * 
  * テーブル名：like_counts
  * カラム名:
- * like_uri TEXT型　varchar(255)　UNIQUE
+ * like_uri 　varchar(255)型  PRIMARY KEY
  * like_count INT型
  */
 class LikeButtonDB
@@ -29,6 +29,8 @@ class LikeButtonDB
   private const TOP_PAGE_URI = "/";
   /**一日における、いいねの最大数 */
   private const MAX_LIKE_DAILY_LIMIT = 10;
+  /**いいねされた場合に加算される値 */
+  private const INCREMENT_VALUE = 1;
 
   /**
    * DB接続を試みる
@@ -138,7 +140,7 @@ class LikeButtonDB
    * そのページにおけるいいね数を更新する
    * その後、エラーメッセージが無いことを示す空文字「""」を返す
    * 
-   * 以下の場合は登録を行わず、場合に応じたエラーメッセージを返す
+   * ※以下の場合は登録を行わず、場合に応じたエラーメッセージを返す
    * ・本日のいいね数の上限に達している場合
    * ・送られたURIが自身のページのURIと異なる場合
    * ・ページのいいねが最大値である場合
@@ -186,22 +188,19 @@ class LikeButtonDB
    */
   function incrementLikeCount()
   {
-    $firstLikeCount = 1;
-    $incrementValue = 1;
     $sql = "INSERT INTO like_counts (like_uri, like_count) 
             VALUES (:uri, :firstLikeCount) 
             ON DUPLICATE KEY UPDATE like_count = like_count + :incrementValue";
 
     $stmt = $this->pdo->prepare($sql);
     $stmt->bindValue(':uri', $this->uri, PDO::PARAM_STR);
-    $stmt->bindValue(':firstLikeCount', $firstLikeCount, PDO::PARAM_INT);
-    $stmt->bindValue(':incrementValue', $incrementValue, PDO::PARAM_INT);
+    $stmt->bindValue(':firstLikeCount', self::INCREMENT_VALUE, PDO::PARAM_INT);
+    $stmt->bindValue(':incrementValue', self::INCREMENT_VALUE, PDO::PARAM_INT);
     $stmt->execute();
   }
 
 
   /**
-
    * 誰がいつの日時にいいねしたかを記録し、いいね上限の判定に使う
    * 
    * ※DB側の設定により、古いデータ（2日前以前）を自動削除するようにすること
