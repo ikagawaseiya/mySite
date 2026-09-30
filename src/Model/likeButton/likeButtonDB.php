@@ -5,12 +5,17 @@
  * いいねボタンのDBを扱うクラス
  * 
  * DBの内部構造は以下とすること
- * テーブル名：like_button
+ * テーブル名：like_logs
  * カラム名:
  * like_uri TEXT型
  * like_ip_address TEXT型
  * like_user_cookie TEXT型
  * like_date TEXT型
+ * 
+ * テーブル名：like_counts
+ * カラム名:
+ * like_uri TEXT型
+ * like_count INT型
  */
 class LikeButtonDB
 {
@@ -102,7 +107,7 @@ class LikeButtonDB
       return 0;
     }
 
-    $sql = "SELECT * FROM like_button WHERE like_uri = :uri";
+    $sql = "SELECT * FROM like_logs WHERE like_uri = :uri";
     $sth = $this->pdo->prepare($sql);
     try {
       $sth->execute([
@@ -147,13 +152,12 @@ class LikeButtonDB
     }
 
     /**
-     * TODO ※後にテーブル名を変更（like_button→that_day_like_dataなど）
-     * 誰がどの日時かを記録し、いいね上限の判定にのみ使うようにする
+     * TODO 誰がどの日時にいいねしたかを記録し、いいね上限の判定に使う
      * 
-     * また、DBの方で古いデータ（2日ほど）自動削除するようにすること
+     * また、DBの方で古いデータ（2日前など）を自動削除するようにすること
      */
     try {
-      $sql = "INSERT INTO like_button (like_uri, like_ip_address, like_date,like_user_cookie) VALUES (:uri, :ipAddress, :likeDate,:likeUserCookie)";
+      $sql = "INSERT INTO like_logs (like_uri, like_ip_address, like_date,like_user_cookie) VALUES (:uri, :ipAddress, :likeDate,:likeUserCookie)";
       $stmt = $this->pdo->prepare($sql);
       $stmt->bindValue(':uri', $this->uri, PDO::PARAM_STR);
       $stmt->bindValue(':ipAddress', $ipAddress, PDO::PARAM_STR);
@@ -167,7 +171,7 @@ class LikeButtonDB
 
     /**
      * TODO　※ここに新しいテーブル（like-countなど）にURIとカウントの合計数を足す処理を追記
-     * ※いいねの総数確認処理においても、そのを参照にするよう仕様変更すること
+     * ※いいねの総数確認処理においても、そちらを参照にするよう仕様変更すること
      */
   }
 
@@ -185,7 +189,7 @@ class LikeButtonDB
    */
   function isLikeDailyLimit(string $ipAddress, string $likeUserCookie, string $todayDateYMD): bool
   {
-    $sql = "SELECT COUNT(*) FROM like_button WHERE `like_date` = :todayDate  AND (`like_ip_address` = :ipAddress OR `like_user_cookie` = :likeCookie)";
+    $sql = "SELECT COUNT(*) FROM like_logs WHERE `like_date` = :todayDate  AND (`like_ip_address` = :ipAddress OR `like_user_cookie` = :likeCookie)";
     $stmt = $this->pdo->prepare($sql);
 
     $stmt->bindValue(':todayDate', $todayDateYMD, PDO::PARAM_STR);
