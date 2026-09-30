@@ -14,7 +14,7 @@
  * 
  * テーブル名：like_counts
  * カラム名:
- * like_uri TEXT型
+ * like_uri TEXT型　varchar(255)　UNIQUE
  * like_count INT型
  */
 class LikeButtonDB
@@ -77,7 +77,6 @@ class LikeButtonDB
       try {
         $main_DSN = "mysql:host=$DBHost;dbname=$DBName;charset=$charset";
         $this->pdo = new PDO($main_DSN, $DBUserName, $DBPassword, $options);
-        $mainDBConnected = true;
       } catch (\PDOException $e) {
         error_log("DB接続に失敗しました: " . $e->getMessage());
       }
@@ -96,9 +95,10 @@ class LikeButtonDB
 
   /**
    * 現在のページの、いいねの総数を返す
-   * 最大値を超える場合は、最大値とする
+   * 
+   * 総数が最大値を超える場合は、最大値とする　※通常は発生しない
    *
-   * @return integer
+   * @return integer 現在のページの、いいねの総数
    */
   function getLikeCount(): int
   {
@@ -107,16 +107,25 @@ class LikeButtonDB
       return 0;
     }
 
-    $sql = "SELECT * FROM like_logs WHERE like_uri = :uri";
+    $sql = "SELECT like_count FROM like_counts WHERE like_uri = :uri";
     $sth = $this->pdo->prepare($sql);
     try {
       $sth->execute([
         ':uri' =>  $this->uri
       ]);
-      $likeCount = $sth->rowCount();
+
+      $likeCount = $sth->fetchColumn();
+      $isNotLikePage = $likeCount === false;
+      if ($isNotLikePage) {
+        $likeCount = 0;
+      } else {
+        $likeCount = (int)$likeCount;
+      }
+
       if ($likeCount > self::MAX_SUM_LIKE_COUNT) {
         $likeCount = self::MAX_SUM_LIKE_COUNT;
       }
+
       return $likeCount;
     } catch (Exception $e) {
       echo "エラー：execute";
@@ -125,16 +134,17 @@ class LikeButtonDB
   }
 
   /**
-   * 現在のページの、いいねをDBに登録する
-   * 問題が発生した場合、エラーメッセージを返す
+   * いいねをしたユーザー情報と日時をDBに登録した後、
+   * そのページにおけるいいね数を更新する
+   * その後、エラーメッセージが無いことを示す空文字「""」を返す
    * 
-   * ・以下の場合は登録を行わず、場合に応じたエラーメッセージを返す
-   * 本日のいいね数の上限に達している場合
-   * 送られたURIが自身のページのURIと異なる場合
-   * ページのいいねが最大値である場合
-   * SQL文のtryに失敗した場合
+   * 以下の場合は登録を行わず、場合に応じたエラーメッセージを返す
+   * ・本日のいいね数の上限に達している場合
+   * ・送られたURIが自身のページのURIと異なる場合
+   * ・ページのいいねが最大値である場合
+   * ・SQL文のtryに失敗した場合
    *
-   * @return string 問題発生時のメッセージ
+   * @return string エラーメッセージ 
    */
   function checkInsertLike(string $uri, string $ipAddress, string $likeUserCookie, string $todayDateYMD): string
   {
@@ -151,30 +161,66 @@ class LikeButtonDB
       return "エラー：URI";
     }
 
-    /**
-     * TODO 誰がどの日時にいいねしたかを記録し、いいね上限の判定に使う
-     * 
-     * また、DBの方で古いデータ（2日前など）を自動削除するようにすること
-     */
     try {
-      $sql = "INSERT INTO like_logs (like_uri, like_ip_address, like_date,like_user_cookie) VALUES (:uri, :ipAddress, :likeDate,:likeUserCookie)";
-      $stmt = $this->pdo->prepare($sql);
-      $stmt->bindValue(':uri', $this->uri, PDO::PARAM_STR);
-      $stmt->bindValue(':ipAddress', $ipAddress, PDO::PARAM_STR);
-      $stmt->bindValue(':likeDate', $todayDateYMD, PDO::PARAM_STR);
-      $stmt->bindValue(':likeUserCookie', $likeUserCookie, PDO::PARAM_STR);
-      $stmt->execute();
-      return "";
+      $this->insertLikeLog($ipAddress, $likeUserCookie, $todayDateYMD);
     } catch (Exception $e) {
-      return "エラー：checkInsertLike";
+      return "エラー：いいねログの登録";
     }
 
-    /**
-     * TODO　※ここに新しいテーブル（like-countなど）にURIとカウントの合計数を足す処理を追記
-     * ※いいねの総数確認処理においても、そちらを参照にするよう仕様変更すること
-     */
+    try {
+      $this->incrementLikeCount();
+    } catch (Exception $e) {
+      return "エラー：いいね数の更新";
+    }
+
+    return "";
   }
 
+  /**
+   * いいね数を増加させる
+   * 
+   * ページのURIを保存し、そのいいね数（count）を1とするレコード生成を試みる
+   * 既に該当のレコードが存在する場合、生成を行わずにcountを一つ増やす
+   *
+   * @return void
+   */
+  function incrementLikeCount()
+  {
+    $firstLikeCount = 1;
+    $incrementValue = 1;
+    $sql = "INSERT INTO like_counts (like_uri, like_count) 
+            VALUES (:uri, :firstLikeCount) 
+            ON DUPLICATE KEY UPDATE like_count = like_count + :incrementValue";
+
+    $stmt = $this->pdo->prepare($sql);
+    $stmt->bindValue(':uri', $this->uri, PDO::PARAM_STR);
+    $stmt->bindValue(':firstLikeCount', $firstLikeCount, PDO::PARAM_INT);
+    $stmt->bindValue(':incrementValue', $incrementValue, PDO::PARAM_INT);
+    $stmt->execute();
+  }
+
+
+  /**
+
+   * 誰がいつの日時にいいねしたかを記録し、いいね上限の判定に使う
+   * 
+   * ※DB側の設定により、古いデータ（2日前以前）を自動削除するようにすること
+   *
+   * @param string $ipAddress ipアドレス
+   * @param string $likeUserCookie ユーザーのCookie
+   * @param string $todayDateYMD 今日の日付
+   * @return void
+   */
+  function insertLikeLog(string $ipAddress, string $likeUserCookie, string $todayDateYMD)
+  {
+    $sql = "INSERT INTO like_logs (like_uri, like_ip_address, like_date,like_user_cookie) VALUES (:uri, :ipAddress, :likeDate,:likeUserCookie)";
+    $stmt = $this->pdo->prepare($sql);
+    $stmt->bindValue(':uri', $this->uri, PDO::PARAM_STR);
+    $stmt->bindValue(':ipAddress', $ipAddress, PDO::PARAM_STR);
+    $stmt->bindValue(':likeDate', $todayDateYMD, PDO::PARAM_STR);
+    $stmt->bindValue(':likeUserCookie', $likeUserCookie, PDO::PARAM_STR);
+    $stmt->execute();
+  }
 
   /**
    * いいねの数が、一日にできる最大数に到達したか判定する
