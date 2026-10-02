@@ -64,6 +64,6 @@ class GalleryPageController
   public function displayGalleryHead(string $title)
   {
     $cssPaths = ["/public/css/gallery.css"];
-    renderPageStartAndShowHeader($title, $cssPaths);
+    showHeader($title, $cssPaths);
   }
 }

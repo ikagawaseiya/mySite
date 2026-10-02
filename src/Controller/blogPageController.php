@@ -41,6 +41,6 @@ class BlogPageController
   public function displayBlogHead(string $title)
   {
     $cssPaths = ["/public/css/blog.css"];
-    renderPageStartAndShowHeader($title, $cssPaths);
+    showHeader($title, $cssPaths);
   }
 }

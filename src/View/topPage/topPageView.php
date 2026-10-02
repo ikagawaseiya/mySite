@@ -9,7 +9,7 @@
  */
 ?>
 
-<?php renderPageStartAndShowHeader($pageTitle, $cssPaths); ?>
+<?php showHeader($pageTitle, $cssPaths); ?>
 
 <main>
   <div class="main-content center-element">

@@ -7,7 +7,7 @@
  * @param array $cssPaths 追加するCSSファイルのパスの配列
  * @return void
  */
-function renderPageStartAndShowHeader(string $pageTitle = '', array $cssPaths = []): void
+function showHeader(string $pageTitle = '', array $cssPaths = []): void
 {
   $displayHeaderTitle = SITE_NAME . ":" . $pageTitle;
   $blogPosts =  FileGetter::getArrayNewestPageFirst(PathGetter::getBlogFilePath());

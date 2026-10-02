@@ -6,7 +6,7 @@
  * @var array $blogPosts 新着順のブログページ一覧
  */
 ?>
-<?php renderPageStartAndShowHeader($pageTitle, $cssPaths); ?>
+<?php showHeader($pageTitle, $cssPaths); ?>
 
 <div>
   <main class="main-content">
