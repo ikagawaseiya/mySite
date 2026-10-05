@@ -3,7 +3,7 @@
 /**
  * トップページのコントローラー
  */
-class topPageController
+class TopPageController
 {
   /**
    * トップページに渡す値を宣言し、viewを呼び出す
@@ -12,6 +12,7 @@ class topPageController
    * ・ページ名
    * ・htmlの表示名
    * ・新着記事に並び替えた記事リスト
+   * ・ページに用いるCSSのパス
    * ・表示する新着記事の表示数
    */
   public function show()

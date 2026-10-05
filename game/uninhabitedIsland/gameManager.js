@@ -9,7 +9,4 @@ const GAME_STATE = new GameState();
 
 TITLE_SCREEN.init({
   gameState: GAME_STATE,
-  sound: SOUND,
-  restartObject: restartObject,
-  touchArea: TOUCH_AREA,
 })

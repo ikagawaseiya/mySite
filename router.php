@@ -13,14 +13,14 @@ class Router
     {
         $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
         $publicDir = dirname(__FILE__);
-        $publicStrDeleteDeletePath = (strpos($path, '/public') === 0) ? substr($path, 7) : $path;
-        $targetFile = $publicDir . str_replace('/', DIRECTORY_SEPARATOR, $publicStrDeleteDeletePath);
+        $publicStrDeletePath = (strpos($path, '/public') === 0) ? substr($path, 7) : $path;
+        $targetFile = $publicDir . str_replace('/', DIRECTORY_SEPARATOR, $publicStrDeletePath);
 
         $this->checkIsCssOrJsFile($targetFile);
         $this->loadingCommonFiles();
 
 
-        $page = trim($publicStrDeleteDeletePath, '/');
+        $page = trim($publicStrDeletePath, '/');
         require_once __DIR__ . '/routeChecker.php';
         $routeChecker = new RouteChecker();
         $routeChecker->routeCheck($page);

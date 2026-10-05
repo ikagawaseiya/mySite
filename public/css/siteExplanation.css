@@ -1,0 +1,15 @@
+/* main */
+.main-content {
+  background-color: #ffffff;
+  max-width: 2000px;
+  margin: 20px auto 0;
+  padding: 20px 3%;
+  border-radius: 8px;
+}
+
+/* main PC画面表示 */
+@media screen and (min-width: 768px) {
+  .main-content {
+    padding: 40px;
+  }
+}

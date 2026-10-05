@@ -111,7 +111,7 @@ class RouteChecker
   {
     if ($page === '' || $page === 'index.php') {
       require_once __DIR__ . '/src/Controller/topPageController.php';
-      $controller = new topPageController();
+      $controller = new TopPageController();
       $controller->show();
       exit;
     }
