@@ -57,8 +57,7 @@
                 <?php echo displayDropdownLinksHtml($gamePosts) . PHP_EOL; ?>
               </li>
 
-              <!--ゲーム一覧ページは現在未実装-->
-              <!--<li><a href="/gameList"><span class="arrow-icon">▶</span>ゲーム一覧</a></li> -->
+              <li><a href="/gameList"><span class="arrow-icon">▶</span>ゲーム一覧</a></li>
             </ul>
           </li>
 

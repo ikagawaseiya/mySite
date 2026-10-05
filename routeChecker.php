@@ -7,12 +7,19 @@
  */
 class RouteChecker
 {
+  /**
+   * 受け取ったページパスのルートを確認する
+   *
+   * @param string $page ページのパス
+   * @return void
+   */
   function routeCheck(string $page)
   {
     $this->checkIsTopPage($page);
     $this->checkIsGameDirectory($page);
     $this->checkIsBlogDirectory($page);
     $this->checkIsGalleryDirectory($page);
+    $this->checkIsAllGameListPage($page);
     $this->checkIsAllBlogListPage($page);
     $this->checkIsAllGalleryListPage($page);
     $this->checkIsSiteExplanationDirectory($page);
@@ -22,7 +29,7 @@ class RouteChecker
    * このサイトについてのページであるか確認する。
    * その場合、siteExplanationControllerを呼び出す
    *
-   * @param string $page 現在のページ名
+   * @param string $page 現在のページのパス
    * @return void
    */
   function checkIsSiteExplanationDirectory(string $page)
@@ -39,7 +46,7 @@ class RouteChecker
    * ゲームのページであるか確認する。
    * その場合、gamePageControllerを呼び出す
    * 
-   * @param string $page 現在のページ名
+   * @param string $page 現在のページのパス
    */
   function checkIsGameDirectory(string $page)
   {
@@ -56,7 +63,7 @@ class RouteChecker
    * ブログのページであるか確認する。
    * その場合、BlogPageControllerを呼び出す
    * 
-   * @param string $page 現在のページ名
+   * @param string $page 現在のページのパス
    */
   function checkIsBlogDirectory(string $page)
   {
@@ -73,7 +80,7 @@ class RouteChecker
    * ギャラリーのページであるか確認する。
    * その場合、GalleryPageControllerを呼び出す
    * 
-   * @param string $page 現在のページ名
+   * @param string $page 現在のページのパス
    */
   function checkIsGalleryDirectory(string $page)
   {
@@ -86,12 +93,27 @@ class RouteChecker
     }
   }
 
+  /**
+   * ゲーム一覧ページであるか確認する。
+   * その場合、allGameListPageControllerを呼び出す
+   * 
+   * @param string $page 現在のページのパス
+   */
+  function checkIsAllGameListPage(string $page)
+  {
+    if (strpos($page, "gameList") !== false) {
+      require_once __DIR__ . '/src/Controller/allGameListPageController.php';
+      $controller = new AllGameListPageController();
+      $controller->show();
+      exit;
+    }
+  }
 
   /**
    * ブログ一覧ページであるか確認する。
-   * その場合、blogListPageControllerを呼び出す
+   * その場合、allBlogListPageControllerを呼び出す
    * 
-   * @param string $page 現在のページ名
+   * @param string $page 現在のページのパス
    */
   function checkIsAllBlogListPage(string $page)
   {
@@ -105,9 +127,9 @@ class RouteChecker
 
   /**
    * ギャラリー一覧ページであるか確認する。
-   * その場合、blogListPageControllerを呼び出す
+   * その場合、allBlogListPageControllerを呼び出す
    * 
-   * @param string $page 現在のページ名
+   * @param string $page 現在のページのパス
    */
   function checkIsAllGalleryListPage(string $page)
   {
@@ -123,7 +145,7 @@ class RouteChecker
    * トップページであるか確認する。
    * その場合、topPageControllerを呼び出す
    * 
-   * @param string $page 現在のページ名
+   * @param string $page 現在のページのパス
    */
   function checkIsTopPage(string $page)
   {

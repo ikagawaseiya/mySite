@@ -40,7 +40,8 @@
 
       <?php endforeach; ?>
 
-      <?php if ($isDisplayed): ?>
+      <?php
+      if ($DisplayingMonth !== ''): ?>
         </ul>
       <?php endif; ?>
   </main>
