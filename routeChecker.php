@@ -15,20 +15,21 @@ class RouteChecker
     $this->checkIsGalleryDirectory($page);
     $this->checkIsAllBlogListPage($page);
     $this->checkIsAllGalleryListPage($page);
+    $this->checkIsSiteExplanationDirectory($page);
   }
 
   /**
-   * このサイトについてページであるか確認する。
-   * その場合、
+   * このサイトについてのページであるか確認する。
+   * その場合、siteExplanationControllerを呼び出す
    *
-   * @param string $page
+   * @param string $page 現在のページ名
    * @return void
    */
   function checkIsSiteExplanationDirectory(string $page)
   {
     if (strpos($page, "siteExplanation") !== false) {
       require_once __DIR__ . '/src/Controller/siteExplanationController.php';
-      $controller = new AllBlogListPageController();
+      $controller = new SiteExplanationController();
       $controller->show();
       exit;
     }

@@ -4,7 +4,7 @@
  *このサイトについてページのコントローラー
  */
 
-class siteExplanationController
+class SiteExplanationController
 {
   /**
    * このサイトについてページに渡す値を宣言し、viewを呼び出す
@@ -16,7 +16,7 @@ class siteExplanationController
    */
   public function show()
   {
-    $siteTitle = "このサイトについて";
+    $pageTitle = "このサイトについて";
     $cssPaths = ["/public/css/siteExplanation.css"];
     require_once __DIR__ . '/../View/siteExplanation/siteExplanation.php';
   }

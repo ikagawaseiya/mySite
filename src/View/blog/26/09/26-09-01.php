@@ -9,7 +9,7 @@ $this->displayBlogHead($title);
   </div>
   <h1><?php echo Common::h($title); ?></h1>
   <div>
-    <h2>ブロック崩し 修正内容</h2>
+    ブロック崩しにおいて、以下の修正を行いました。
     <ul>
       <li>携帯端末で起動した場合、動作が重くなる不具合を修正</li>
       <p>

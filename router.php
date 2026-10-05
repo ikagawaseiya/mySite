@@ -17,8 +17,8 @@ class Router
         $targetFile = $publicDir . str_replace('/', DIRECTORY_SEPARATOR, $strDeletePathForPublicDir);
 
         $this->checkIsCssOrJsFile($targetFile);
-        $this->loadingCommonFiles();
 
+        $this->loadingCommonFiles();
 
         $page = trim($strDeletePathForPublicDir, '/');
         require_once __DIR__ . '/routeChecker.php';

@@ -1,9 +1,10 @@
   <?php
   /**
-   * <head>タグを閉じた後、<body>タグを開く
+   * <head>タグを表示した後、<body>タグを開く
    * その後、共通ヘッダーを表示する
    *
    * ハンバーガーメニューによって、以下のボタンを表示する
+   * ・「このサイトについて」ページ
    * ・トップページ
    * ・ゲーム（TODO　後に一覧を追加予定）
    * ・ブログ
@@ -12,7 +13,7 @@
    * @var string $pageTitle ページのタイトル
    * @var array $cssPaths ページごとに付与する、CSSの配列
    * @var string $displayHeaderTitle ヘッダー内に表示するタイトル※表記は（サイト名:ページ名）
-   * @var array $gamePosts 新着順のゲーム配列 
+   * @var array $gamePosts 新着順のゲーム配列
    * @var array $blogPosts 新着順のブログ配列
    * @var array $galleryPosts 新着順のギャラリー配列
    */
@@ -96,6 +97,7 @@
               <li><a href="/galleryList"><span class="arrow-icon">▶</span>ギャラリー一覧</a></li>
             </ul>
           </li>
+          <li><a href="/siteExplanation">このサイトについて</a></li>
         </ul>
       </nav>
     </div>
