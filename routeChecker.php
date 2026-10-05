@@ -18,6 +18,23 @@ class RouteChecker
   }
 
   /**
+   * このサイトについてページであるか確認する。
+   * その場合、
+   *
+   * @param string $page
+   * @return void
+   */
+  function checkIsSiteExplanationDirectory(string $page)
+  {
+    if (strpos($page, "siteExplanation") !== false) {
+      require_once __DIR__ . '/src/Controller/siteExplanationController.php';
+      $controller = new AllBlogListPageController();
+      $controller->show();
+      exit;
+    }
+  }
+
+  /**
    * ゲームのページであるか確認する。
    * その場合、gamePageControllerを呼び出す
    * 
@@ -71,7 +88,7 @@ class RouteChecker
 
   /**
    * ブログ一覧ページであるか確認する。
-   * その場合、blogListPagePageControllerを呼び出す
+   * その場合、blogListPageControllerを呼び出す
    * 
    * @param string $page 現在のページ名
    */
@@ -87,7 +104,7 @@ class RouteChecker
 
   /**
    * ギャラリー一覧ページであるか確認する。
-   * その場合、blogListPagePageControllerを呼び出す
+   * その場合、blogListPageControllerを呼び出す
    * 
    * @param string $page 現在のページ名
    */

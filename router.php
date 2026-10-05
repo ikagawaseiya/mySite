@@ -13,14 +13,14 @@ class Router
     {
         $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
         $publicDir = dirname(__FILE__);
-        $publicStrDeletePath = (strpos($path, '/public') === 0) ? substr($path, 7) : $path;
-        $targetFile = $publicDir . str_replace('/', DIRECTORY_SEPARATOR, $publicStrDeletePath);
+        $strDeletePathForPublicDir = (strpos($path, '/public') === 0) ? substr($path, 7) : $path;
+        $targetFile = $publicDir . str_replace('/', DIRECTORY_SEPARATOR, $strDeletePathForPublicDir);
 
         $this->checkIsCssOrJsFile($targetFile);
         $this->loadingCommonFiles();
 
 
-        $page = trim($publicStrDeletePath, '/');
+        $page = trim($strDeletePathForPublicDir, '/');
         require_once __DIR__ . '/routeChecker.php';
         $routeChecker = new RouteChecker();
         $routeChecker->routeCheck($page);
@@ -55,7 +55,6 @@ class Router
     *いいねボタン likeButton
     *汎用パス取得関数　commonPathGetter
     *ファイル関係の関数　fileGetter
-    *HTMLの開始ファイル
      */
     public function loadingCommonFiles()
     {
