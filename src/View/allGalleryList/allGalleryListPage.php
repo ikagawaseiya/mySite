@@ -10,7 +10,6 @@
 
 <div>
   <main class="main-content">
-    <h1><?php echo Common::h($pageTitle); ?></h1>
     <?php
     $DisplayingMonth = '';
     $isDisplayed = false;

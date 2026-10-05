@@ -54,7 +54,7 @@
             <ul class="dropdown-menu" id="js-game-dropdown-menu">
 
               <li>
-                <?php echo displayDropdownLinksHtml($gamePosts) . PHP_EOL; ?>
+                <?php echo displayDropdownLinksHtml($gamePosts); ?>
               </li>
 
               <li><a href="/gameList"><span class="arrow-icon">▶</span>ゲーム一覧</a></li>
@@ -72,7 +72,7 @@
             <ul class="dropdown-menu" id="js-blog-dropdown-menu">
 
               <li>
-                <?php echo displayDropdownLinksHtml($blogPosts) . PHP_EOL; ?>
+                <?php echo displayDropdownLinksHtml($blogPosts); ?>
               </li>
 
               <li><a href="/blogList"><span class="arrow-icon">▶</span>ブログ一覧</a></li>
@@ -90,7 +90,7 @@
             <ul class="dropdown-menu" id="js-gallery-dropdown-menu">
 
               <li>
-                <?php echo displayDropdownLinksHtml($galleryPosts) . PHP_EOL; ?>
+                <?php echo displayDropdownLinksHtml($galleryPosts); ?>
               </li>
 
               <li><a href="/galleryList"><span class="arrow-icon">▶</span>ギャラリー一覧</a></li>
