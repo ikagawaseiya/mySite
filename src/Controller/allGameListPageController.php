@@ -16,8 +16,8 @@ class AllGameListPageController
   public function show()
   {
     $pageTitle = "ゲーム一覧";
-    $gamePosts = FileGetter::getArrayNewestPageFirst(PathGetter::getGameFilePath());
+    $posts = FileGetter::getArrayNewestPageFirst(PathGetter::getGameFilePath());
     $cssPaths = ["/public/css/allTypeListPage.css"];
-    require_once __DIR__ . '/../View/allGameList/allGameListPage.php';
+    require_once __DIR__ . '/../View/allListPageForTypes/allListPage.php';
   }
 }

@@ -16,8 +16,8 @@ class AllGalleryListPageController
   public function show()
   {
     $pageTitle = "ギャラリー一覧";
-    $galleryPosts = FileGetter::getArrayNewestPageFirst(PathGetter::getGalleryFilePath());
+    $posts = FileGetter::getArrayNewestPageFirst(PathGetter::getGalleryFilePath());
     $cssPaths = ["/public/css/allTypeListPage.css"];
-    require_once __DIR__ . '/../View/allGalleryList/allGalleryListPage.php';
+    require_once __DIR__ . '/../View/allListPageForTypes/allListPage.php';
   }
 }
